@@ -95,16 +95,10 @@ class ImagebaseDownloader extends GenericImagesDownloader
 						}
 					}
 				}
-				elseif ( $this->results ) 
-				{
-					$this->i = $this->i + 10 ;
-					return count($results);
-				}
 			}
-			elseif ( $this->results ) 
+			else
 			{
-				$this->i = $this->i + 10 ;
-				return count($results);
+				return null;
 			}
 		} 		
 
