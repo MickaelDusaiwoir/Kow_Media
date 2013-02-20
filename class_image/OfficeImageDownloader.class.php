@@ -24,19 +24,25 @@
 						$results = array();
 
 						$url = $this->buildURL();
-						$url .= '#pg:'.$j.'|mt:2|is:0|';
+						$url .= '#pg:'.$j;
 
 						if ( $html = $this->getContent($url) )
 						{ 
-							if( $start = strpos($html, 'var jsonSearchResults = ') )
+							if( $start = strpos($html, '<div id="dvResults"') )
 							{ 
-								if ( $end = strpos($html, ';', $start) ) 
+								if ( $end = strpos($html, '<span class="cdSearchBottomPaging"', $start) ) 
 								{ 
 									if ( $block = substr($html, $start, $end - $start) ) 
 									{	
-										$block = str_replace('var jsonSearchResults =','', $block);						
-										$block = json_decode($block);	
-										print_r($block);
+										$items = explode('</a>', $block);
+										$count = count($items) -1 ;
+
+										for ( $i = 0; $i < $count; $i++ ) 
+										{
+											if ( $tmp = $this->getDataItem($items[$i]) )
+												$results[] = $tmp;
+										}				
+
 									}
 								}
 							}
@@ -67,6 +73,40 @@
 		protected function buildURL ()
 		{
 			return $this->domain.'/'.$this->lang.$this->path.$this->keywords.'&ex=2';
+		}
+
+		private function getDataItem ($input) 
+		{	
+			$result = array();
+
+			if ( preg_match('#<a class="([^"]+)" id="([^"]+)" href="([^"]+)" name="([^"]+)"#', $input, $result) )
+			{				
+				if ( strpos($result[4], 'MP')  !== false ) // type image 
+				{
+					// ex: /en-us/images/bull-with-mountains-and-sun-MP900446569.aspx
+					// http://officeimg.vo.msecnd.net/en-us/images/bull-with-mountains-and-sun-MP900446569.jpg
+					$url = 'http://officeimg.vo.msecnd.net'.str_replace('.aspx', '.jpg', $result[3]);
+					$result = array();
+
+					if ( preg_match('#<img class="([^"]+)" title="" alt="([^"]+)" src="([^"]+)"#', $input, $result) ) 
+					{
+						$tmp = getimagesize('http:'.$result[3]);
+
+						return array(
+							'title' => $result[2], 
+							'image' => array(
+								'thumb_url' => 'http:'.$result[3],
+								'url' => $url, // Grande image
+								'alt' => $result[2],
+								'width' => $tmp[0],
+								'height' => $tmp[1]
+							)
+						);
+					}
+				}
+			}			
+			
+			return array();
 		}
 
 	}

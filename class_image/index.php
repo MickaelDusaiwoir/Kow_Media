@@ -22,7 +22,7 @@
 
 	// END
 
-	$img->setPagination(5);
+	//$img->setPagination(5);
 
 	if( ( $count = $img->search() ) > 0 )
 	{
@@ -31,23 +31,26 @@
 			$display .= '<ul>'."\n";
 			foreach ( $results as $result ) 
 			{
-				$display .= '<li>'."\n";
-
-				if ( $result['image'] ) 
+				if ( $result )
 				{
-					$src = isset($result['image']['url']) ? $result['image']['url'] : $result['image']['thumb_url'];
+					$display .= '<li>'."\n";
 
-					$display .= 
-						'<a href="'.$src.'">'.
-						'<img src="'.$src.'" width="'.$result['image']['width'].'" '.
-						'height="'.$result['image']['height'].'" />'.
-						'</a>'."\n";
+					if ( $result['image'] ) 
+					{
+						$src = isset($result['image']['url']) ? $result['image']['url'] : $result['image']['thumb_url'];
+
+						$display .= 
+							'<a href="'.$src.'">'.
+							'<img src="'.$src.'" width="'.$result['image']['width'].'" '.
+							'height="'.$result['image']['height'].'" />'.
+							'</a>'."\n";
+					}
+
+					if ( $result['title'] )
+						$display .= '<span>'.$result['title'].'</span>';
+
+					$display .= '</li>'."\n";
 				}
-
-				if ( $result['title'] )
-					$display .= '<span>'.$result['title'].'</span>';
-
-				$display .= '</li>'."\n";
 			}
 
 			$display .= '</ul>'."\n";
