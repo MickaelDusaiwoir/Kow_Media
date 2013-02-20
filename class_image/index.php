@@ -4,25 +4,28 @@
 	include('OfficeImageDownloader.class.php');
 	include('RgbStockImageDownloader.class.php');
 	include('GoogleImageDownloader.class.php');
+	include('PhotoBucketDownloader.class.php');
 
 	header('content-type: text/html; charset=utf-8');
 
 	$results = array();
 	$display = null;
-	$keywords = 'sun';
+	$keywords = 'winter';
 
 	//$img = new ImagebaseDownloader($keywords);
 	//$img = new GoogleImageDownloader($keywords);
 	//$img = new RgbStockImageDownloader($keywords);
+	//$img->setPagination(5);
 
 	// START
 
-	$img = new OfficeImageDownloader($keywords);
-	$img->setLanguage(GenericImagesDownloader::English);
+	//$img = new OfficeImageDownloader($keywords);
+	//$img->setLanguage(GenericImagesDownloader::English);
 
 	// END
 
-	//$img->setPagination(5);
+	$img = new PhotoBucketDownloader($keywords);
+	
 
 	if( ( $count = $img->search() ) > 0 )
 	{
