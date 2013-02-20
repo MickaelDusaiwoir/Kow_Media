@@ -9,15 +9,20 @@
 
 	$results = array();
 	$display = null;
-	$keywords = 'snow';
+	$keywords = 'sun';
 
 	//$img = new ImagebaseDownloader($keywords);
 	//$img = new GoogleImageDownloader($keywords);
-	$img = new RgbStockImageDownloader($keywords);
+	//$img = new RgbStockImageDownloader($keywords);
+
+	// START
+
+	$img = new OfficeImageDownloader($keywords);
+	$img->setLanguage(GenericImagesDownloader::English);
+
+	// END
 
 	$img->setPagination(5);
-
-
 
 	if( ( $count = $img->search() ) > 0 )
 	{
@@ -53,5 +58,4 @@
 		$display = 'Nothing was found with these keywords';
 	}
 
-	//echo $count;
 	echo $display;

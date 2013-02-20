@@ -22,7 +22,6 @@
 					for ( $j = 1; $j <= $this->numPage ; $j++ ) 
 					{ 
 						$results = array();
-
 						$url = $this->buildURL();
 						$url .= '/'.$j;
 
@@ -81,6 +80,10 @@
 				)
 			);
 
+			$startTitle = explode('<p class="ti">', $input);
+			$tmp = explode('</p>', $startTitle[1] );
+			$data['title'] = strip_tags($tmp[0] );
+
 			$result = array();
 
 			if ( preg_match('#<IMG src="([^"]+)" width="([^"]+)" height="([^"]+)" alt="([^"]+)"#', $input, $result) ) 
@@ -95,10 +98,8 @@
 				$data['image']['alt'] = $result[4];
 			}
 
-			$result = array();
-
-			/*if ( preg_match('#<A href="([^"]+)"#', $input, $result) )				
-				$data['image']['url'] = $this->domain.$result[1];*/
+			$url = str_replace('100', '300', $data['image']['thumb_url'] );
+			$data['image']['url'] = $url;
 
 			return $data;
 		}

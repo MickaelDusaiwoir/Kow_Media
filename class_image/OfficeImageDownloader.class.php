@@ -24,17 +24,19 @@
 						$results = array();
 
 						$url = $this->buildURL();
-						$url .= '/'.$j;
+						$url .= '#pg:'.$j.'|mt:2|is:0|';
 
 						if ( $html = $this->getContent($url) )
-						{
-							if( $start = strpos($html, 'var jsonSearchResults') )
-							{
+						{ 
+							if( $start = strpos($html, 'var jsonSearchResults = ') )
+							{ 
 								if ( $end = strpos($html, ';', $start) ) 
-								{
+								{ 
 									if ( $block = substr($html, $start, $end - $start) ) 
-									{										
-										$results = json_decode($block);	
+									{	
+										$block = str_replace('var jsonSearchResults =','', $block);						
+										$block = json_decode($block);	
+										print_r($block);
 									}
 								}
 							}
@@ -64,7 +66,7 @@
 
 		protected function buildURL ()
 		{
-			return $this->domain.'/'.$this->lang.$this->path.$this->keywords.'#mt:2|';
+			return $this->domain.'/'.$this->lang.$this->path.$this->keywords.'&ex=2';
 		}
 
 	}
