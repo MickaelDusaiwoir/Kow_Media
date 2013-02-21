@@ -21,8 +21,11 @@
 
 					for ( $j = 1; $j <= $this->numPage ; $j++ ) 
 					{ 
-						$results = array();
+						// French
 
+						$resultsFrench = array();
+
+						$this->lang = 'fr-be';
 						$url = $this->buildURL();
 						$url .= '#pg:'.$j;
 
@@ -40,34 +43,55 @@
 										for ( $i = 0; $i < $count; $i++ ) 
 										{
 											if ( $tmp = $this->getDataItem($items[$i]) )
-												$results[] = $tmp;
-										}				
-
+												$resultsFrench[] = $tmp;
+										}	
 									}
 								}
-								else
-								{
-									trigger_error("La fin du block n'a pas étais trouvée");
+							}
+						}			
+
+						// English
+
+						$resultsEnglish = array();
+
+						$this->lang = 'en-us';
+						$url = $this->buildURL();
+						$url .= '#pg:'.$j;
+
+						if ( $html = $this->getContent($url) )
+						{ 
+							if( $start = strpos($html, '<div id="dvResults"') )
+							{ 
+								if ( $end = strpos($html, '<span class="cdSearchBottomPaging"', $start) ) 
+								{ 
+									if ( $block = substr($html, $start, $end - $start) ) 
+									{	
+										$items = explode('</a>', $block);
+										$count = count($items) -1 ;
+
+										for ( $i = 0; $i < $count; $i++ ) 
+										{
+											if ( $tmp = $this->getDataItem($items[$i]) )
+												$resultsEnglish[] = $tmp;
+										}	
+									}
 								}
 							}
-							else
-							{
-								trigger_error("Le début du block n'a pas étais trouvé");
-							}
+						}	
+
+						if ( $resultsFrench )
+						{
+							$totalCount += count($resultsFrench);
+							$this->results = array_merge($this->results, $resultsFrench);
+						}
+
+						if ( $resultsEnglish )
+						{
+							$totalCount += count($resultsEnglish);
+							$this->results = array_merge($this->results, $resultsEnglish);
 						}
 						else
 						{
-							trigger_error("L'url ne retourne aucune donnnée");
-						}				
-						
-						if ( $results )
-						{
-							$totalCount += count($results);
-							$this->results = array_merge($this->results, $results);
-						}
-						else
-						{
-							trigger_error("La regex ne retourne aucune donnnée");
 							break;
 						}
 					}

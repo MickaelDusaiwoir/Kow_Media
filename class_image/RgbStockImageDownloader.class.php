@@ -44,17 +44,17 @@
 								}
 								else
 								{
-									trigger_error("La fin du block n'a pas étais trouvée");
+									trigger_error("La fin du bloc n'a pas été trouvée");
 								}
 							}
 							else
 							{
-								trigger_error("Le début du block n'a pas étais trouvé");
+								trigger_error("Le début du bloc n'a pas été trouvé");
 							}
 						}
 						else
 						{
-							trigger_error("L'url ne retourne aucune donnnée");
+							trigger_error("L'url ne retourne aucune donnée");
 						}				
 						
 						if ( $results )
@@ -64,7 +64,7 @@
 						}
 						else
 						{
-							trigger_error("La regex ne retourne aucune donnnée");
+							trigger_error("La regex ne retourne aucune donnée");
 							break;
 						}
 					}

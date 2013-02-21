@@ -10,7 +10,11 @@
 
 	$results = array();
 	$display = null;
-	$keywords = 'winter';
+	
+	if ( isset($_POST['search']) ) 
+		$keywords = $_POST['search'];
+	else
+		$keywords = '';
 
 	//$img = new ImagebaseDownloader($keywords);
 	//$img = new GoogleImageDownloader($keywords);
@@ -19,49 +23,72 @@
 
 	// START
 
-	//$img = new OfficeImageDownloader($keywords);
+	$img = new OfficeImageDownloader($keywords);
 	//$img->setLanguage(GenericImagesDownloader::English);
 
 	// END
 
-	$img = new PhotoBucketDownloader($keywords);
+	//$img = new PhotoBucketDownloader($keywords);
 	
-
-	if( ( $count = $img->search() ) > 0 )
+	if ( $keywords )
 	{
-		if( $results = $img->getResults() )
+		if( ( $count = $img->search() ) > 0 )
 		{
-			$display .= '<ul>'."\n";
-			foreach ( $results as $result ) 
+			if( $results = $img->getResults() )
 			{
-				if ( $result )
+				$display .= '<ul>'."\n";
+				foreach ( $results as $result ) 
 				{
-					$display .= '<li>'."\n";
-
-					if ( $result['image'] ) 
+					if ( $result )
 					{
-						$src = isset($result['image']['url']) ? $result['image']['url'] : $result['image']['thumb_url'];
+						$display .= '<li>'."\n";
 
-						$display .= 
-							'<a href="'.$src.'">'.
-							'<img src="'.$src.'" width="'.$result['image']['width'].'" '.
-							'height="'.$result['image']['height'].'" />'.
-							'</a>'."\n";
+						if ( $result['image'] ) 
+						{
+							$src = isset($result['image']['url']) ? $result['image']['url'] : $result['image']['thumb_url'];
+
+							$display .= 
+								'<a href="'.$src.'">'.
+								'<img src="'.$src.'" width="'.$result['image']['width'].'" '.
+								'height="'.$result['image']['height'].'" />'.
+								'</a>'."\n";
+						}
+
+						if ( $result['title'] )
+							$display .= '<span>'.$result['title'].'</span>';
+
+						$display .= '</li>'."\n";
 					}
-
-					if ( $result['title'] )
-						$display .= '<span>'.$result['title'].'</span>';
-
-					$display .= '</li>'."\n";
 				}
-			}
 
-			$display .= '</ul>'."\n";
+				$display .= '</ul>'."\n";
+			}
+		}
+		else 
+		{
+			$display = 'Nothing was found with these keywords';
 		}
 	}
-	else 
+	else
 	{
-		$display = 'Nothing was found with these keywords';
+		echo "Aucun mot clé saisi";
 	}
 
-	echo $display;
+?>
+
+<html>
+	<head>
+		<title>Recherche</title>
+	</head>
+	<body>
+		<form action="#" method="post">
+			<input type="texte" name="search" />
+			<input type="submit" value="Search" />
+		</form>
+
+		<?php  
+			echo $display;
+		?>
+
+	</body>
+</html>

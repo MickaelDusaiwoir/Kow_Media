@@ -2,8 +2,8 @@
 
 	abstract class GenericImagesDownloader 
 	{
-		const French = 'fr-be';
-		const English = 'en-us';
+		//const French = 'fr-be';
+		//const English = 'en-us';
 
 		protected $results = array();
 		protected $domain = null;
@@ -84,7 +84,7 @@
 				$this->numPage = $numPage;
 		}
 
-		public function setLanguage ($language)
+	/*	public function setLanguage ($language)
 		{
 			switch ($language) 
 			{
@@ -97,7 +97,7 @@
 					trigger_error('Entrez une langue (French ou English)');
 					break;
 			}
-		}
+		}*/
 
 		public function __destruct()
 		{
