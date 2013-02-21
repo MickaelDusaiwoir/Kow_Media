@@ -42,7 +42,19 @@
 										}				
 									}
 								}
+								else
+								{
+									trigger_error("La fin du block n'a pas étais trouvée");
+								}
 							}
+							else
+							{
+								trigger_error("Le début du block n'a pas étais trouvé");
+							}
+						}
+						else
+						{
+							trigger_error("L'url ne retourne aucune donnnée");
 						}				
 						
 						if ( $results )
@@ -52,6 +64,7 @@
 						}
 						else
 						{
+							trigger_error("La regex ne retourne aucune donnnée");
 							break;
 						}
 					}
@@ -60,7 +73,7 @@
 				}
 				else
 				{
-					trigger_error("Entrez un nombre de page maximum via la fonction setPagination()");
+					trigger_error("Donnez un nombre de page maximum ( setPagination() )");
 				}
 			}
 

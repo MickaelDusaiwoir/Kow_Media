@@ -57,6 +57,10 @@
 				$this->keywords = $keywords;
 				$this->keywords = preg_replace('#([ ]{1,})#', '+', $this->keywords);
 			}
+			else
+			{
+				trigger_error("Entrez au moins un mot clé");
+			}
 		}
 
 		protected function buildURL ()
@@ -90,7 +94,7 @@
 					break;
 					
 				default:
-					trigger_error('Mauvais paramètre');
+					trigger_error('Entrez une langue (French ou English)');
 					break;
 			}
 		}
