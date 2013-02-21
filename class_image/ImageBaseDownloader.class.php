@@ -4,7 +4,7 @@
 
 	class ImagebaseDownloader extends GenericImagesDownloader
 	{
-		function __construct ($keywords = null) 
+		public function __construct ($keywords = null) 
 		{ 
 			parent::__construct('www.imagebase.net','/search?q=');
 			if ( $keywords )

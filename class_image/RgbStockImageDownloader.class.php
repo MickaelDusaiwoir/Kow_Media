@@ -4,7 +4,7 @@
 
 	class RgbStockImageDownloader extends GenericImagesDownloader
 	{
-		function __construct ($keywords = null) 
+		public function __construct ($keywords = null) 
 		{ 
 			parent::__construct('www.rgbstock.com','/images/');
 			if ( $keywords )

@@ -4,7 +4,6 @@
 
 	class PhotoBucketDownloader extends GenericImagesDownloader
 	{
-
 		public function __construct ($keywords = null) 
 		{ 
 			parent::__construct('http://ww6.photobucket.com','/images/');
@@ -17,11 +16,10 @@
 			if ( $this->keywords ) 
 			{	 
 				$results = array();
-
 				$url = $this->buildURL().'/';
 
 				if ( $html = $this->getContent($url) )
-				{ echo $html;
+				{
 					if( $start = strpos($html, '<div class="tresults"') )
 					{ 
 						if ( $end = strpos($html, '<div class="clearBoth"', $start) ) 
@@ -57,8 +55,7 @@
 			}
 
 			return 0;
-
-			}
+		}
 
 		private function getDataItem ($input) 
 		{	
@@ -75,31 +72,17 @@
 
 			$result = array();
 
-			 '#<div id="([^"]+)" 
-					        class="thumbnail" 
-					        style="([^"]+)"
-					        pbpending="0" 
-					        pbthumburl="([^"]+)" 
-					        pbthumbtype="search" 
-					        pbshowflyout="0" 
-					        pbinfo="([^"]+)"
-					  #';
-
-			if ( preg_match('#<img src="([^"]+)" class="([^"]+)" title="([^"]+)" alt="([^"]+)"#', $input, $result) ) 
+			if ( preg_match('#<img src="([^"]+)" class="([^"]+)" title="([^"]*)" alt="([^"]+)"#', $input, $result) ) 
 			{				
-				$tmp = getimagesize($result[1]);
+				$tmp = getimagesize(str_replace(' ', '%20', $result[1]));
 				$url = str_replace('/th_', '/', $result[1]);
 
 				$data['image']['thumb_url'] = $result[1];
-				$data['image']['url'] = $url;
-				$data['image']['width'] = $tmp[0];
-				$data['image']['height'] = $tmp[1];
-				$data['image']['alt'] = $result[4];
-				$data['title'] = $result[4];
-			}
-			else
-			{
-				trigger_error("La regex ne retourne aucune donnnée");
+				$data['image']['url'] 		= $url;
+				$data['image']['width'] 	= $tmp[0];
+				$data['image']['height'] 	= $tmp[1];
+				$data['image']['alt'] 		= $result[4];
+				$data['title'] 				= $result[3];
 			}
 
 			return $data;

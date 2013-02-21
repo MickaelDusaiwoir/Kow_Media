@@ -4,7 +4,7 @@
 
 	class OfficeImageDownloader extends GenericImagesDownloader
 	{
-		function __construct ($keywords = null) 
+		public function __construct ($keywords = null) 
 		{ 
 			parent::__construct('www.office.microsoft.com','/images/results.aspx?qu=');
 			if ( $keywords )
