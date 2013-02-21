@@ -48,7 +48,11 @@
 									}
 								}
 							}
-						}			
+						}	
+						else
+						{
+							trigger_error("L'url ne retourne aucune donnée");
+						}		
 
 						// English
 
@@ -78,6 +82,10 @@
 								}
 							}
 						}	
+						else
+						{
+							trigger_error("L'url ne retourne aucune donnée");
+						}
 
 						if ( $resultsFrench )
 						{

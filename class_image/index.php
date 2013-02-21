@@ -54,9 +54,6 @@
 								'</a>'."\n";
 						}
 
-						if ( $result['title'] )
-							$display .= '<span>'.$result['title'].'</span>';
-
 						$display .= '</li>'."\n";
 					}
 				}
@@ -78,11 +75,13 @@
 
 <html>
 	<head>
+		<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
 		<title>Recherche</title>
+		<link rel="stylesheet" type="text/css" href="./css/style.css" media="screen" />
 	</head>
 	<body>
 		<form action="#" method="post">
-			<input type="texte" name="search" />
+			<input type="text" name="search" />
 			<input type="submit" value="Search" />
 		</form>
 

@@ -1,0 +1,49 @@
+body {
+	width: 960px;
+	margin: 0 auto;
+	font: normal 90%/1.5 Sans-Serif;
+}
+
+ul {
+	width: 100%;
+}
+
+li {
+	list-style: none;
+	display: inline-block;
+	margin: 10px 10px;
+	width: 200px;
+	vertical-align: top;
+}
+
+li a, li img {
+	display: block;
+	margin: 3px auto;
+	max-width: 192px;
+}
+
+li img {
+	padding: 5px;
+	border: 2px solid #ccc;
+	moz-border-radius: 5px;
+	webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+li:hover img, li:hover {
+	-moz-transform: scale(1.05) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+	-webkit-transform: scale(1.05) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+    -o-transform: scale(1.05) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+    -ms-transform: scale(1.05) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+    transform: scale(1.05) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+}
+
+form {
+	font-size: 1.1em;
+	width: 430px;
+	margin: 1em auto 0 auto;
+}
+
+input[type=text] {
+	width: 350px;
+}
+
