@@ -2,18 +2,22 @@
 
 	abstract class GenericImagesDownloader 
 	{
-		//const French = 'fr-be';
-		//const English = 'en-us';
+		const NO_KEYWORDS 			= 1;
+		const NO_PAGE_NUMBER 		= 2;
+		const NO_CONTENT 			= 3;
+		const START_BLOCK_NOT_FOUND = 4;
+		const END_BLOCK_NOT_FOUND   = 5;
+		const INVALID_REGEX			= 6;
 
-		protected $results = array();
-		protected $domain = null;
-		protected $path = null;
-		protected $page = null;
+		protected $results 	= array();
+		protected $domain 	= null;
+		protected $path 	= null;
+		protected $page 	= null;
 		protected $keywords = null;
-		protected $display = null;
-		protected $numPage = 1;
-		protected $lang = null;
-		protected $curl = null;
+		protected $display 	= null;
+		protected $numPage 	= 1;
+		protected $lang 	= null;
+		protected $curl 	= null;
 
 		public function __construct ($domain, $path) 
 		{
@@ -27,14 +31,14 @@
 			else
 				trigger_error("Entrez un path (Ex : /search?q= )");
 
-			$header[0] = "Accept: text/xml,application/xml,application/xhtml+xml,";
+			$header[0] 	= "Accept: text/xml,application/xml,application/xhtml+xml,";
 			$header[0] .= "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
-			$header[] = "Cache-Control: max-age=0";
-			$header[] = "Connection: keep-alive";
-			$header[] = "Keep-Alive: 300";
-			$header[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
-			$header[] = "Accept-Language: en-us,en;q=0.5";
-			$header[] = "Pragma: ";
+			$header[] 	= "Cache-Control: max-age=0";
+			$header[] 	= "Connection: keep-alive";
+			$header[] 	= "Keep-Alive: 300";
+			$header[] 	= "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
+			$header[] 	= "Accept-Language: en-us,en;q=0.5";
+			$header[] 	= "Pragma: ";
 
 			$this->curl = curl_init();
 
@@ -43,7 +47,7 @@
 				
 		}
 
-		abstract public function search () ;
+		abstract public function search (array & $errors = array()) ;
 
 		public function getResults () 
 		{
@@ -83,21 +87,6 @@
 			if ( $numPage > 0)
 				$this->numPage = $numPage;
 		}
-
-	/*	public function setLanguage ($language)
-		{
-			switch ($language) 
-			{
-				case self::French :
-				case self::English :
-					$this->lang = $language;
-					break;
-					
-				default:
-					trigger_error('Entrez une langue (French ou English)');
-					break;
-			}
-		}*/
 
 		public function __destruct()
 		{

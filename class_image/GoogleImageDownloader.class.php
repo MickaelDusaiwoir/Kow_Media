@@ -13,26 +13,26 @@
 				$this->setKeywords( $keywords );
 		}
 
-		public function search ()
+		public function search (array & $errors = array())
 		{	
-			if ( $this->keywords ) 
-			{
-				if ( $this->numPage ) 
-				{
-					$totalCount = 0;		
-					$numPage = $this->numPage - 1;
 
-					for ( $j = 0;  $j <= $numPage;  $j++ ) 
-					{
+			if ( $this->keywords ) 
+			{	
+				if ( $this->numPage )
+				{
+					for ( $j = 1; $j <= $this->numPage ; $j++ ) 
+					{ 
 						$results = array();
+						$totalCount = 0;
+						
 						$url = $this->buildURL();
 						$url .= '&start='.($j * 20);
-						
+
 						if( $html = $this->getContent($url) )
 						{
-							if( $start = strpos($html, '<div id="ires"') )
+							if( ( $start = strpos($html, '<div id="ires"') ) !== false )
 							{
-								if ( $end = strpos($html, '</div>', $start) ) 
+								if ( ( $end = strpos($html, '</div>', $start) ) !== false ) 
 								{
 									if ( $block = substr($html, $start, $end - $start) ) 
 									{
@@ -41,21 +41,36 @@
 
 										for ( $i = 0; $i < $count; $i++ ) 
 										{ 
-											$results[] = $this->getDataItem($items[$i]);
+											if ( $tmp = $this->getDataItem($items[$i]) )
+												$results[] = $tmp;
+											else
+												$errors[] = array($url, self::INVALID_REGEX);
 										}
 									}
 								}
+								else
+								{
+									$errors = array($url, self::END_BLOCK_NOT_FOUND);
+								}
 							}
+							else
+							{
+								$errors = array($url, self::START_BLOCK_NOT_FOUND);
+							}
+						}	
+						else
+						{
+							$errors[] = array($url, self::NO_CONTENT);
 						}
-
+						
 						if ( $results )
 						{
 							$totalCount += count($results);
 							$this->results = array_merge($this->results, $results);
-						}					
+						}
 						else
-						{
-							break;					
+						{	
+							break;
 						}
 					}
 
@@ -63,8 +78,12 @@
 				}
 				else
 				{
-					trigger_error("Entrez un nombre de page maximum via la fonction setPagination()");
+					$errors[] = self::NO_PAGE_NUMBER;
 				}
+			}
+			else
+			{
+				$errors[] = self::NO_KEYWORDS;
 			}
 
 			return 0;

@@ -8,6 +8,7 @@
 
 	header('content-type: text/html; charset=utf-8');
 
+	$errors = array();
 	$results = array();
 	$display = null;
 	
@@ -16,60 +17,50 @@
 	else
 		$keywords = '';
 
+	// ok 
 	//$img = new ImagebaseDownloader($keywords);
 	//$img = new GoogleImageDownloader($keywords);
 	//$img = new RgbStockImageDownloader($keywords);
+	$img = new OfficeImageDownloader($keywords);
+	//$img = new PhotoBucketDownloader($keywords);
+
 	//$img->setPagination(5);
 
-	// START
-
-	$img = new OfficeImageDownloader($keywords);
-	//$img->setLanguage(GenericImagesDownloader::English);
-
-	// END
-
-	//$img = new PhotoBucketDownloader($keywords);
-	
-	if ( $keywords )
+	if( ( $count = $img->search($errors) ) > 0 )
 	{
-		if( ( $count = $img->search() ) > 0 )
+		if( $results = $img->getResults() )
 		{
-			if( $results = $img->getResults() )
+			$display .= '<ul>'."\n";
+			foreach ( $results as $result ) 
 			{
-				$display .= '<ul>'."\n";
-				foreach ( $results as $result ) 
+				if ( $result )
 				{
-					if ( $result )
+					$display .= '<li>'."\n";
+
+					if ( $result['image'] ) 
 					{
-						$display .= '<li>'."\n";
+						$src = isset($result['image']['url']) ? $result['image']['url'] : $result['image']['thumb_url'];
 
-						if ( $result['image'] ) 
-						{
-							$src = isset($result['image']['url']) ? $result['image']['url'] : $result['image']['thumb_url'];
-
-							$display .= 
-								'<a href="'.$src.'">'.
-								'<img src="'.$src.'" width="'.$result['image']['width'].'" '.
-								'height="'.$result['image']['height'].'" />'.
-								'</a>'."\n";
-						}
-
-						$display .= '</li>'."\n";
+						$display .= 
+							'<a href="'.$src.'">'.
+							'<img src="'.$src.'" width="'.$result['image']['width'].'" '.
+							'height="'.$result['image']['height'].'" />'.
+							'</a>'."\n";
 					}
-				}
 
-				$display .= '</ul>'."\n";
+					$display .= '</li>'."\n";
+				}
 			}
-		}
-		else 
-		{
-			$display = 'Nothing was found with these keywords';
+
+			$display .= '</ul>'."\n";
 		}
 	}
-	else
+	else 
 	{
-		echo "Aucun mot clé saisi";
+		echo "erreur: ";
+		print_r($errors);
 	}
+
 
 ?>
 

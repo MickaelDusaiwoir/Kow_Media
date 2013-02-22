@@ -11,7 +11,7 @@
 				$this->setKeywords($keywords);
 		}
 
-		public function search ()
+		public function search (array & $errors = array())
 		{	
 			if ( $this->keywords ) 
 			{	
@@ -27,9 +27,9 @@
 
 						if ( $html = $this->getContent($url) )
 						{ 
-							if( $start = strpos($html, '<DIV class="th"') )
+							if( ( $start = strpos($html, '<DIV class="th"') ) !== false )
 							{
-								if ( $end = strpos($html, '<div id="stockfreshresults">', $start) ) 
+								if ( ( $end = strpos($html, '<div id="stockfreshresults">', $start) ) !== false ) 
 								{
 									if ( $block = substr($html, $start, $end - $start) ) 
 									{
@@ -38,23 +38,24 @@
 
 										for ( $i = 1; $i < $count; $i++ ) 
 										{ 
-											$results[] = $this->getDataItem($items[$i]);
-										}				
+											if ( $tmp = $this->getDataItem($items[$i]) )
+													$results[] = $tmp;
+										}
 									}
 								}
 								else
 								{
-									trigger_error("La fin du bloc n'a pas été trouvée");
+									$errors = self::END_BLOCK_NOT_FOUND;
 								}
 							}
 							else
 							{
-								trigger_error("Le début du bloc n'a pas été trouvé");
+								$errors = self::START_BLOCK_NOT_FOUND;
 							}
-						}
+						}	
 						else
 						{
-							trigger_error("L'url ne retourne aucune donnée");
+							$errors[] = self::NO_CONTENT;
 						}				
 						
 						if ( $results )
@@ -64,7 +65,6 @@
 						}
 						else
 						{
-							trigger_error("La regex ne retourne aucune donnée");
 							break;
 						}
 					}
@@ -73,10 +73,14 @@
 				}
 				else
 				{
-					trigger_error("Donnez un nombre de page maximum ( setPagination() )");
+					$errors[] = self::NO_PAGE_NUMBER;
 				}
 			}
-
+			else
+			{
+				$errors[] = self::NO_KEYWORDS;
+			}
+			
 			return 0;
 		}
 

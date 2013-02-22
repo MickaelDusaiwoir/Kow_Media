@@ -11,26 +11,25 @@
 				$this->setKeywords($keywords);
 		}
 
-		public function search ()
+		public function search (array & $errors = array())
 		{	
 			if ( $this->keywords ) 
 			{	
 				if ( $this->numPage )
 				{
-					$totalCount = 0;
-
 					for ( $j = 1; $j <= $this->numPage ; $j++ ) 
 					{ 
 						$results = array();
+						$totalCount = 0;
 
 						$url = $this->buildURL();
 						$url .= '&page='.$j;
 
 						if ( $html = $this->getContent($url) )
 						{
-							if( $start = strpos($html, '<ul id="g-album-grid"') )
+							if( ( $start = strpos($html, '<ul id="g-album-grid"') ) !== false )
 							{
-								if ( $end = strpos($html, '</ul>', $start) ) 
+								if ( ( $end = strpos($html, '</ul>', $start) ) !== false ) 
 								{
 									if ( $block = substr($html, $start, $end - $start) ) 
 									{
@@ -39,23 +38,32 @@
 
 										for ( $i = 0; $i < $count; $i++ ) 
 										{ 
-											$results[] = $this->getDataItem($items[$i]);
+											if ( $tmp =  $this->getDataItem($items[$i]) )
+												$results[] = $tmp;
+											else
+												$errors[] = array($url, self::INVALID_REGEX);
 										}				
 									}
 								}
 								else
 								{
-									trigger_error("La fin du bloc n'a pas été trouvée");
+									if ( $j < 2 )
+										$errors[] = array($url, self::END_BLOCK_NOT_FOUND);
+									else
+										return $totalCount;
 								}
 							}
 							else
 							{
-								trigger_error("Le début du bloc n'a pas été trouvé");
+								if ( $j < 2 )
+									$errors[] = array($url, self::START_BLOCK_NOT_FOUND);
+								else
+										return $totalCount;
 							}
 						}
 						else
 						{
-							trigger_error("L'url ne retourne aucune donnée");
+							$errors[] = array($url, self::NO_CONTENT);
 						}				
 						
 						if ( $results )
@@ -65,7 +73,6 @@
 						}
 						else
 						{	
-							trigger_error("La regex ne retourne aucune donnée");
 							break;
 						}
 					}
@@ -74,8 +81,12 @@
 				}
 				else
 				{
-					trigger_error("Donnez un nombre de page maximum ( setPagination() )");
+					$errors[] = self::NO_PAGE_NUMBER;
 				}
+			}
+			else
+			{
+				$errors[] = self::NO_KEYWORDS;
 			}
 
 			return 0;

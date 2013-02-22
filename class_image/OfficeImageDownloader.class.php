@@ -11,96 +11,66 @@
 				$this->setKeywords($keywords);
 		}
 
-		public function search () 
+		public function search (array & $errors = array()) 
 		{
 			if ( $this->keywords ) 
 			{	
 				if ( $this->numPage )
 				{
 					$totalCount = 0;
+					$languages = array('French' => 'fr-be', 'English' => 'en-us');
 
-					for ( $j = 1; $j <= $this->numPage ; $j++ ) 
-					{ 
-						// French
-
-						$resultsFrench = array();
-
-						$this->lang = 'fr-be';
-						$url = $this->buildURL();
-						$url .= '#pg:'.$j;
-
-						if ( $html = $this->getContent($url) )
+					foreach ($languages as $lang) 
+					{						
+						for ( $j = 1; $j <= $this->numPage ; $j++ ) 
 						{ 
-							if( $start = strpos($html, '<div id="dvResults"') )
-							{ 
-								if ( $end = strpos($html, '<span class="cdSearchBottomPaging"', $start) ) 
-								{ 
-									if ( $block = substr($html, $start, $end - $start) ) 
-									{	
-										$items = explode('</a>', $block);
-										$count = count($items) -1 ;
+							$results = array();
 
-										for ( $i = 0; $i < $count; $i++ ) 
-										{
-											if ( $tmp = $this->getDataItem($items[$i]) )
-												$resultsFrench[] = $tmp;
-										}	
+							$this->lang = $lang;
+							$url = $this->buildURL();
+							$url .= '#pg:'.$j;
+
+							if ( $html = $this->getContent($url) )
+							{ 
+								if( ( $start = strpos($html, '<div id="dvResults"') ) !== false )
+								{ 
+									if ( ( $end = strpos($html, '<span class="cdSearchBottomPaging"', $start) ) !== false ) 
+									{ 
+										if ( $block = substr($html, $start, $end - $start) ) 
+										{	
+											$items = explode('</a>', $block);
+											$count = count($items) -1 ;
+
+											for ( $i = 0; $i < $count; $i++ ) 
+											{
+												$results[] = $this->getDataItem($items[$i]);
+											}
+										}
+									}
+									else
+									{
+										$errors[] = array($url, self::END_BLOCK_NOT_FOUND);
 									}
 								}
-							}
-						}	
-						else
-						{
-							trigger_error("L'url ne retourne aucune donnée");
-						}		
-
-						// English
-
-						$resultsEnglish = array();
-
-						$this->lang = 'en-us';
-						$url = $this->buildURL();
-						$url .= '#pg:'.$j;
-
-						if ( $html = $this->getContent($url) )
-						{ 
-							if( $start = strpos($html, '<div id="dvResults"') )
-							{ 
-								if ( $end = strpos($html, '<span class="cdSearchBottomPaging"', $start) ) 
-								{ 
-									if ( $block = substr($html, $start, $end - $start) ) 
-									{	
-										$items = explode('</a>', $block);
-										$count = count($items) -1 ;
-
-										for ( $i = 0; $i < $count; $i++ ) 
-										{
-											if ( $tmp = $this->getDataItem($items[$i]) )
-												$resultsEnglish[] = $tmp;
-										}	
-									}
+								else
+								{
+									$errors[] = array($url,self::START_BLOCK_NOT_FOUND);
 								}
+							}	
+							else
+							{
+								$errors[] = array($url,self::NO_CONTENT);
+							}	
+
+							if ( $results )
+							{
+								$totalCount += count($results);
+								$this->results = array_merge($this->results, $results);
 							}
-						}	
-						else
-						{
-							trigger_error("L'url ne retourne aucune donnée");
-						}
-
-						if ( $resultsFrench )
-						{
-							$totalCount += count($resultsFrench);
-							$this->results = array_merge($this->results, $resultsFrench);
-						}
-
-						if ( $resultsEnglish )
-						{
-							$totalCount += count($resultsEnglish);
-							$this->results = array_merge($this->results, $resultsEnglish);
-						}
-						else
-						{
-							break;
+							else
+							{
+								break;
+							}
 						}
 					}
 
@@ -108,8 +78,12 @@
 				}
 				else
 				{
-					trigger_error("Donnez un nombre de page maximum ( setPagination() )");
+					$errors[] = self::NO_PAGE_NUMBER;
 				}
+			}
+			else
+			{
+				$errors[] = self::NO_KEYWORDS;	
 			}
 
 			return 0;
@@ -125,7 +99,7 @@
 			$result = array();
 
 			if ( preg_match('#<a class="([^"]+)" id="([^"]+)" href="([^"]+)" name="([^"]+)"#', $input, $result) )
-			{				
+			{		
 				if ( strpos($result[4], 'MP')  !== false ) // type image 
 				{
 					// ex: /en-us/images/bull-with-mountains-and-sun-MP900446569.aspx
@@ -134,7 +108,7 @@
 					$result = array();
 
 					if ( preg_match('#<img class="([^"]+)" title="" alt="([^"]+)" src="([^"]+)"#', $input, $result) ) 
-					{
+					{ 
 						$tmp = getimagesize('http:'.$result[3]);
 
 						return array(

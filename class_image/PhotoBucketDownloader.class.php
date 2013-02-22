@@ -11,7 +11,7 @@
 				$this->setKeywords($keywords);
 		}
 
-		public function search () 
+		public function search (array & $errors = array()) 
 		{
 			if ( $this->keywords ) 
 			{	 
@@ -20,9 +20,9 @@
 
 				if ( $html = $this->getContent($url) )
 				{
-					if( $start = strpos($html, '<div class="tresults"') )
+					if( ( $start = strpos($html, '<div class="tresults"') ) !== false )
 					{ 
-						if ( $end = strpos($html, '<div class="clearBoth"', $start) ) 
+						if ( ( $end = strpos($html, '<div class="clearBoth"', $start) ) !== false ) 
 						{ 
 							if ( $block = substr($html, $start, $end - $start) ) 
 							{	
@@ -31,29 +31,37 @@
 
 								for ( $i = 0; $i < $count; $i++ ) 
 								{
-									$results[] = $this->getDataItem($items[$i]);
-									$this->results = $results;
+									if ( $tmp = $this->getDataItem($items[$i]) )
+										$results[] = $tmp;
+									else
+										$errors[] = array($url, self::INVALID_REGEX);
 								}	
-
-								return count($results);
 							}
 						}
 						else
 						{
-							trigger_error("La fin du bloc n'a pas été trouvée");
+							$errors = array($url, self::END_BLOCK_NOT_FOUND);
 						}
 					}
 					else
 					{
-						trigger_error("Le début du bloc n'a pas été trouvé");
+						$errors = array($url, self::START_BLOCK_NOT_FOUND);
 					}
 				}
 				else
 				{
-					trigger_error("L'url ne retourne aucune donnée");
+					$errors[] = array($url, self::NO_CONTENT);
 				} 
-			}
 
+				if ( $results )
+					$this->results = $results;
+					return count($results);
+			}
+			else
+			{
+				$errors[] = self::NO_KEYWORDS;
+			}
+			
 			return 0;
 		}
 
@@ -73,8 +81,8 @@
 			$result = array();
 
 			if ( preg_match('#<img src="([^"]+)" class="([^"]+)" title="([^"]*)" alt="([^"]+)"#', $input, $result) ) 
-			{				
-				$tmp = getimagesize(str_replace(' ', '%20', $result[1]));
+			{	
+				$tmp = getimagesize(urlencode( $result[1]));
 				$url = str_replace('/th_', '/', $result[1]);
 
 				$data['image']['thumb_url'] = $result[1];
