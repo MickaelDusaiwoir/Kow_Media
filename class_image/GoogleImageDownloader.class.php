@@ -20,10 +20,11 @@
 			{	
 				if ( $this->numPage )
 				{
+					$totalCount = 0;
+					
 					for ( $j = 1; $j <= $this->numPage ; $j++ ) 
 					{ 
-						$results = array();
-						$totalCount = 0;
+						$results = array();						
 						
 						$url = $this->buildURL();
 						$url .= '&start='.($j * 20);

@@ -61,7 +61,7 @@
 			{
 				$errors[] = self::NO_KEYWORDS;
 			}
-			
+
 			return 0;
 		}
 
@@ -82,7 +82,7 @@
 
 			if ( preg_match('#<img src="([^"]+)" class="([^"]+)" title="([^"]*)" alt="([^"]+)"#', $input, $result) ) 
 			{	
-				$tmp = getimagesize(urlencode( $result[1]));
+				$tmp = getimagesize(str_replace(' ', '%20', $result[1]));
 				$url = str_replace('/th_', '/', $result[1]);
 
 				$data['image']['thumb_url'] = $result[1];

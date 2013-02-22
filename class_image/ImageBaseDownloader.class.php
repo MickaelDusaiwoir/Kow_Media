@@ -17,10 +17,11 @@
 			{	
 				if ( $this->numPage )
 				{
+					$totalCount = 0;
+
 					for ( $j = 1; $j <= $this->numPage ; $j++ ) 
 					{ 
-						$results = array();
-						$totalCount = 0;
+						$results = array();						
 
 						$url = $this->buildURL();
 						$url .= '&page='.$j;
@@ -47,18 +48,12 @@
 								}
 								else
 								{
-									if ( $j < 2 )
-										$errors[] = array($url, self::END_BLOCK_NOT_FOUND);
-									else
-										return $totalCount;
+									$errors[] = array($url, self::END_BLOCK_NOT_FOUND);
 								}
 							}
 							else
 							{
-								if ( $j < 2 )
-									$errors[] = array($url, self::START_BLOCK_NOT_FOUND);
-								else
-										return $totalCount;
+								$errors[] = array($url, self::START_BLOCK_NOT_FOUND);
 							}
 						}
 						else

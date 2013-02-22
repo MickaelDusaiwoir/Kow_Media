@@ -22,55 +22,47 @@
 
 					foreach ($languages as $lang) 
 					{						
-						for ( $j = 1; $j <= $this->numPage ; $j++ ) 
+						$results = array();
+
+						$this->lang = $lang;
+						$url = $this->buildURL();
+
+						if ( $html = $this->getContent($url) )
 						{ 
-							$results = array();
-
-							$this->lang = $lang;
-							$url = $this->buildURL();
-							$url .= '#pg:'.$j;
-
-							if ( $html = $this->getContent($url) )
+							if( ( $start = strpos($html, '<div id="dvResults"') ) !== false )
 							{ 
-								if( ( $start = strpos($html, '<div id="dvResults"') ) !== false )
+								if ( ( $end = strpos($html, '<span class="cdSearchBottomPaging"', $start) ) !== false ) 
 								{ 
-									if ( ( $end = strpos($html, '<span class="cdSearchBottomPaging"', $start) ) !== false ) 
-									{ 
-										if ( $block = substr($html, $start, $end - $start) ) 
-										{	
-											$items = explode('</a>', $block);
-											$count = count($items) -1 ;
+									if ( $block = substr($html, $start, $end - $start) ) 
+									{	
+										$items = explode('</a>', $block);
+										$count = count($items) -1 ;
 
-											for ( $i = 0; $i < $count; $i++ ) 
-											{
-												$results[] = $this->getDataItem($items[$i]);
-											}
+										for ( $i = 0; $i < $count; $i++ ) 
+										{
+											$results[] = $this->getDataItem($items[$i]);
 										}
-									}
-									else
-									{
-										$errors[] = array($url, self::END_BLOCK_NOT_FOUND);
 									}
 								}
 								else
 								{
-									$errors[] = array($url,self::START_BLOCK_NOT_FOUND);
+									$errors[] = array($url, self::END_BLOCK_NOT_FOUND);
 								}
-							}	
+							}
 							else
 							{
-								$errors[] = array($url,self::NO_CONTENT);
-							}	
+								$errors[] = array($url,self::START_BLOCK_NOT_FOUND);
+							}
+						}	
+						else
+						{
+							$errors[] = array($url,self::NO_CONTENT);
+						}	
 
-							if ( $results )
-							{
-								$totalCount += count($results);
-								$this->results = array_merge($this->results, $results);
-							}
-							else
-							{
-								break;
-							}
+						if ( $results )
+						{
+							$totalCount += count($results);
+							$this->results = array_merge($this->results, $results);
 						}
 					}
 
