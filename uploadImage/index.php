@@ -47,6 +47,7 @@
 						$error ++;
 					break;
 				}				
+				
 				if($error == 0) {
 					$thumbnail = imagecreatetruecolor($taille, $taille); 
 					 

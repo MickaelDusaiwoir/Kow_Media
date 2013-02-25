@@ -76,12 +76,12 @@
 				}
 				else
 				{
-					$errors[] = self::NO_PAGE_NUMBER;
+					$errors[] = array($this->numPage, self::NO_PAGE_NUMBER);
 				}
 			}
 			else
 			{
-				$errors[] = self::NO_KEYWORDS;
+				$errors[] = array($this->keywords, self::NO_KEYWORDS);
 			}
 
 			return 0;
@@ -89,33 +89,32 @@
 
 		private function getDataItem ($input) 
 		{	
-			$data = array(
-				'title' => null, 
-				'image' => array(
-					'thumb_url' => null,
-					'url' => null, // Grande image
-					'alt' => null,
-					'width' => 0,
-					'height' => 0
-				)
-			);
-
 			$startTitle = explode('<p>', $input);
 			$tmp = explode('</p>', $startTitle[1] );
-			$data['title'] = strip_tags($tmp[0] );
 			$result = array();
 
 			if ( preg_match('#<img class="([^"]+)" src="([^"]+)" alt="([^"]+)" width="([^"]+)" height="([^"]+)"#', $input, $result) ) 
 			{	
 				$urlImage = explode('var/thumbs/', $result[2]);
+				$headers = get_headers('http://'.$this->domain.'/var/resizes/'.$urlImage[1], 1);
 
-				$data['image']['thumb_url'] = 'http://'.$this->domain.$result[2];
-				$data['image']['url'] = 'http://'.$this->domain.'/var/resizes/'.$urlImage[1];
-				$data['image']['alt'] = $result[3];
-				$data['image']['width'] = $result[4];
-				$data['image']['height'] = $result[5];
+				if ( strpos($headers[0], '200') !== false  ) 
+				{
+					$data = array(
+						'title' => strip_tags($tmp[0]), 
+						'image' => array(
+							'thumb_url' => 'http://'.$this->domain.$result[2],
+							'url' 		=> 'http://'.$this->domain.'/var/resizes/'.$urlImage[1], // Grande image
+							'alt' 		=> $result[3],
+							'width' 	=> $result[4],
+							'height' 	=> $result[5]
+						)
+					);
+
+					return $data;
+				}				
 			}
 
-			return $data;
+			return $data = array();
 		}
 	}

@@ -59,7 +59,7 @@
 			}
 			else
 			{
-				$errors[] = self::NO_KEYWORDS;
+				$errors[] = array($this->keywords, self::NO_KEYWORDS);
 			}
 
 			return 0;
@@ -82,18 +82,32 @@
 
 			if ( preg_match('#<img src="([^"]+)" class="([^"]+)" title="([^"]*)" alt="([^"]+)"#', $input, $result) ) 
 			{	
-				$tmp = getimagesize(str_replace(' ', '%20', $result[1]));
+				
 				$url = str_replace('/th_', '/', $result[1]);
+				$headers = get_headers($url, 1);
 
-				$data['image']['thumb_url'] = $result[1];
-				$data['image']['url'] 		= $url;
-				$data['image']['width'] 	= $tmp[0];
-				$data['image']['height'] 	= $tmp[1];
-				$data['image']['alt'] 		= $result[4];
-				$data['title'] 				= $result[3];
+				if ( strpos($headers[0], '200') !== false )
+				{
+					$tmp = str_replace(' ', '%20', $result[1]);
+					$headers = get_headers($tmp, 1);
+
+					$data['image']['thumb_url'] = $result[1];
+					$data['image']['url'] 		= $url;
+					$data['image']['alt'] 		= $result[4];
+					$data['title'] 				= $result[3];
+
+					if ( strpos($headers[0], '200') !== false )
+					{
+						$tmp = getimagesize(str_replace(' ', '%20', $result[1]));
+						$data['image']['width'] 	= $tmp[0];
+						$data['image']['height'] 	= $tmp[1];
+					}
+
+					return $data;
+				}			
 			}
 
-			return $data;
+			return $data = array();
 		}
 
 	}

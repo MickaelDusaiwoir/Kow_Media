@@ -70,12 +70,12 @@
 				}
 				else
 				{
-					$errors[] = self::NO_PAGE_NUMBER;
+					$errors[] = array($this->numPage, self::NO_PAGE_NUMBER);
 				}
 			}
 			else
 			{
-				$errors[] = self::NO_KEYWORDS;	
+				$errors[] = array($this->keywords, self::NO_KEYWORDS);	
 			}
 
 			return 0;
@@ -97,22 +97,28 @@
 					// ex: /en-us/images/bull-with-mountains-and-sun-MP900446569.aspx
 					// http://officeimg.vo.msecnd.net/en-us/images/bull-with-mountains-and-sun-MP900446569.jpg
 					$url = 'http://officeimg.vo.msecnd.net'.str_replace('.aspx', '.jpg', $result[3]);
-					$result = array();
 
-					if ( preg_match('#<img class="([^"]+)" title="" alt="([^"]+)" src="([^"]+)"#', $input, $result) ) 
-					{ 
-						$tmp = getimagesize('http:'.$result[3]);
+					$headers = get_headers($url, 1);
 
-						return array(
-							'title' => $result[2], 
-							'image' => array(
-								'thumb_url' => 'http:'.$result[3],
-								'url' => $url, // Grande image
-								'alt' => $result[2],
-								'width' => $tmp[0],
-								'height' => $tmp[1]
-							)
-						);
+					if ( strpos($headers[0], '200') !== false )
+					{
+						$result = array();
+
+						if ( preg_match('#<img class="([^"]+)" title="" alt="([^"]+)" src="([^"]+)"#', $input, $result) ) 
+						{ 
+							$tmp = getimagesize('http:'.$result[3]);
+
+							return array(
+								'title' => $result[2], 
+								'image' => array(
+									'thumb_url' => 'http:'.$result[3],
+									'url' => $url, // Grande image
+									'alt' => $result[2],
+									'width' => $tmp[0],
+									'height' => $tmp[1]
+								)
+							);
+						}						
 					}
 				}
 			}			

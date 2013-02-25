@@ -73,12 +73,12 @@
 				}
 				else
 				{
-					$errors[] = self::NO_PAGE_NUMBER;
+					$errors[] = array($this->numPage, self::NO_PAGE_NUMBER);
 				}
 			}
 			else
 			{
-				$errors[] = self::NO_KEYWORDS;
+				$errors[] = array($this->keywords, self::NO_KEYWORDS);
 			}
 			
 			return 0;
@@ -86,38 +86,37 @@
 
 		private function getDataItem ($input) 
 		{	
-			$data = array(
-				'title' => null, 
-				'image' => array(
-					'thumb_url' => null,
-					'url' => null, // Grande image
-					'alt' => null,
-					'width' => 0,
-					'height' => 0
-				)
-			);
-
 			$startTitle = explode('<p class="ti">', $input);
 			$tmp = explode('</p>', $startTitle[1] );
-			$data['title'] = strip_tags($tmp[0] );
 
 			$result = array();
-
+		
 			if ( preg_match('#<IMG src="([^"]+)" width="([^"]+)" height="([^"]+)" alt="([^"]+)"#', $input, $result) ) 
 			{
 				if( strpos($result[1], 'http://') === false )
-					$data['image']['thumb_url'] = 'http://a.rgbimg.com'.$result[1];
+					$thumb_url = 'http://a.rgbimg.com'.$result[1];
 				else
-					$data['image']['thumb_url'] = $result[1];
+					$thumb_url = $result[1];
 
-				$data['image']['width'] = $result[2];
-				$data['image']['height'] = $result[3];
-				$data['image']['alt'] = $result[4];
+				$url = str_replace('100', '300', $thumb_url );
+
+				$headers = get_headers($url, 1);
+
+				if ( strpos($headers[0], '200') !== false )
+				{
+					return 	$data = array(
+						'title' => strip_tags($tmp[0] ), 
+						'image' => array(
+							'thumb_url' => $thumb_url,
+							'url' 		=> $url, // Grande image
+							'alt' 		=> $result[4],
+							'width' 	=> $result[2],
+							'height' 	=> $result[3]
+						)
+					);
+				}
 			}
 
-			$url = str_replace('100', '300', $data['image']['thumb_url'] );
-			$data['image']['url'] = $url;
-
-			return $data;
+			return $data = array();
 		}
 	}

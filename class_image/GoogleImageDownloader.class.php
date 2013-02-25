@@ -79,12 +79,12 @@
 				}
 				else
 				{
-					$errors[] = self::NO_PAGE_NUMBER;
+					$errors[] = array($this->numPage, self::NO_PAGE_NUMBER);
 				}
 			}
 			else
 			{
-				$errors[] = self::NO_KEYWORDS;
+				$errors[] = array($this->keywords, self::NO_KEYWORDS);
 			}
 
 			return 0;
@@ -92,30 +92,32 @@
 
 		private function getDataItem ($input) 
 		{	
-			$data = array(
-				'title' => null, 
-				'image' => array(
-					'thumb_url' => null,
-					'url' => null, // Grande image
-					'alt' => null,
-					'width' => 0,
-					'height' => 0
-				)
-			);
 			$result = array();
 
-			if ( preg_match('#<img height="([^"]+)" width="([^"]+)" src="([^"]+)"#', $input, $result) ) 
-			{
-				$data['image']['thumb_url'] = $result[3];
-				$data['image']['width'] = $result[2];
-				$data['image']['height'] = $result[1];
+			if ( preg_match('#/imgres\?imgurl=([^&]+)&amp;#', $input, $result) )	
+			{			
+				$headers = get_headers($result[1], 1);
+
+				if ( strpos($headers[0], '200') !== false  )
+				{
+					$results = array();
+
+					if ( preg_match('#<img height="([^"]+)" width="([^"]+)" src="([^"]+)"#', $input, $results) ) 
+					{
+						return $data = array(
+							'title' => null, 
+							'image' => array(
+								'thumb_url' => $results[3],
+								'url' 		=> $result[1], // Grande image
+								'alt' 		=> null,
+								'width' 	=> $results[2],
+								'height' 	=> $results[1]
+							)
+						);
+					}
+				}
 			}
 
-			$result = array();
-
-			if ( preg_match('#/imgres\?imgurl=([^&]+)&amp;#', $input, $result) )				
-				$data['image']['url'] = $result[1];
-
-			return $data;
+			return $data = array();
 		}
 	}
