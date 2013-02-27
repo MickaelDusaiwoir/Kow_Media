@@ -2,9 +2,28 @@
 	
 	require_once('GenericImagesDownloader.class.php');
 	
+	/**
+	* @file GoogleImageDownloader.class.php
+	* @author M. D. (mikanono01@hotmail.com)
+	* @version 1 (27/02/2013)
+	* @brief GoogleImageDownloader class file.  */
+
+	/**
+	* @class GoogleImageDownloader
+	* @author M. D. (mikanono01@hotmail.com)
+	* @version 1 (27/02/2013)
+	* @brief Cette classe permet de télécharger les images des résultats de "Google Image". 
+	*/	
 	class GoogleImageDownloader extends GenericImagesDownloader
 	{
+		// Search parameters
 		protected $numPage = 0;
+		protected $imgPerPage = 20;
+
+		/** 
+		* @brief Le constructeur.
+		* @param $keywords Les mots clés entrés par l'utilisateur 
+		*/
 
 		function __construct ( $keywords = null ) 
 		{ 
@@ -13,22 +32,35 @@
 				$this->setKeywords( $keywords );
 		}
 
+
+		/** 
+		* @brief Débute une recherche sur google image.
+		* @param $errors Un tableau servant a affiché les possibles erreurs.
+		* @return Un nombre entier pour le nombre d'image trouvée ou false en cas de problème.
+		*/
 		public function search (array & $errors = array())
 		{	
-
+			// Vérifie si on a des mots clés
 			if ( $this->keywords ) 
 			{	
-				if ( $this->numPage )
+				// Vérifier si on a un nombre de résultat souhaité
+				if ( $this->nbResult )
 				{
+					// Calcule le nombre de pages dont on aura besoin afin d'obtenir le nombre de résultat.
+					$this->numPage = ceil($this->nbResult / $this->imgPerPage);
 					$totalCount = 0;
 					
+					// Fait autant de tour de boucle qu'il y a de nombre de pages
 					for ( $j = 1; $j <= $this->numPage ; $j++ ) 
 					{ 
 						$results = array();						
 						
+						// Création de l'URL et ajout du numéro de page à analyser 
 						$url = $this->buildURL();
 						$url .= '&start='.($j * 20);
 
+						// récupération du contenu de la page avant d'extraits le bloc ciblé
+						// Parcour de chaque item afin de reupéré les images
 						if( $html = $this->getContent($url) )
 						{
 							if( ( $start = strpos($html, '<div id="ires"') ) !== false )
@@ -79,7 +111,7 @@
 				}
 				else
 				{
-					$errors[] = array($this->numPage, self::NO_PAGE_NUMBER);
+					$errors[] = array($this->numPage, self::NO_RESULTAT_NUMBER);
 				}
 			}
 			else
@@ -92,6 +124,9 @@
 
 		private function getDataItem ($input) 
 		{	
+			// Recherche des chaines de caractère correspondantes aux expressions régulières.
+			// Retourne un tableau soit vide soit rempli celons le résultat. 
+			
 			$result = array();
 
 			if ( preg_match('#/imgres\?imgurl=([^&]+)&amp;#', $input, $result) )	

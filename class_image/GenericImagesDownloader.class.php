@@ -1,14 +1,28 @@
 <?php
 
+	/**
+	* @file GenericImagesDownloader.class.php
+	* @author M. D. (mikanono01@hotmail.com)
+	* @version 1 (27/02/2013)
+	* @brief GenericImagesDownloader class file. 
+	* @brief Classe générique à toute les autres classes
+	*/
 	abstract class GenericImagesDownloader 
 	{
+		/** @brief Erreur aucun mot clé. */
 		const NO_KEYWORDS 			= 1;
-		const NO_PAGE_NUMBER 		= 2;
+		/** @brief Erreur aucun nombre de résultat maximum introduit. */
+		const NO_RESULTAT_NUMBER 	= 2;
+		/** @brief Erreur aucun contenu trouver. */
 		const NO_CONTENT 			= 3;
+		/** @brief Erreur début du bloc non trouver. */
 		const START_BLOCK_NOT_FOUND = 4;
+		/** @brief Erreur fin du bloc non trouver. */
 		const END_BLOCK_NOT_FOUND   = 5;
+		/** @brief Erreur pas de donnée retournée par la regex. */
 		const INVALID_REGEX			= 6;
 
+		// Search parameters
 		protected $results 	= array();
 		protected $domain 	= null;
 		protected $path 	= null;
@@ -18,7 +32,14 @@
 		protected $numPage 	= 1;
 		protected $lang 	= null;
 		protected $curl 	= null;
+		protected $nbResult = 20;
 
+		/** 
+		* @brief Le constructeur.
+		* @param $domaine URL du site 
+		* @param $path Chemin relatif permettant la recherche
+		* @details Initialisation de curl 
+		*/
 		public function __construct ($domain, $path) 
 		{
 			if ( $domain )
@@ -49,12 +70,16 @@
 
 		abstract public function search (array & $errors = array()) ;
 
+		/** 
+		* @brief Retourne le tableau d'images.
+		* @return Un tableau associatif structuré de cette manière : array("thumb", "width", "height", "url")
+		*/
 		public function getResults () 
 		{
 			return $this->results;
 		}
 
-		public function setKeywords ($keywords) 
+		protected function setKeywords ($keywords) 
 		{
 			if ( $keywords ) 
 			{
@@ -82,15 +107,22 @@
 			return null;
 		}
 
-		public function setPagination ( $numPage )
+		/** 
+		* @brief Prépare la pagination.
+		* @param $nbResult Nombre de résultat a afficher.
+		*/
+		public function setPagination ( $nbResult )
 		{
-			if ( $numPage > 0)
-				$this->numPage = $numPage;
+			if ( $nbResult > 0)
+				$this->nbResult = $nbResult;
 		}
 
+		/** 
+		* @brief Détruit la classe.
+		*/
 		public function __destruct()
 		{
-				curl_close($this->curl);
+			curl_close($this->curl);
 		}
 	}
 	

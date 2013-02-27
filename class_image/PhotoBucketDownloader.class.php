@@ -2,6 +2,18 @@
 
 	require_once('GenericImagesDownloader.class.php');
 
+	/**
+	* @file PhotoBucketDownloader.class.php
+	* @author M. D. (mikanono01@hotmail.com)
+	* @version 1 (27/02/2013)
+	* @brief PhotoBucketDownloader class file.  */
+
+	/**
+	* @class PhotoBucketDownloader
+	* @author M. D. (mikanono01@hotmail.com)
+	* @version 1 (27/02/2013)
+	* @brief Cette classe permet de télécharger les images des résultats de "photobucket.com". 
+	*/	
 	class PhotoBucketDownloader extends GenericImagesDownloader
 	{
 		public function __construct ($keywords = null) 
@@ -11,13 +23,22 @@
 				$this->setKeywords($keywords);
 		}
 
+		/** 
+		* @brief Débute une recherche sur photoBucket.
+		* @param $errors Un tableau servant a affiché les possibles erreurs.
+		* @return Un nombre entier pour le nombre d'image trouvée ou false en cas de problème.
+		*/
 		public function search (array & $errors = array()) 
 		{
+			// Vérifie si on a des mots clés
 			if ( $this->keywords ) 
 			{	 
 				$results = array();
+				// Création de l'URL et ajout du numéro de page à analyser 
 				$url = $this->buildURL().'/';
 
+				// récupération du contenu de la page avant d'extraits le bloc ciblé
+				// Parcour de chaque item afin de reupéré les images
 				if ( $html = $this->getContent($url) )
 				{
 					if( ( $start = strpos($html, '<div class="tresults"') ) !== false )
@@ -79,6 +100,9 @@
 			);
 
 			$result = array();
+
+			// Recherche des chaines de caractère correspondantes aux expressions régulières.
+			// Retourne un tableau soit vide soit rempli celons le résultat.
 
 			if ( preg_match('#<img src="([^"]+)" class="([^"]+)" title="([^"]*)" alt="([^"]+)"#', $input, $result) ) 
 			{	

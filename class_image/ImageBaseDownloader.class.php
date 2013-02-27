@@ -2,8 +2,22 @@
 	
 	require_once('GenericImagesDownloader.class.php');
 
+	/**
+	* @file ImagebaseDownloader.class.php
+	* @author M. D. (mikanono01@hotmail.com)
+	* @version 1 (27/02/2013)
+	* @brief ImagebaseDownloader class file.  */
+
+	/**
+	* @class ImagebaseDownloader
+	* @author M. D. (mikanono01@hotmail.com)
+	* @version 1 (27/02/2013)
+	* @brief Cette classe permet de télécharger les images des résultats de "imagebase.net". 
+	*/
 	class ImagebaseDownloader extends GenericImagesDownloader
 	{
+		protected $imgPerPage = 18;
+
 		public function __construct ($keywords = null) 
 		{ 
 			parent::__construct('www.imagebase.net','/search?q=');
@@ -11,21 +25,35 @@
 				$this->setKeywords($keywords);
 		}
 
+		/** 
+		* @brief Débute une recherche sur photoBucket.
+		* @param $errors Un tableau servant a affiché les possibles erreurs.
+		* @return Un nombre entier pour le nombre d'image trouvée ou false en cas de problème.
+		*/
 		public function search (array & $errors = array())
 		{	
+			// Vérifie si on a des mots clés
 			if ( $this->keywords ) 
 			{	
-				if ( $this->numPage )
+				// Vérifier si on a un nombre de résultat souhaité
+				if ( $this->nbResult )
 				{
+					// Calcule le nombre de pages dont on aura besoin afin d'obtenir le nombre de résultat.
+					$this->numPage = ceil($this->nbResult / $this->imgPerPage);
+
 					$totalCount = 0;
 
-					for ( $j = 1; $j <= $this->numPage ; $j++ ) 
+					// Fait autant de tour de boucle qu'il y a de nombre de pages
+					for ( $j = 1; $j <= $this->numPage; $j++ ) 
 					{ 
 						$results = array();						
 
+						// Création de l'URL et ajout du numéro de page à analyser 
 						$url = $this->buildURL();
 						$url .= '&page='.$j;
 
+						// récupération du contenu de la page avant d'extraits le bloc ciblé
+						// Parcour de chaque item afin de reupéré les images
 						if ( $html = $this->getContent($url) )
 						{
 							if( ( $start = strpos($html, '<ul id="g-album-grid"') ) !== false )
@@ -76,7 +104,7 @@
 				}
 				else
 				{
-					$errors[] = array($this->numPage, self::NO_PAGE_NUMBER);
+					$errors[] = array($this->numPage, self::NO_RESULTAT_NUMBER);
 				}
 			}
 			else
@@ -89,6 +117,9 @@
 
 		private function getDataItem ($input) 
 		{	
+			// Recherche des chaines de caractère correspondantes aux expressions régulières.
+			// Retourne un tableau soit vide soit rempli celons le résultat. 
+			
 			$startTitle = explode('<p>', $input);
 			$tmp = explode('</p>', $startTitle[1] );
 			$result = array();
