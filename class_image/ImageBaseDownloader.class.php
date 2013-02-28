@@ -16,8 +16,14 @@
 	*/
 	class ImagebaseDownloader extends GenericImagesDownloader
 	{
+		/** @brief $imgPerPage Nombre d'image par page de recherche sur le site imagebase.net, sert a la création de la pagination */
 		protected $imgPerPage = 18;
 
+		/** 
+		* @brief Le constructeur.
+		* @param $keywords Chaine de caractères comportant les mots clés.
+		* @details Appel de la fonction setkeywords s'il y a des mots clés. 
+		*/
 		public function __construct ($keywords = null) 
 		{ 
 			parent::__construct('www.imagebase.net','/search?q=');

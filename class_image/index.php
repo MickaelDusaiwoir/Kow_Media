@@ -170,7 +170,7 @@
 		<link rel="stylesheet" type="text/css" href="./css/style.css" media="screen" />
 		<meta name="viewport" content="width=device-width">
 	</head>
-	<body>
+	<BODY>
 		<form action="#" method="post">
 			<label>Rechercher sur</label>
 			<select name="site">
@@ -205,5 +205,5 @@
 		?>
 		<script src="./js/jquery-1.9.1.min.js"></script>
 		<script src="./js/script.js"></script>
-	</body>
+	</BODY>
 </html>

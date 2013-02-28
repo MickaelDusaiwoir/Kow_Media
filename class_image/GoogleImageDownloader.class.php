@@ -17,14 +17,16 @@
 	class GoogleImageDownloader extends GenericImagesDownloader
 	{
 		// Search parameters
+		/** @brief $numPage Numéro de la page a recherché */
 		protected $numPage = 0;
+		/** @brief $imgPerPage Nombre d'image par page de recherche sur le site imagebase.net, sert a la création de la pagination */
 		protected $imgPerPage = 20;
 
 		/** 
 		* @brief Le constructeur.
-		* @param $keywords Les mots clés entrés par l'utilisateur 
+		* @param $keywords Chaine de caractères comportant les mots clés.
+		* @details Appel de la fonction setkeywords s'il y a des mots clés. 
 		*/
-
 		function __construct ( $keywords = null ) 
 		{ 
 			parent::__construct('www.google.com','/search?tbm=isch&q=');

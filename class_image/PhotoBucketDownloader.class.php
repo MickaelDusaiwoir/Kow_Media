@@ -16,6 +16,11 @@
 	*/	
 	class PhotoBucketDownloader extends GenericImagesDownloader
 	{
+		/** 
+		* @brief Le constructeur.
+		* @param $keywords Chaine de caractères comportant les mots clés.
+		* @details Appel de la fonction setkeywords s'il y a des mots clés. 
+		*/
 		public function __construct ($keywords = null) 
 		{ 
 			parent::__construct('http://ww6.photobucket.com','/images/');

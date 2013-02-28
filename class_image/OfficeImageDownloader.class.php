@@ -16,6 +16,11 @@
 	*/	
 	class OfficeImageDownloader extends GenericImagesDownloader
 	{
+		/** 
+		* @brief Le constructeur.
+		* @param $keywords Chaine de caractères comportant les mots clés.
+		* @details Appel de la fonction setkeywords s'il y a des mots clés. 
+		*/
 		public function __construct ($keywords = null) 
 		{ 
 			parent::__construct('www.office.microsoft.com','/images/results.aspx?qu=');
@@ -104,6 +109,9 @@
 			return 0;
 		}
 
+		/** 
+		* @brief Fonction permettant la création de l'URL.
+		*/
 		protected function buildURL ()
 		{
 			return $this->domain.'/'.$this->lang.$this->path.$this->keywords.'&ex=2';
