@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Remplissage automatique</title>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+	</head>
+	<body>
+		<form method="post" action="js/script.js">
+
+			<label for="nom">Nom</label>
+			<input id="nom" name="nom" type="text" placeholder="Rambo" />
+
+			<label for="prenom">Pr&eacute;nom</label>
+			<input id="prenom" name="prenom" type="text" placeholder="John" />
+
+			<label>Date de naissance</label>
+			<select id="jour" name="jour"></select>
+			<select id="mois" name="mois"></select>
+			<select id="annee" name="annee"></select>
+
+			<label for="email">E-mail</label>
+			<input id="email" name="email" type="email" placeholder="john.rambo@exemple.com">
+
+			<label for="add">Adresse</label>
+			<input id="add" name="add" type="text" placeholder="Rue du champ de mine n°1" />
+
+			<label for="cp">Code postal</label>
+			<input id="cp" name="cp" type="text" placeholder="4000" />
+
+			<label for="ville">Ville</label>
+			<input id="ville" name="ville" type="text" placeholder="Li&egrave;ge" />
+		</form>
+
+		<a href="index.html/?nom=%nom&prenom=%prenom&jour=%jour&mois=%mois&annee=%annee&email=%email&adresse=%adresse&code_postal=%code_postal&ville=%ville">Cliquez ICI pour jouer à ce concours</a>
+
+		<script src="./js/jquery-1.9.1.min.js"></script>
+		<script src="./js/script.js"></script>
+	</body>
+</html>

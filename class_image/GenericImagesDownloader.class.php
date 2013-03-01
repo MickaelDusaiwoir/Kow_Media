@@ -12,7 +12,7 @@
 	* @class GenericImagesDownloader
 	* @author M. D. (mikanono01@hotmail.com)
 	* @version 1 (27/02/2013)
-	* @brief Cette classe est la classe générique à toutes les auutres.
+	* @brief Cette classe est la classe générique à toutes les autres.
 	*/	
 	abstract class GenericImagesDownloader 
 	{
