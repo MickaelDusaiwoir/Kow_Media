@@ -4,8 +4,8 @@
 
 // -- globals
 
-    var userData = {'nom' : '', 'prenom' : '', 'jour': '', 'mois' : '', 'annee' : '', 'email' : '', 'adresse' : '', 'code_postal' : '', 'ville' : '' };
-
+    var userData = {'nom' : '', 'prenom' : '', 'jour': '', 'mois' : '', 'annee' : '', 'email' : '', 'adresse' : '', 'code_postal' : '', 'ville' : '' },
+        key = new Array('nom' , 'prenom', 'jour', 'mois', 'annee', 'email', 'adresse', 'code_postal', 'ville');
 // -- methods
 
     var setSelect = function () {
@@ -63,8 +63,7 @@
 
     var putData = function ( url ) {
 
-        var key = new Array('nom' , 'prenom', 'jour', 'mois', 'annee', 'email', 'adresse', 'code_postal', 'ville'),
-            data = {'nom' : '', 'prenom' : '', 'jour': '', 'mois' : '', 'annee' : '', 'email' : '', 'adresse' : '', 'code_postal' : '', 'ville' : '' },
+        var data = {'nom' : '', 'prenom' : '', 'jour': '', 'mois' : '', 'annee' : '', 'email' : '', 'adresse' : '', 'code_postal' : '', 'ville' : '' },
             cookieArray = {};
 
         if ( document.cookie )
@@ -102,7 +101,7 @@
         console.log(document.cookie);
 
         createCookie(data);
-        createUrl(data, url, key);
+        createUrl(data, url);
 
 /*                 
 
@@ -128,11 +127,11 @@ document.cookie = cookieName+ "=" + JSON.stringify(cookieArray) + ";expires=" + 
         document.cookie = cookieName + "=" + JSON.stringify(dataToString) + ";expires=" + expires.toGMTString();
     }
 
-    var createUrl = function (data, url, key)
+    var createUrl = function (data, url)
     {
         for (var i = 0; i < key.length; i++) 
         {
-            var tmp = '%' + data[key[i]];
+            var tmp = '%' + key[i];
             url = url.replace(tmp, data[key[i]]);
         }
 
@@ -140,12 +139,29 @@ document.cookie = cookieName+ "=" + JSON.stringify(cookieArray) + ";expires=" + 
     }
 
 
+    var setform = function () {
+
+        var tmp = document.cookie.split('=');
+        cookieArray = JSON.parse(tmp[1]); 
+
+        for ( var i = 0; i < key.length; i++ )
+        {
+            var tmp = '#'+ key[i];
+            $(tmp).attr('value', cookieArray[key[i]]);
+        } 
+    }
+
 
     // Fonction s'exécutant dès le chargement de la page
 
 	$( function () {
 
 		// -- onload routines
+
+        if ( document.cookie )
+        {
+            setform();       
+        }
 
         setSelect();
 
