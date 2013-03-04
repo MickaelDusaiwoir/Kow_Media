@@ -3,9 +3,16 @@
 	<head>
 		<title>Remplissage automatique</title>
 		<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+		<link rel=​"stylesheet" href=​"./css/screen.css">​
 	</head>
 	<body>
-		<form method="post" action="js/script.js">
+		<form method="post" action="#">
+
+			<label for="civilite">Civilité</label>
+			<select id="civilite" name="civilite">
+				<option value="1">Homme</option>
+				<option value="2">Femme</option>
+			</select> 
 
 			<label for="nom">Nom</label>
 			<input id="nom" name="nom" type="text" placeholder="Rambo" />
@@ -29,11 +36,15 @@
 
 			<label for="ville">Ville</label>
 			<input id="ville" name="ville" type="text" placeholder="Li&egrave;ge" />
+
+			<input type="submit" value="Envoyer" name="envoyer" />
 		</form>
 
-		<a href="index.html/?nom=%nom&prenom=%prenom&jour=%jour&mois=%mois&annee=%annee&email=%email&adresse=%adresse&code_postal=%code_postal&ville=%ville">Cliquez ICI pour jouer à ce concours</a>
+		<a href="index.html/?nom=%nom&prenom=%prenom&jour=%jour&mois=%mois&annee=%annee&email=%email&adresse=%adresse&code_postal=%code_postal&ville=%ville&civilite=%sexe(H|F)">Cliquez ICI pour jouer à ce concours</a>
+
+		<a href="http://vacancesadeux.com/?a_aid=PU83&a_bid=ed333e95&email=%email&nom=%nom&prenom=%prenom&zipcode=%code_postal&day_birthdate=%jour&month_birthdate=%mois&year_birthdate=%annee&civilite=%sexe(H|F)">Concours vacances à deux </a>
 
 		<script src="./js/jquery-1.9.1.min.js"></script>
-		<script src="./js/script.js"></script>
+		<script src="./js/script.js"></script>	
 	</body>
 </html>

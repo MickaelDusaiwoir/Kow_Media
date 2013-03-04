@@ -1,0 +1,11 @@
+body{
+	font: normal 90%/1.5 Sans-Serif;
+	width: 960px;
+}
+
+form {
+	display: block;
+	margin: 0 auto;
+	width: 960px;
+}
+
