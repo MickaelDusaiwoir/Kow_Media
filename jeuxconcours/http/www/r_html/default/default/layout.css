@@ -1,0 +1,70 @@
+div#document
+{
+	margin:16px;
+}
+
+div#document_left
+{
+	width:200px;
+	float:left;
+	overflow:hidden
+}
+
+div#document_logo
+{
+	width:200px;
+	height:80px;
+	overflow:hidden
+}
+
+div#document_menu
+{
+	width:200px;
+	overflow:hidden
+}
+
+div#document_right
+{
+	width:80%;
+	float:left;
+	overflow:hidden
+}
+
+div#document_header
+{
+	height:80px;
+	overflow:hidden
+}
+
+	div#header_panel
+	{
+		margin:8px;
+		background-color:#333;
+		border-top:1px solid #FFF;
+		border-left:1px solid #FFF;
+		border-right:1px solid #FFF;
+		border-bottom:2px solid #999;
+	}
+
+	div#header_panel h1
+	{
+		margin:10px;
+		text-align:center;
+		font:32px Arial, Helvetica, sans-serif;
+		color:#FFF;
+	}
+
+div#document_content
+{
+	overflow:hidden
+}
+
+div#document_footer
+{
+	overflow:hidden
+}
+
+p#copyright
+{
+	text-align:center
+}

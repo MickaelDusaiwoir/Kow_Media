@@ -10,8 +10,10 @@
 
 			<label for="civilite">Civilité</label>
 			<select id="civilite" name="civilite">
-				<option value="1">Homme</option>
-				<option value="2">Femme</option>
+				<option value="0">Vous êtes :</option>
+				<option value="man">Homme</option>
+				<option value="woman">Femme</option>
+				<option value="miss">Mademoiselle</option>
 			</select> 
 
 			<label for="nom">Nom</label>
@@ -40,9 +42,13 @@
 			<input type="submit" value="Envoyer" name="envoyer" />
 		</form>
 
-		<a href="index.html/?nom=%nom&prenom=%prenom&jour=%jour&mois=%mois&annee=%annee&email=%email&adresse=%adresse&code_postal=%code_postal&ville=%ville&civilite=%sexe(H|F)">Cliquez ICI pour jouer à ce concours</a>
+		<a href="index.html/?nom=%nom&prenom=%prenom&jour=%jour&mois=%mois&annee=%annee&email=%email&adresse=%adresse&code_postal=%code_postal&ville=%ville&civilite=%sexe(H|F)">Cliquez ICI pour jouer à ce concours</a><br />
 
-		<a href="http://vacancesadeux.com/?a_aid=PU83&a_bid=ed333e95&email=%email&nom=%nom&prenom=%prenom&zipcode=%code_postal&day_birthdate=%jour&month_birthdate=%mois&year_birthdate=%annee&civilite=%sexe(H|F)">Concours vacances à deux </a>
+		<a href="http://vacancesadeux.com/?a_aid=PU83&a_bid=ed333e95&email=%email&nom=%nom&prenom=%prenom&zipcode=%code_postal&day_birthdate=%jour&month_birthdate=%mois&year_birthdate=%annee&civilite=%sexe(H|F)">Concours vacances à deux </a><br />
+
+		<a href="http://www.amenagez-votre-cuisine.com/?a_aid=PU83&a_bid=dc99a2d5&email=%email&nom=%nom&prenom=%prenom&zipcode=%code_postal&day_birthdate=%jour&month_birthdate=%mois&year_birthdate=%annee&civilite=%sexe(H|F)">7000€ à gagner</a><br />
+
+		<a href="http://www.octelio.com/extranet/grazia/decouverte/index.php?p=REAC&nom=%nom&prenom=%prenom&jour=%jour&mois=%mois&annee=%annee&email=%email&adresse1=%adresse&cp=%code_postal&ville=%ville&civilite=%sexe(M.|Mme|Mlle)">Grazia, 6 numéros de l'édition numérique gratuit</a>
 
 		<script src="./js/jquery-1.9.1.min.js"></script>
 		<script src="./js/script.js"></script>	

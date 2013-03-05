@@ -1,0 +1,95 @@
+1276086738__127.0.0.1__1__/index.php->dbaccess::connexion_mysqli()__La base `dbname` n'est pas accessible![END]
+1276086766__127.0.0.1__1__/index.php->dbaccess::connexion_mysqli()__La base `dbname` n'est pas accessible![END]
+1276091001__127.0.0.1__1__/gateway.php->dbaccess::get_row()__Request : SELECT `id`, `username`, `password`, `level`, `suspended` FROM `pwm_users` WHERE `username` = 'crazy' LIMIT 1;
+Response : Table 'jeuxconcours.pwm_users' doesn't exist[END]
+1276091022__127.0.0.1__1__/admin.php->dbaccess::get_result()__Request : SELECT COUNT(1) FROM `sa_advertisers`;
+Response : Table 'jeuxconcours.sa_advertisers' doesn't exist[END]
+1276091022__127.0.0.1__1__/admin.php->dbaccess::get_result()__Request : SELECT COUNT(1) FROM `sa_advertisers_banners`;
+Response : Table 'jeuxconcours.sa_advertisers_banners' doesn't exist[END]
+1276091022__127.0.0.1__1__/admin.php->dbaccess::get_result()__Request : SELECT COUNT(1) FROM `sa_sites`;
+Response : Table 'jeuxconcours.sa_sites' doesn't exist[END]
+1276091022__127.0.0.1__1__/admin.php->dbaccess::get_result()__Request : SELECT COUNT(1) FROM `sa_sites_pools`;
+Response : Table 'jeuxconcours.sa_sites_pools' doesn't exist[END]
+1276091031__127.0.0.1__1__/admin.php->dbaccess::get_result()__Request : SELECT COUNT(1) FROM `sa_advertisers`;
+Response : Table 'jeuxconcours.sa_advertisers' doesn't exist[END]
+1276091031__127.0.0.1__1__/admin.php->dbaccess::get_result()__Request : SELECT COUNT(1) FROM `sa_advertisers_banners`;
+Response : Table 'jeuxconcours.sa_advertisers_banners' doesn't exist[END]
+1276091031__127.0.0.1__1__/admin.php->dbaccess::get_result()__Request : SELECT COUNT(1) FROM `sa_sites`;
+Response : Table 'jeuxconcours.sa_sites' doesn't exist[END]
+1276091031__127.0.0.1__1__/admin.php->dbaccess::get_result()__Request : SELECT COUNT(1) FROM `sa_sites_pools`;
+Response : Table 'jeuxconcours.sa_sites_pools' doesn't exist[END]
+1276091356__127.0.0.1__1__/admin_contests_list.php->dbaccess::get_result()__Request : SELECT COUNT(1) FROM `jc_concours`;
+Response : Table 'jeuxconcours.jc_concours' doesn't exist[END]
+1276091356__127.0.0.1__1__/admin_contests_list.php->dbaccess::get_array()__Request : SELECT  `id` , `position` , `title` , `url` , `url_alt`  FROM `jc_concours` LIMIT 0, 30;
+Response : Table 'jeuxconcours.jc_concours' doesn't exist[END]
+1276093725__127.0.0.1__1__/admin_contests_tools.php->dbaccess::execute()__Request : UPDATE `jc_contests` SET `position` = 0, `title` = 'Jeu concours organisé par Groupolitan', `text` = 'Astuces :
+- La réponse à la question est \"31 minutes\".', `url` = 'http://clk.tradedoubler.com/click?p(193243)loc(85032)g(18812740)', `alt_url` = '' WHERE `id` = 1 LIMIT 1;
+Response : Unknown column 'alt_url' in 'field list'[END]
+1276094646__127.0.0.1__1__/admin_prizes_list.php->dbaccess::get_array()__Request : SELECT  `id` , `position` , `title` , `screenshot_url` , `value`  FROM `jc_contests` LIMIT 0, 30;
+Response : Unknown column 'screenshot_url' in 'field list'[END]
+1276094673__127.0.0.1__1__/admin_prizes_list.php->dbaccess::get_array()__Request : SELECT  `id` , `position` , `title` , `screenshot_url` , `value`  FROM `jc_contests` LIMIT 0, 30;
+Response : Unknown column 'screenshot_url' in 'field list'[END]
+1276094676__127.0.0.1__1__/admin_prizes_list.php->dbaccess::get_array()__Request : SELECT  `id` , `position` , `title` , `screenshot_url` , `value`  FROM `jc_contests` LIMIT 0, 30;
+Response : Unknown column 'screenshot_url' in 'field list'[END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094686__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276094865__127.0.0.1__1__/admin_prizes_list.php__Recherche de la valeur "url_alt" ne se trouvant pas dans le resultat de la requête SQL ![END]
+1276095715__127.0.0.1__1__/admin_prizes_tools.php->dbaccess::get_row()__Request : SELECT `position`, `title`, `sreenshot_url`, `value` FROM `jc_prizes` WHERE `id` = 2 LIMIT 1;
+Response : Unknown column 'sreenshot_url' in 'field list'[END]
+1276699839__127.0.0.1__1__/admin_contests_tools.php->dbaccess::execute()__Request : DELETE FROM `jc_contests` WHERE `id` =  LIMIT 1;
+Response : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LIMIT 1' at line 1[END]
+1276699851__127.0.0.1__1__/admin_contests_tools.php->dbaccess::execute()__Request : DELETE FROM `jc_contests` WHERE `id` =  LIMIT 1;
+Response : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LIMIT 1' at line 1[END]

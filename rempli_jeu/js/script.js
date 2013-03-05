@@ -49,16 +49,36 @@
 		
 		for (var i = 0; i < key.length; i++) 
 		{
+            var fieldName = key[i]; 
+
             if ( fieldName == 'civilite' )
             {
-                var regex = /%sexe\(([^"]){0,1}\|([^"]){0,2}\)/;
-                var match = regex.exec(url);
-                url = url.replace(match[0], match[userData[fieldName]]);
+                var reg = new RegExp("[( | )]+","g");
+                var match = url.split(reg);
+
+                switch( userData[fieldName] )
+                {
+                    case 'woman':
+                        url = match[0].replace('%sexe', match[2]);
+                        break;
+
+                    case 'miss':
+                        url = match[0].replace('%sexe', match.length == 5 ? match[3] : match[2] );
+                        break;
+
+                    case 'man':
+                    default :
+                        url = match[0].replace('%sexe', match[1]);
+                        break;
+                }             
+            }		
+            else
+            {
+                url = url.replace('%' + fieldName, userData[fieldName]);
             }
-			var fieldName = key[i];			
-			url = url.replace('%' + fieldName, userData[fieldName]);
+			
 		}
-		
+
 		window.location.href = url;
 	}
 	

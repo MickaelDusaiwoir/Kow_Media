@@ -1,0 +1,158 @@
+body
+{
+	margin:0;
+	padding:0;
+	font-size:14px
+}
+
+div
+{
+	margin:0;
+	padding:0;
+	border:0
+}
+
+img
+{
+	margin:0;
+	padding:0;
+	border:0;
+	vertical-align:middle
+}
+
+div.float_breaker
+{
+	clear:both
+}
+
+a.link:link, a.link:active, a.link:visited
+{
+	text-decoration:none;
+	color:#66E
+}
+
+a.link:hover
+{
+	text-decoration:underline;
+	color:#66F
+}
+
+div.box
+{
+	margin:16px;
+	border:1px solid #999
+}
+
+div.box_header
+{
+	border:1px solid #000;
+	background-color:#333
+}
+
+h2.box_header
+{
+	margin:8px;
+	font-size:16px;
+	color:#FFF
+}
+
+div.floating_box
+{
+	width:320px;
+	height:240px;
+	overflow:hidden;
+	background-color:#EEE;
+	border:1px solid #666;
+	position:absolute;
+	top:0px;
+	left:0px;
+	display:none
+}
+
+h2.box
+{
+	margin:8px;
+	border-bottom:1px solid #777
+}
+
+h3.box
+{
+	margin:8px 16px 8px 16px;
+	border-bottom:1px solid #AAA
+}
+
+/* CSS des listes d'infos */
+div.list
+{
+	margin:16px
+}
+
+p.navbox
+{
+	
+}
+
+div.list_hrow
+{
+	background-color:#339
+}
+
+div.list_hcase
+{
+	width:64px;
+	float:left
+}
+
+div.list_hcase_r
+{
+	width:64px;
+	float:right
+}
+
+p.list_htext
+{
+	margin:8px;
+	font-size:12px;
+	font-weight:bold;
+	color:#FFF
+}
+
+div.list_row
+{
+	border-bottom:1px solid #CCC
+}
+
+div.list_case
+{
+	width:64px;
+	border-right:1px solid #CCC;
+	float:left
+}
+
+div.list_case_r
+{
+	width:64px;
+	border-left:1px solid #CCC;
+	float:right
+}
+
+p.list_text
+{
+	margin:8px;
+}
+
+/* CSS des formulaires standards */
+div.form
+{
+	margin:16px
+}
+
+div.form_section
+{
+	margin:8px
+}
+
+label.form
+{
+	display:block
+}

@@ -1,0 +1,249 @@
+body
+{
+	margin:0;
+	padding:0;
+	background-image:url('bck.gif');
+	font:12px Verdana, Helvetica, sans-serif;
+}
+
+div
+{
+	margin:0;
+	padding:0;
+	border:0
+}
+
+img
+{
+	margin:0;
+	padding:0;
+	border:0;
+	vertical-align:middle
+}
+
+h2
+{
+	font-size:18px;
+	margin:8px;
+}
+
+
+
+h3
+{
+	font-size:12px;
+	margin:8px;
+}
+
+div.float_breaker
+{
+	clear:both
+}
+
+a.link:link, a.link:active, a.link:visited
+{
+	text-decoration:none;
+	color:#333
+}
+
+a.link:hover
+{
+	text-decoration:underline;
+	color:#06F
+}
+
+h2.menu
+{
+	margin:8px 8px 0 8px;
+	text-align:center;
+	font:14px arial;
+	font-weight:bold;
+	border-bottom:1px solid black
+}
+
+p.menu_entry
+{
+	margin:4px 16px 4px 16px
+}
+
+div.box
+{
+	margin:8px;
+	background-color:#EEE;
+	border:1px solid #FFF;
+}
+
+div.bloc
+{
+	margin:7px;
+	border:1px solid #555;
+}
+
+p.text
+{
+	margin:16px;
+	text-align:justify
+}
+
+p.text_bold
+{
+	margin:16px;
+	font:14px Arial;
+	font-weight:bold
+}
+
+p.cmd
+{
+	margin:8px;
+	text-align:right
+}
+
+/* CSS des listes d'infos */
+div.list
+{
+	margin:16px;
+	font:10px Arial, Helvetica, sans-serif;
+	color:#000
+}
+
+p.navbox
+{
+	text-align:right	
+}
+
+div.list_hrow
+{
+	background-color:#333;
+	border-left:1px solid #333;
+	border-right:1px solid #333;
+	border-top:1px solid #333;
+	border-bottom:1px solid #700
+}
+
+div.list_hcase
+{
+	width:64px;
+	float:left;
+	overflow:hidden
+}
+
+div.list_hcase_r
+{
+	width:64px;
+	float:right;
+	overflow:hidden
+}
+
+p.list_htext
+{
+	margin:8px;
+	font-size:16px;
+	font-weight:bold;
+	color:#FFF
+}
+
+div.list_row
+{
+	background-color:#CCC;
+	border:1px solid #000
+}
+
+div.list_row:hover
+{
+	background-color:#FFF
+}
+
+div.list_case
+{
+	width:64px;
+	border-right:1px solid #888;
+	float:left;
+	overflow:hidden
+}
+
+div.list_case_r
+{
+	width:64px;
+	float:right;
+	text-align:right;
+	overflow:hidden
+}
+
+p.list_text
+{
+	margin:8px;
+	font:10px Arial, Helvetica, sans-serif;
+}
+
+p.list_text_c
+{
+	margin:8px;
+	font:10px Arial, Helvetica, sans-serif;
+	text-align:center
+}
+
+p.list_text_stats
+{
+	margin:8px;
+	font:10px Arial, Helvetica, sans-serif;
+	color:#FFF;
+	text-align:center
+}
+
+div.list_tools_box
+{
+	margin:0 16px 0 16px;
+	text-align:right
+}
+
+/* CSS des formulaires standards */
+div.form
+{
+	margin:16px
+}
+
+div.form_section
+{
+	margin:8px
+}
+
+div.form_section_lined
+{
+	margin:7px;
+	padding:8px;
+	border:1px solid #999;
+	background-color:#F9F9F9
+}
+
+div.form_section_c
+{
+	margin:8px;
+	text-align:center
+}
+
+label.form
+{
+	font:16px Arial;
+	color:#05F;
+	font-weight:bold;
+	display:block
+}
+
+/* Messagery */
+p.message_negative
+{
+	margin:8px;
+	color:#900
+}
+
+p.message_positive
+{
+	margin:8px;
+	color:#090
+}
+
+p.message_note
+{
+	margin:8px;
+	color:#03C
+}
