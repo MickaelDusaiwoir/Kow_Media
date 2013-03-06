@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'local.mickael.com';
+$config['base_url']	= 'http://local.mickael.com/promo_konkours';
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ $config['base_url']	= 'local.mickael.com';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'O5o86164aSE8fdGnIURwr2wQ6Flc5R68';
 
 /*
 |--------------------------------------------------------------------------
