@@ -26,6 +26,29 @@
 	        return $query->result();
 		}
 
+		public function addContest ($data)
+		{
+			$this->db->insert('test', $data);
+			$last_contest_id = $this->db->insert_id();
+
+			return $last_contest_id;
+		}
+
+
+		public function addPrize ($data)
+		{
+			$this->db->insert('test2', $data);
+			$last_prize_id = $this->db->insert_id();
+
+			return $last_prize_id;
+		}
+
+		public function contests_to_prizes ($data)
+		{
+			$this->db->insert('test_to_test2', $data);
+			
+			redirect('admin/afficher');
+		}
 
 
 	}

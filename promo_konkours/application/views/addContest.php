@@ -2,7 +2,7 @@
 	Ajouter un nouveau concours
 </h2>
 
-<?= form_open('admin/saveContest', array('id' => 'addContest')); ?>
+<?= form_open('admin/addContest', array('id' => 'addContest')); ?>
 <?= form_fieldset(); ?>
 <?= form_label('Titre du concours','title'); ?>
 <input type='text' id="title" name="title" placeholder="Jeu concours organis&eacute; par Banana" value="<?php echo set_value('title'); ?>" />
@@ -12,9 +12,11 @@
 <input type='text' id="url" name="url" placeholder="http://konkours.be" value="<?php echo set_value('url'); ?>" />
 <?= form_error('url'); ?>
 
-<?= form_label('Astuces (texte preformater)', 'text'); ?>
+<?= form_label('Astuces pour ce concours', 'text'); ?>
 <textarea id="text" name="text" value="<?php echo set_value('text'); ?>"></textarea>
 <?= form_error('text'); ?>
+
+<?= form_submit('envoyer','Ajouter ce concours'); ?>
 
 <?= form_fieldset_close(); ?>
 <?= form_close(); ?>
@@ -27,7 +29,6 @@
 		<li>
 			civilit&eacute;&nbsp;: %sexe( civilit&eacute; 1 | civilit&eacute; 2 [ | civilit&eacute; 3]* ) 
 			<p>Ex: &civilite=%sexe(H|F)</p>
-			<p>Les param&egrave;tre de la civilit&eacute; sont définit diff&eacute;remment selon le site</p>
 			<p>* Optionnel</p>
 		</li>
 		<li>

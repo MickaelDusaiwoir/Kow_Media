@@ -74,7 +74,7 @@ class CI_Form_validation {
 	public function set_rules($field, $label = '', $rules = '')
 	{
 		// No reason to set rules if we have no POST data
-		if (count($_POST) == 0)
+		if (count($_POST) == 0 )
 		{
 			return $this;
 		}
@@ -1374,6 +1374,21 @@ class CI_Form_validation {
 	{
 		return str_replace(array('<?php', '<?PHP', '<?', '?>'),  array('&lt;?php', '&lt;?PHP', '&lt;?', '?&gt;'), $str);
 	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * valid_url check url is valid
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	bool
+	 */
+	public function valid_url($str)
+	{
+		return ( ! preg_match("/^(?:https?:\/\/)?(?:[a-z0-9-]+\.)*(?:[a-z0-9-]+\.)[a-z%\?=\/&\(\)\|]+/", $str)) ? FALSE : TRUE;
+	}
+
 
 }
 // END Form Validation Class

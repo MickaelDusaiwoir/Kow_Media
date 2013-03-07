@@ -40,6 +40,6 @@
 		
 	<?php endforeach;
 
-	echo anchor('admin/addContest', 'Ajouter un concours', array('title' => 'Ajouter un concours')); 
+	echo anchor('admin/addContestView', 'Ajouter un concours', array('title' => 'Ajouter un concours')); 
 
 ?>

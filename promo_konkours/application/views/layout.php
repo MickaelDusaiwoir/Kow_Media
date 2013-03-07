@@ -7,6 +7,14 @@
         <meta name="viewport" content="width=device-width; initial-scale=1.0">
     </head>
     <body>
+        <div>
+            <?php
+                if ( !$this->session->userdata('Connected') )
+                    echo anchor('admin/connect', 'Se connecter', array('title' => 'Se connecter')); 
+                else
+                    echo anchor('admin/disconnect', 'Se d&eacute;connecter', array('title' => 'Se d&eacute;connecter')); 
+            ?>
+        </div>
         <div id="container">
             
             <h1 id="no_show"><?php echo $titre; ?></h1>
