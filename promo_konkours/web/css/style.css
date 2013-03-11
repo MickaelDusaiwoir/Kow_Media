@@ -1,3 +1,150 @@
+@import 'bootstrap.min.css';
+@import 'bootstrap-responsive.min.css';
+@import 'fontello.css';
+
+body {	
+	background: url('../img/straws.png') repeat;
+}
+
 #no_show {
 	display: none;
+}
+
+#connexion {
+	margin-top: 1em ;
+}
+
+body #connexion #login, #connexion ul {
+	display: block;
+	float: none;
+	display: block;
+	margin: 0 auto;
+}
+
+#login label:last-child {
+	margin-left: 1em;
+}
+
+#login {
+	margin:  0 auto;	
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1.4em;
+}
+
+h4 {
+	font-size: 1.3em;
+	margin-top: 0;
+}
+
+#code_postal, #ville {
+	margin: -0.5em 0 1em 0;
+}
+
+
+.contests h2 {
+	padding-left: 0.3em;
+}
+
+.contest img {
+	display: block;
+	max-width: 128px;
+	max-height: 128px;
+	margin: 0 auto 0.5em auto;
+}
+
+.contest span {
+	display: none;
+}
+
+.contest .actionPrize {
+	font-size: 1.4em;
+	width: 1em;
+}
+
+.contest .action a {
+	margin-bottom: 0.8em;
+}
+
+.contest a {
+	text-decoration: none;
+}
+
+.contest .row-fluid .prize {
+	position: relative;
+	margin: 0;
+	padding: 0.5em;
+}
+
+.actionPrize {
+	position: absolute;
+	top: 1.8em;
+	left: 0.25em;
+}
+
+.contest {
+	border-bottom: 1px solid #aaa;
+	position: relative;
+	line-height: 1.5;
+	margin-bottom: 1em;
+}
+
+.contest:last-child {
+	border: none;
+}
+
+.contest h3 {
+	margin: 0; 
+	padding-left: 0.5em;
+}
+
+.actionContest {
+	position: absolute;
+	top: 0.8em;
+	right: 1em;
+	font-size: 1.4em;
+}
+
+.actionContest a {
+	margin-right: 0.8em;
+}
+
+.prize .actionPrize {
+	display: none;
+}
+
+.prize:hover .actionPrize {
+	display: block;
+}
+
+.astuces {
+	margin-top: 0.4em;
+}
+
+.contest em {
+	color: #aa0000;
+	font-weight: bold;
+}
+
+body #wrap #updateContest {
+	display: block;
+	float: none;
+	margin: 2em auto 0 auto;
+}
+
+#updateContest input[type="submit"] {
+	margin-top: 1em;
+}
+
+#userData {
+	padding: 0 0.5em;
+}
+
+#value {
+	margin-bottom: 1em;
 }
