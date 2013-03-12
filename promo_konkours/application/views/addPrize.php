@@ -1,29 +1,46 @@
-<h2>
-	Ajouter un cadeau
-</h2>
+<?= form_open('admin/addPrize', array('id' => 'addPrize', 'enctype' => 'multipart/form-data', 'class' => "form-horizontal span5")); ?>
 
-<?= form_open('admin/addPrize', array('id' => 'addPrize', 'enctype' => 'multipart/form-data')); ?>
+	<div>
+		<h2>
+			Ajouter un cadeau
+		</h2>
+	</div>
 
 	<?= form_fieldset(); ?>
 
-		<?= form_label('Titre du cadeau','title'); ?>
-		<input type="text" name="title" id="title" value="<?php echo set_value('title'); ?>" />
-		<?= form_error('title'); ?>
+		<div class="control-group">
+			<?= form_label('Titre du cadeau','title', array( 'class' => "control-label")); ?>
+			<div class="controls">
+				<input type="text" name="title" id="title" class="span12" value="<?php echo set_value('title'); ?>" />
+				<?= form_error('title'); ?>
+			</div>			
+		</div>
 
-		<?= form_label('Image du cadeau', 'image'); ?>
-		<input type="file" name="image" id="image" />
-		<?php 
-			if ( isset($erreur) && $erreur == null )
-				echo '<p>'.$erreur.'</p>';
-		?>
+		<div class="control-group">
+			<?= form_label('Image du cadeau', 'image', array( 'class' => "control-label")); ?>
+			<div class="controls">
+				<input type="file" name="image" id="image" />
+				<?php 
+				if ( isset($erreur) && $erreur !== null )
+					echo '<p class="alert alert-error">'.$erreur.'</p>';
+			?>
+			</div>
+		</div>
 
-		<?= form_label('Valeur du cadeau', 'value' ); ?>
-		<input type="text" name="value" id="value" value="<?php echo set_value('value'); ?>" />
-		<?= form_error('value'); ?>
+		<div class="control-group">
+			<?= form_label('Valeur du cadeau', 'value', array( 'class' => "control-label") ); ?>
+			<div class="controls">
+				<div class="input-append row-fluid ">
+					<input type="text" name="value" class="span11" id="value" value="<?php echo set_value('value'); ?>" />
+					<span class="add-on">&euro;</span>
+				</div>
+				<?= form_error('value'); ?>
 
-		<input type="hidden" name="contest_id" value="<?php echo $id; ?>" />
+				<input type="hidden" name="contest_id" value="<?php echo $id; ?>" />
 
-		<?= form_submit('envoyer','Ajouter le cadeau'); ?>
+				<input type="submit" name="envoyer" value="Ajouter ce cadeau" class="btn btn-primary span12" />
+			</div>
+		</div>
 
 	<?= form_fieldset_close(); ?>
 

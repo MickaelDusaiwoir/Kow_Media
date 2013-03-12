@@ -4,30 +4,32 @@
 	</h2>
 	<form method="post" action="#">
 
-		<label for="civilite">Civilité</label>
-		<select id="civilite" name="civilite" class="span12">
+		<label for="civilite" class="span3">Civilité</label>
+		<select id="civilite" name="civilite" class="span9">
 			<option value="0">Vous êtes :</option>
 			<option value="man">Homme</option>
 			<option value="woman">Femme</option>
 			<option value="miss">Mademoiselle</option>
 		</select> 
 
-		<label for="nom">Nom</label>
-		<input id="nom" name="nom" type="text" placeholder="Rambo" class="span12" />
-
-		<label for="prenom">Pr&eacute;nom</label>
-		<input id="prenom" name="prenom" type="text" placeholder="John" class="span12" />
+		<div class="row-fluid">
+			<label for="nom" class="span6">Nom</label>
+			<label for="prenom" class="span6">Pr&eacute;nom</label>
+			
+			<input id="nom" name="nom" type="text" placeholder="Rambo" class="span6" />
+			<input id="prenom" name="prenom" type="text" placeholder="John" class="span6" />
+		</div>
 
 		<label>Date de naissance</label>
 		<select id="jour" name="jour" class="span3"></select>
 		<select id="mois" name="mois" class="span5"></select>
 		<select id="annee" name="annee" class="span4"></select>
 
-		<label for="email">E-mail</label>
-		<input id="email" name="email" type="email" placeholder="john.rambo@exemple.com" class="span12">
+		<label for="email" class="span3">E-mail</label>
+		<input id="email" name="email" type="email" placeholder="john.rambo@exemple.com" class="span9">
 
-		<label for="add">Adresse</label>
-		<input id="adresse" name="adresse" type="text" placeholder="Rue du champ de mine n°1" class="span12"/>
+		<label for="add" class="span3">Adresse</label>
+		<input id="adresse" name="adresse" type="text" placeholder="Rue du champ de mine n°1" class="span9"/>
 
 		<div class="row-fluid">
 			<label for="cp" class="span4">Code postal</label>
@@ -61,7 +63,7 @@
 			$display .= '<div class="span3 prize">';
 			$display .= '<h4>'.$prize['title'].'</h4>';
 			$display .= '<img src="'.base_url() . THUMB_IMG . $prize['id'] .'.jpg" class="img-polaroid" title="'.$prize['title'].'" style="max-width: 128px;max-height:128px;"/>';
-			$display .= '<p> Valeur du cadeau&nbsp;: <em>'.$prize['value'].'&euro;</em></p>';
+			$display .= '<p class="valeur">'.$prize['value'].'&euro;</p>';
 
 			if ( $this->session->userdata('Connected') ) 
 			{

@@ -110,7 +110,7 @@
 
 		public function getContestsList ()
 		{
-        	$query = $this->db->get('test');
+        	$query = $this->db->get_where('test', array('status' => '0'));
         	return $query->result_array();
 		}
 
@@ -134,8 +134,16 @@
 	        $this->db->query($req);
 
 	        return true;
-
 		}
+
+		public function archiveContest ($id) 
+		{
+			$this->db->where('id', $id);
+			$this->db->update('test', array('status' => '1'));
+			
+			redirect('admin/afficher');
+		}
+
 
 		public function getItem($id, $table)
 		{

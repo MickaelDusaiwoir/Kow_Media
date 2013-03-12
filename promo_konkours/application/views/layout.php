@@ -28,7 +28,8 @@
                             }                     
                             else
                             { 
-                                echo '<ul class="nav nav-pills span3">';
+                                echo '<ul class="nav nav-pills span4">';
+                                echo '<li>'.anchor('admin/afficher', 'Accueil', array('title' => 'Retourner sur la page d\'accueil')).'</li>'; 
                                 echo '<li>'.anchor('admin/addContestView', 'Ajouter un concours', array('title' => 'Ajouter un concours')).'</li>'; 
                                 echo '<li>'.anchor('admin/disconnect', 'Se d&eacute;connecter', array('title' => 'Se d&eacute;connecter'));
                                 echo '</ul>';

@@ -186,7 +186,7 @@ class CI_Form_validation {
 	 * @param	string
 	 * @return	void
 	 */
-	public function set_error_delimiters($prefix = '<p>', $suffix = '</p>')
+	public function set_error_delimiters($prefix = '<p class="alert alert-error">', $suffix = '</p>')
 	{
 		$this->_error_prefix = $prefix;
 		$this->_error_suffix = $suffix;

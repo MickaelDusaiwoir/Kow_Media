@@ -92,12 +92,12 @@ class Admin extends CI_Controller {
 	{
 		if ( $this->session->userdata('Connected') ) 
 		{
-			$this->load->library('form_validation');
+			$this->load->library('form_validation');			
 			$this->form_validation->set_error_delimiters('<p class="alert alert-error">', '</p>');
 
-			$this->form_validation->set_rules('title', ': Titre du concours ', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
-			$this->form_validation->set_rules('url', ': Lien du concours ', 'trim|required|min_length[5]|prep_url|valid_url|xss_clean');
-			$this->form_validation->set_rules('text', ': Astuces pour ce concours ', 'trim|required|encode_php_tags|xss_clean');
+			$this->form_validation->set_rules('title', 'titre', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
+			$this->form_validation->set_rules('url', 'lien', 'trim|required|min_length[5]|prep_url|valid_url|xss_clean');
+			$this->form_validation->set_rules('text', 'astuces', 'trim|required|encode_php_tags|xss_clean');
 			
 			if ( $this->form_validation->run() )
 			{
@@ -121,7 +121,7 @@ class Admin extends CI_Controller {
 	    }
 	    else
 	    {
-	    	redirect('admin/connect');
+	    	redirect('admin/afficher');
 	    }
 	}
 
@@ -147,15 +147,15 @@ class Admin extends CI_Controller {
 			$this->load->library('form_validation');
 			$this->form_validation->set_error_delimiters('<p class="alert alert-error">', '</p>');
 
-			$this->form_validation->set_rules('title', ': Titre du cadeau ', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
-			$this->form_validation->set_rules('value', ': Valeur du cadeau ', 'trim|required|numeric|encode_php_tags|xss_clean');
+			$this->form_validation->set_rules('title', 'titre ', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
+			$this->form_validation->set_rules('value', 'valeur ', 'trim|required|numeric|min_length[1]|max_length[12]|encode_php_tags|xss_clean');
 			
 			$contest_id = $this->input->post('contest_id');
 			
 			$image = isset($_FILES['image']) ?  $_FILES['image'] : null ;
 
-			if ( $image == null )
-				$erreur = 'Le champ Image du cadeau est requis.';
+			if ( $image['size'] == 0 )
+				$erreur = 'Le champ Image est requis.';
 			else
 				$erreur = null;
 
@@ -174,35 +174,39 @@ class Admin extends CI_Controller {
 
 				$this->M_Admin->contests_to_prizes($id);
 
-				$erreur = $this->saveImage($last_prize_id, $image);
+				$imageErreur = $this->saveImage($last_prize_id, $image);
 
-				redirect('admin/afficher');
-
-				if ( $erreur !== TRUE )
+				if ( $imageErreur  !== TRUE )
 				{
 					$this->M_Admin->deletePrize($last_prize_id);
 
 					$this->load->helper('form');
 
-					$dataList['erreur']		=  $erreur;
+					$dataList['erreur']		=  $imageErreur ;
 					$dataList['id'] 		=  $contest_id; 
 					$dataLayout['titre'] 	=  'Administration - Ajouter un cadeau';
 			        $dataLayout['vue'] 		=  $this->load->view('addPrize', $dataList ,true);
 			        $this->load->view('layout', $dataLayout);
-				}							
+				}
+				elseif ( $imageErreur == TRUE) 
+				{
+					redirect('admin/afficher');
+				}				
 			}
+			else
+			{
+				$this->load->helper('form');
 
-			$this->load->helper('form');
-
-			$dataList['erreur']		=  $erreur;
-			$dataList['id'] 		=  $contest_id; 
-			$dataLayout['titre'] 	=  'Administration - Ajouter un cadeau';
-	        $dataLayout['vue'] 		=  $this->load->view('addPrize', $dataList ,true);
-	        $this->load->view('layout', $dataLayout);
+				$dataList['erreur']		=  $erreur;
+				$dataList['id'] 		=  $contest_id; 
+				$dataLayout['titre'] 	=  'Administration - Ajouter un cadeau';
+		        $dataLayout['vue'] 		=  $this->load->view('addPrize', $dataList ,true);
+		        $this->load->view('layout', $dataLayout);
+			}			
 	    }
 	    else
 	    {
-	    	redirect('admin/connect');
+	    	redirect('admin/afficher');
 	    }
 	}
 
@@ -223,7 +227,8 @@ class Admin extends CI_Controller {
 				break;
 
 				default: 
-					$erreur = 'L\'image doit être de type png ou jpg';
+					return $erreur = 'L\'image doit être de type png ou jpg';
+				break;
 			}		
 
 			imagejpeg ($img, 'web/uploads/full_size/'.$nom);
@@ -336,7 +341,7 @@ class Admin extends CI_Controller {
 			if ( $type == 'prize' )
 			{
 				$this->form_validation->set_rules('title', ': Titre du cadeau ', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
-				$this->form_validation->set_rules('value', ': Valeur du cadeau ', 'trim|required|numeric|encode_php_tags|xss_clean');
+				$this->form_validation->set_rules('value', ': Valeur du cadeau ', 'trim|required|numeric|min_length[1]|max_length[12]|encode_php_tags|xss_clean');
 				$this->form_validation->set_rules('position', ': Position du cadeau ', 'trim|numeric|encode_php_tags|xss_clean');
 
 				$image = isset($_FILES['image']) ?  $_FILES['image'] : null ;

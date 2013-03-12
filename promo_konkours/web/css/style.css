@@ -10,6 +10,11 @@ body {
 	display: none;
 }
 
+body #wrap .alert-error {
+	text-align: center;
+	margin: 1em 0 0 0 ;
+}
+
 #connexion {
 	margin-top: 1em ;
 }
@@ -42,10 +47,19 @@ h4 {
 	margin-top: 0;
 }
 
-#code_postal, #ville {
+#code_postal, #ville, #nom, #prenom {
 	margin: -0.5em 0 1em 0;
 }
 
+#jour, #mois, #annee, #email {
+	margin-bottom: 1em;
+}
+
+#userData label {
+	margin-top: 0.35em;
+	margin-bottom: 0;
+	font-size: 0.9em;
+}
 
 .contests h2 {
 	padding-left: 0.3em;
@@ -83,7 +97,7 @@ h4 {
 
 .actionPrize {
 	position: absolute;
-	top: 1.8em;
+	bottom: 2em;
 	left: 0.25em;
 }
 
@@ -126,12 +140,14 @@ h4 {
 	margin-top: 0.4em;
 }
 
-.contest em {
+.contest .valeur {
+	text-align: center;
 	color: #aa0000;
 	font-weight: bold;
+	font-style: normal;
 }
 
-body #wrap #updateContest {
+body #wrap #updateContest, body #wrap #addPrize, #wrap #updatePrize {
 	display: block;
 	float: none;
 	margin: 2em auto 0 auto;
@@ -145,6 +161,40 @@ body #wrap #updateContest {
 	padding: 0 0.5em;
 }
 
-#value {
-	margin-bottom: 1em;
+#userData input[type="submit"] {
+	margin-top: 0;
 }
+
+#addContest {
+	margin-left: 0;
+}
+
+input[type="submit"] {
+	margin-top: 1em;
+}
+
+#addContest label {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+#legend {
+	overflow: auto;
+	margin-left: 0;
+	padding: 0.5em 1em;
+}
+
+#legend li {
+	margin: 0.5em 0;
+	padding: 0 0.5em;
+	color: #18658b; /* #3A87AD */
+}
+
+#updatePrize label {
+	width: 70px;
+}
+
+#updatePrize .controls {
+	margin-left: 90px;
+}
+
