@@ -1,11 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
-
-// $this->load->model('M_Admin');
-// $this->load->library('form_validation');
-// $this->load->helper('form');
-	
+class Admin extends CI_Controller 
+{
 	public function index()
 	{	
 		$this->load->library('session');
@@ -15,37 +11,26 @@ class Admin extends CI_Controller {
 	public function afficher()
 	{	
 		$this->load->helper('form');
-		/*if ( !$this->session->userdata('Connected') )
-		{
-			$this->load->helper('form');
+		$this->load->model('M_Admin'); 
 
-			$dataLayout['titre'] 	=  'Administration - Connection';
-	        $dataLayout['vue'] 		=  $this->load->view('login', null ,true);
-		}
-		else 
-		{*/
-			$this->load->model('M_Admin'); 
+		$dataList['contests_with_prizes'] = $this->M_Admin->getContestsList();
 
-			$dataList['contests_with_prizes'] = $this->M_Admin->getContestsList();
+		foreach ( $dataList['contests_with_prizes'] as $key => $value ) 
+			$dataList['contests_with_prizes'][$key]['prizes_data'] = $this->M_Admin->getPrizesList($value['id']);
 
-			foreach ( $dataList['contests_with_prizes'] as $key => $value ) 
-				$dataList['contests_with_prizes'][$key]['prizes_data'] = $this->M_Admin->getPrizesList($value['id']);
-
-			$dataLayout['titre'] 				=  'Administration - Accueil';
-	        $dataLayout['vue'] 					=  $this->load->view('index', $dataList ,true);
-		//}
+		$dataLayout['titre']	=  'Administration - Accueil';
+        $dataLayout['vue'] 		=  $this->load->view('index', $dataList ,true);
 
 		$this->load->view('layout', $dataLayout);		
 	}
-
 
 	public function connect () 
 	{
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<p class="alert alert-error">', '</p>');
 
-		$this->form_validation->set_rules('username', ': Nom d\'utilisateur ', 'trim|required|min_length[5]|alpha_dash|encode_php_tags|xss_clean');
-		$this->form_validation->set_rules('password', ': Mot de passe ', 'trim|required|min_length[5]|max_length[64]|alpha_dash|encode_php_tags|xss_clean');
+		$this->form_validation->set_rules('username', 'nom d\'utilisateur ', 'trim|required|min_length[5]|alpha_dash|encode_php_tags|xss_clean');
+		$this->form_validation->set_rules('password', 'mot de passe ', 'trim|required|min_length[5]|max_length[64]|alpha_dash|encode_php_tags|xss_clean');
 
 		if ( $this->form_validation->run() )
 		{
@@ -69,7 +54,7 @@ class Admin extends CI_Controller {
 		$this->load->helper('form');
 
 		$dataLayout['titre'] 	= 'Administration - Connection';
-        $dataLayout['vue'] 		=  $this->load->view('index', null ,true);
+        $dataLayout['vue'] 		=  $this->load->view('login', null ,true);
         $this->load->view('layout', $dataLayout);
 	}
 
@@ -84,7 +69,7 @@ class Admin extends CI_Controller {
 		$this->load->helper('form');
 
 		$dataLayout['titre'] 	=  'Administration - Ajouter un concours';
-        $dataLayout['vue'] 		=  $this->load->view('addContest', null ,true);
+        $dataLayout['vue'] 		=  $this->load->view('contest', null ,true);
         $this->load->view('layout', $dataLayout);		
 	}
 
@@ -115,7 +100,7 @@ class Admin extends CI_Controller {
 				$this->load->helper('form');
 
 				$dataLayout['titre'] 	=  'Administration - Ajouter un concours';
-		        $dataLayout['vue'] 		=  $this->load->view('addContest', null ,true);
+		        $dataLayout['vue'] 		=  $this->load->view('contest', null ,true);
 		        $this->load->view('layout', $dataLayout);
 			}
 	    }
@@ -136,7 +121,7 @@ class Admin extends CI_Controller {
 
 		$dataList['id'] 		= $contest_id;
 		$dataLayout['titre'] 	=  'Administration - Ajouter un concours';
-        $dataLayout['vue'] 		=  $this->load->view('addPrize', $dataList ,true);
+        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
         $this->load->view('layout', $dataLayout);
 	}
 
@@ -185,7 +170,7 @@ class Admin extends CI_Controller {
 					$dataList['erreur']		=  $imageErreur ;
 					$dataList['id'] 		=  $contest_id; 
 					$dataLayout['titre'] 	=  'Administration - Ajouter un cadeau';
-			        $dataLayout['vue'] 		=  $this->load->view('addPrize', $dataList ,true);
+			        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
 			        $this->load->view('layout', $dataLayout);
 				}
 				elseif ( $imageErreur == TRUE) 
@@ -200,7 +185,7 @@ class Admin extends CI_Controller {
 				$dataList['erreur']		=  $erreur;
 				$dataList['id'] 		=  $contest_id; 
 				$dataLayout['titre'] 	=  'Administration - Ajouter un cadeau';
-		        $dataLayout['vue'] 		=  $this->load->view('addPrize', $dataList ,true);
+		        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
 		        $this->load->view('layout', $dataLayout);
 			}			
 	    }
@@ -297,8 +282,9 @@ class Admin extends CI_Controller {
 		        }
 		    }
 		}
-
-	    redirect('admin/afficher');
+		else {
+			redirect('admin/afficher');
+		}
 	}
 
 	public function updateView ()
@@ -313,17 +299,19 @@ class Admin extends CI_Controller {
         {
         	case 'contest':
         		$dataList['data'] = $this->M_Admin->getItem($id, 'test'); //contest
+        		$view = 'contest';
         		break;
 
         	case 'prize':
         		$dataList['data'] = $this->M_Admin->getItem($id, 'test2'); // prizes
+        		$view = 'prize';
         		break;
         }
 
         $dataList['id']			=  $id;
         $dataList['type'] 		=  $type;
 		$dataLayout['titre'] 	=  'Administration - Modifier ce '.$type;
-        $dataLayout['vue'] 		=  $this->load->view('update', $dataList ,true);
+        $dataLayout['vue'] 		=  $this->load->view( $view , $dataList ,true);
         $this->load->view('layout', $dataLayout);
 	}
 
@@ -340,8 +328,8 @@ class Admin extends CI_Controller {
 
 			if ( $type == 'prize' )
 			{
-				$this->form_validation->set_rules('title', ': Titre du cadeau ', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
-				$this->form_validation->set_rules('value', ': Valeur du cadeau ', 'trim|required|numeric|min_length[1]|max_length[12]|encode_php_tags|xss_clean');
+				$this->form_validation->set_rules('title', 'titre', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
+				$this->form_validation->set_rules('value', 'valeur', 'trim|required|numeric|min_length[1]|max_length[12]|encode_php_tags|xss_clean');
 				$this->form_validation->set_rules('position', ': Position du cadeau ', 'trim|numeric|encode_php_tags|xss_clean');
 
 				$image = isset($_FILES['image']) ?  $_FILES['image'] : null ;
@@ -369,7 +357,7 @@ class Admin extends CI_Controller {
 					$dataList['id']			=  $id;
 			        $dataList['type'] 		=  $type;
 					$dataLayout['titre'] 	=  'Administration - Modifier ce '.$type;
-			        $dataLayout['vue'] 		=  $this->load->view('update', $dataList ,true);
+			        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
 			        $this->load->view('layout', $dataLayout);
 				}
 			}
@@ -398,13 +386,15 @@ class Admin extends CI_Controller {
 					$dataList['id']			=  $id;
 			        $dataList['type'] 		=  $type;
 					$dataLayout['titre'] 	=  'Administration - Modifier ce '.$type;
-			        $dataLayout['vue'] 		=  $this->load->view('update', $dataList ,true);
+			        $dataLayout['vue'] 		=  $this->load->view('contest', $dataList ,true);
 			        $this->load->view('layout', $dataLayout);
 				}
 			}
 		}
-
-		redirect('admin/afficher');
+		else 
+		{
+			redirect('admin/afficher');
+		}
 	}
 
 

@@ -15,6 +15,19 @@ body #wrap .alert-error {
 	margin: 1em 0 0 0 ;
 }
 
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1.4em;
+}
+
+h4 {
+	font-size: 1.3em;
+	margin-top: 0;
+}
+
 #connexion {
 	margin-top: 1em ;
 }
@@ -31,24 +44,50 @@ body #connexion #login, #connexion ul {
 }
 
 #login {
-	margin:  0 auto;	
+	display:  block;
+	float:  none;
+	margin:  15% auto 0 auto;	
+	background: none repeat scroll 0 0 #DDDDDD;
+	border: 1px solid #AAAAAA;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    padding: 1em 1em 0 1em;
 }
 
-h2 {
-	font-size: 1.5em;
+#login .alert-error {
+	background-color: #F2CDCD;
+	border-color: #EEa0b4;
 }
 
-h3 {
-	font-size: 1.4em;
+#login label {
+	width: 120px;
 }
 
-h4 {
-	font-size: 1.3em;
+#login .controls {
+	margin-left: 140px;
+}
+
+
+
+
+#userData {
+	padding: 0 0.5em;
+}
+
+#userData input[type="submit"] {
 	margin-top: 0;
 }
 
-#code_postal, #ville, #nom, #prenom {
+#userData #civilite {
+	margin: 0 0 0.35em -1em;
+}
+
+#code_postal, #ville, #nom, #prenom  {
 	margin: -0.5em 0 1em 0;
+}
+
+#nom, #prenom, #adresse {
+	margin-bottom: 0.4em;
 }
 
 #jour, #mois, #annee, #email {
@@ -60,6 +99,9 @@ h4 {
 	margin-bottom: 0;
 	font-size: 0.9em;
 }
+
+
+
 
 .contests h2 {
 	padding-left: 0.3em;
@@ -98,7 +140,7 @@ h4 {
 .actionPrize {
 	position: absolute;
 	bottom: 2em;
-	left: 0.25em;
+	left: -0.25em;
 }
 
 .contest {
@@ -117,10 +159,12 @@ h4 {
 	padding-left: 0.5em;
 }
 
+
+
 .actionContest {
 	position: absolute;
-	top: 0.8em;
-	right: 1em;
+	top: 0.3em;
+	right: 0.5em;
 	font-size: 1.4em;
 }
 
@@ -136,7 +180,7 @@ h4 {
 	display: block;
 }
 
-.astuces {
+.astuces h4 {
 	margin-top: 0.4em;
 }
 
@@ -153,17 +197,16 @@ body #wrap #updateContest, body #wrap #addPrize, #wrap #updatePrize {
 	margin: 2em auto 0 auto;
 }
 
+
+
+
+
+
 #updateContest input[type="submit"] {
 	margin-top: 1em;
 }
 
-#userData {
-	padding: 0 0.5em;
-}
 
-#userData input[type="submit"] {
-	margin-top: 0;
-}
 
 #addContest {
 	margin-left: 0;
@@ -189,6 +232,8 @@ input[type="submit"] {
 	padding: 0 0.5em;
 	color: #18658b; /* #3A87AD */
 }
+
+
 
 #updatePrize label {
 	width: 70px;

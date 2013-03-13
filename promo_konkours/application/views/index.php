@@ -1,11 +1,11 @@
-<div id="userData" class="span3">
+<div id="userData" class="span3 offset1">
 	<h2>
 		Informations personnelles
 	</h2>
 	<form method="post" action="#">
 
 		<label for="civilite" class="span3">Civilité</label>
-		<select id="civilite" name="civilite" class="span9">
+		<select id="civilite" name="civilite" class="span6">
 			<option value="0">Vous êtes :</option>
 			<option value="man">Homme</option>
 			<option value="woman">Femme</option>
@@ -43,7 +43,7 @@
 	</form>
 </div>
 
-<div class="contests span9">
+<div class="contests span6 offset1">
 <h2>
 	Tous nos concours !!
 </h2>
@@ -60,7 +60,7 @@
 
 		foreach ( $contest_with_prize['prizes_data'] as $prize ) 
 		{	
-			$display .= '<div class="span3 prize">';
+			$display .= '<div class="span4 prize">';
 			$display .= '<h4>'.$prize['title'].'</h4>';
 			$display .= '<img src="'.base_url() . THUMB_IMG . $prize['id'] .'.jpg" class="img-polaroid" title="'.$prize['title'].'" style="max-width: 128px;max-height:128px;"/>';
 			$display .= '<p class="valeur">'.$prize['value'].'&euro;</p>';
@@ -75,7 +75,8 @@
 			$display .= '</div>';
 		}
 
-		$display .= '<h4 class="astuces">Astuces</h4>';
+		$display .= '<div class="astuces span4" >';
+		$display .= '<h4>Astuces</h4>';
 		$display .= '<p>'.str_replace("\n", '<br />',$contest_with_prize['text']).'</p>';
 
 		$display .= anchor($contest_with_prize['url'], 'Cliquez ICI pour jouer à ce concours', array('title' => 'Cliquez ICI pour jouer à ce concours', 'class' => 'btn btn-primary'));
@@ -88,7 +89,7 @@
 			$display .= anchor('admin/deleteView/'.$contest_with_prize['id'].'/contest', '<span>Supprimer ce concours</span>', array('title' => 'Supprimer ce concours', 'class' => 'icon-cancel')); 
 			$display .= '</div>';
 		}
-
+		$display .= '</div>';
 		$display .= '</div>';
 		$display .= '</article>';
 
