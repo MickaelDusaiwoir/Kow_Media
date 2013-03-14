@@ -7,6 +7,9 @@
 	var userData = {'civilite' : '' ,'nom' : '', 'prenom' : '', 'jour': '', 'mois' : '', 'annee' : '', 'email' : '', 'adresse' : '', 'code_postal' : '', 'ville' : '' },
 		key = new Array('civilite', 'nom' , 'prenom', 'jour', 'mois', 'annee', 'email', 'adresse', 'code_postal', 'ville');
 
+	var mois = new Array();
+
+		mois = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
 // -- methods
 
 
@@ -14,22 +17,19 @@
 
 	var buildSelectsForm = function () {
 
-		var mois = new Array();
-
-		mois = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
-
 		for ( var i = 0; i <= 11; i++ ) 
 		{
-			$('<option></option').attr('value', i + 1).text(mois[i]).appendTo($('#mois'));
+			$('<option></option').attr('value', i + 1).attr('name', mois[i]).text(mois[i]).appendTo($('#mois'));
 		};
 
 		for ( var j = 1; j <= 31; j++ ) 
 		{
-			$('<option></option').attr('value', j).text(j).appendTo($('#jour'));
+			$('<option></option').attr('value', j).attr('name', j).text(j).appendTo($('#jour'));
 		};
 
-		for ( var u = 1920; u <= 2030; u++ ) {
-			$('<option></option').attr('value', u).text(u).appendTo($('#annee'));
+		for ( var u = 1920; u <= 2030; u++ ) 
+		{
+			$('<option></option').attr('value', u).attr('name', u).text(u).appendTo($('#annee'));
 		};
 
 	}
@@ -78,7 +78,7 @@
             }
 			
 		}
-
+		
 		window.location.href = url;
 	}
 	
@@ -128,12 +128,11 @@
 			{
 				for ( var i = 0; i < cookies.length; i++ )
 				{
-					var tmp = document.cookie.split('=');
+					var tmp = cookies[i].split('=');
 					
 					if ( tmp[0] == 'userData' )
 					{
-						userData = jQuery.parseJSON(tmp[1]); 
-						
+						userData = jQuery.parseJSON(tmp[1]); 						
 						break;
 					}
 				}
@@ -144,6 +143,18 @@
 		{
 			var fieldName = key[i];
 			
+			if ( fieldName == 'civilite' )
+				$('#' + userData[fieldName]).attr('checked', 'checked');
+
+			if ( fieldName == 'mois')
+				$('option[name="' + mois[userData[fieldName] - 1] +'"]').attr('selected', 'selected');
+
+			if ( fieldName == 'jour' )
+				$('option[name="' + userData[fieldName] +'"]').attr('selected', 'selected');
+
+			if ( fieldName == 'annee' )
+				$('option[name="' + userData[fieldName] +'"]').attr('selected', 'selected');
+
 			$('#'+ fieldName).attr('value', userData[fieldName]);
 		} 
 	}
@@ -159,9 +170,11 @@
 		
 		buildSelectsForm();
 		
-		initFormValues();	   
+		initFormValues();	
 
-        $('#civilite').on('blur', saveFieldData);
+        $('#man').on('click', saveFieldData);
+        $('#woman').on('click', saveFieldData);
+        $('#miss').on('click', saveFieldData);
 		$('#nom').on('blur', saveFieldData);
 		$('#prenom').on('blur', saveFieldData);
 		$('#jour').on('blur', saveFieldData);

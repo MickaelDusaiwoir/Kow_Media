@@ -2,25 +2,23 @@
 	<h2>
 		Informations personnelles
 	</h2>
-	<form method="post" action="#">
+	<form method="post" action="#" class="form-inline" id="form">
 
-		<label for="civilite" class="span3">Civilité</label>
-		<select id="civilite" name="civilite" class="span6">
-			<option value="0">Vous êtes :</option>
-			<option value="man">Homme</option>
-			<option value="woman">Femme</option>
-			<option value="miss">Mademoiselle</option>
-		</select> 
 
-		<div class="row-fluid">
-			<label for="nom" class="span6">Nom</label>
-			<label for="prenom" class="span6">Pr&eacute;nom</label>
-			
-			<input id="nom" name="nom" type="text" placeholder="Rambo" class="span6" />
-			<input id="prenom" name="prenom" type="text" placeholder="John" class="span6" />
-		</div>
+		<label for="nom">Nom</label>			
+		<input id="nom" name="nom" type="text" placeholder="Rambo" class="span4" />
 
-		<label>Date de naissance</label>
+		<label for="prenom" id="firstname">Pr&eacute;nom</label>
+		<input id="prenom" name="prenom" type="text" placeholder="John" class="span4" />
+
+		<label for="man">Monsieur</label>
+		<input type="radio" id="man" name="civilite" value="man"/>
+		<label for="woman">Madame</label>
+		<input type="radio" id="woman" name="civilite" value="woman"/>
+		<label for="miss">Mademoiselle</label>
+		<input type="radio" id="miss" name="civilite" value="miss"/>
+
+		<label  id="ddn">Date de naissance</label>
 		<select id="jour" name="jour" class="span3"></select>
 		<select id="mois" name="mois" class="span5"></select>
 		<select id="annee" name="annee" class="span4"></select>
@@ -31,15 +29,12 @@
 		<label for="add" class="span3">Adresse</label>
 		<input id="adresse" name="adresse" type="text" placeholder="Rue du champ de mine n°1" class="span9"/>
 
-		<div class="row-fluid">
-			<label for="cp" class="span4">Code postal</label>
-			<label for="ville" class="span7">Ville</label>
+		<label for="cp">CP</label>
+		<input id="code_postal" name="code_postal" type="text" placeholder="4000"class="span3" />
 
-			<input id="code_postal" name="code_postal" type="text" placeholder="4000"class="span4" />
-			<input id="ville" name="ville" type="text" placeholder="Li&egrave;ge" class="span8" />
-		</div>
-		
-		<input type="submit" value="Envoyer" name="envoyer" class="btn btn-primary span12" />
+		<label for="ville" id="city">Ville</label>
+		<input id="ville" name="ville" type="text" placeholder="Li&egrave;ge" class="span5" />
+	
 	</form>
 </div>
 
@@ -58,11 +53,26 @@
 		$display .= '<div class="row-fluid">';
 		$display .= '<h3>'.$contest_with_prize['title'].'</h3>';
 
+		$display .= '<div class="content_prize span8">';
+
 		foreach ( $contest_with_prize['prizes_data'] as $prize ) 
 		{	
-			$display .= '<div class="span4 prize">';
+			$display .= '<div class="span6 prize">';
 			$display .= '<h4>'.$prize['title'].'</h4>';
-			$display .= '<img src="'.base_url() . THUMB_IMG . $prize['id'] .'.jpg" class="img-polaroid" title="'.$prize['title'].'" style="max-width: 128px;max-height:128px;"/>';
+
+			for ( $i = 0; $i < count($prize); $i++ )
+			{
+				$n = $i * 100;
+				$u = ($i + 1) * 100;
+
+				if ( $n < $prize['id'] && $prize['id'] < $u )
+				{
+					$folderName = $n.'-'.$u.'/';
+					break;
+				}
+			}
+
+			$display .= '<img src="'.base_url() . THUMB_IMG . $folderName . $prize['id'] .'.jpg" class="img-polaroid" title="'.$prize['title'].'" style="max-width: 128px;max-height:128px;"/>';
 			$display .= '<p class="valeur">'.$prize['value'].'&euro;</p>';
 
 			if ( $this->session->userdata('Connected') ) 
@@ -75,9 +85,20 @@
 			$display .= '</div>';
 		}
 
+		$display .= '</div>';
+
 		$display .= '<div class="astuces span4" >';
 		$display .= '<h4>Astuces</h4>';
-		$display .= '<p>'.str_replace("\n", '<br />',$contest_with_prize['text']).'</p>';
+
+		$display .= '<ul>';
+
+			$astuces = explode("\n", $contest_with_prize['text']);
+			for ( $i = 0; $i < count($astuces); $i++) 
+			{
+				$display .= '<li>'.$astuces[$i].'</li>';
+			}
+
+		$display .= '</ul>';
 
 		$display .= anchor($contest_with_prize['url'], 'Cliquez ICI pour jouer à ce concours', array('title' => 'Cliquez ICI pour jouer à ce concours', 'class' => 'btn btn-primary'));
 

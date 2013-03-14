@@ -81,7 +81,7 @@ class Admin extends CI_Controller
 			$this->form_validation->set_error_delimiters('<p class="alert alert-error">', '</p>');
 
 			$this->form_validation->set_rules('title', 'titre', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
-			$this->form_validation->set_rules('url', 'lien', 'trim|required|min_length[5]|prep_url|valid_url|xss_clean');
+			$this->form_validation->set_rules('url', 'lien', 'trim|required|min_length[5]|valid_url');
 			$this->form_validation->set_rules('text', 'astuces', 'trim|required|encode_php_tags|xss_clean');
 			
 			if ( $this->form_validation->run() )
@@ -154,7 +154,6 @@ class Admin extends CI_Controller
 
 				$last_prize_id = $this->M_Admin->addPrize($data);
 
-				//$id = array('contest_id' => $contest_id, 'prize_id' => $last_prize_id);
 				$id = array('test_id' => $contest_id, 'test2_id' => $last_prize_id);
 
 				$this->M_Admin->contests_to_prizes($id);
@@ -216,13 +215,43 @@ class Admin extends CI_Controller
 				break;
 			}		
 
-			imagejpeg ($img, 'web/uploads/full_size/'.$nom);
-			imagejpeg ($img, 'web/uploads/thumbnail/'.$nom);
+			for ( $i = 0; $i < $id; $i++ )
+			{
+				$n = $i * 100;
+				$u = ($i + 1) * 100;
+
+				if ( $n < $id && $id < $u )
+				{
+					$folderName = $n.'-'.$u;
+
+					if ( !is_dir(APPPATH.'../web/uploads/full_size/'.$folderName.'/') && !is_dir(APPPATH.'../web/uploads/thumbnail/'.$u.'/') )
+					{
+						mkdir(APPPATH.'../web/uploads/full_size/'.$folderName, 0777);
+						mkdir(APPPATH.'../web/uploads/thumbnail/'.$folderName, 0777);
+
+						imagejpeg ($img, 'web/uploads/full_size/'.$u.'/'.$nom);
+						imagejpeg ($img, 'web/uploads/thumbnail/'.$u.'/'.$nom);
+
+						break;
+					}
+					else
+					{
+						imagejpeg ($img, 'web/uploads/full_size/'.$folderName.'/'.$nom);
+						imagejpeg ($img, 'web/uploads/thumbnail/'.$folderName.'/'.$nom);
+
+						break;
+					}
+				}
+				else
+				{
+					echo 'bug';
+				}
+			}
 
 			$this->load->library('image_lib');
 
 			$config['image_library'] = 'gd2';
-	        $config['source_image'] = 'web/uploads/thumbnail/' . $nom;
+	        $config['source_image'] = 'web/uploads/thumbnail/'. $folderName .'/'. $nom;
 	        $config['create_thumb'] = FALSE;
 	        $config['maintain_ratio'] = TRUE;
 	        $config['width'] = 128;
@@ -231,7 +260,7 @@ class Admin extends CI_Controller
 	        $this->image_lib->initialize($config);
 	        $this->image_lib->resize();
 
-			return TRUE;
+			return TRUE; 
 		}	
 		return $erreur;	
 	}
@@ -276,6 +305,29 @@ class Admin extends CI_Controller
 		        	break;
 
 		        	case 'prize':
+
+		        		//                     TEST SUPPRESSION OK                      //
+						/*
+		        		for ( $i = 0; $i < $id; $i++ )
+						{
+							$n = $i * 100;
+							$u = ($i + 1) * 100;
+
+							if ( $n < $id && $id < $u )
+							{
+								$folderName = $n.'-'.$u.'/';
+								break;
+							}
+						}
+
+		        		if ( file_exists(APPPATH.'../web/uploads/full_size/'.$folderName.$id.'.jpg') )
+		        			unlink(APPPATH.'../web/uploads/full_size/'.$folderName.$id.'.jpg'); 
+
+		        		if ( file_exists(APPPATH.'../web/uploads/thumbnail/'.$folderName.$id.'.jpg') )
+		        			unlink(APPPATH.'../web/uploads/thumbnail/'.$folderName.$id.'.jpg'); 
+
+		        		*/
+
 		        		$this->M_Admin->deletePrize($id);
 		        		redirect('admin/afficher');
 		        	break; 
@@ -364,7 +416,7 @@ class Admin extends CI_Controller
 			elseif ( $type == 'contest' )
 			{
 				$this->form_validation->set_rules('title', ': Titre du concours ', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
-				$this->form_validation->set_rules('url', ': Lien du concours ', 'trim|required|min_length[5]|prep_url|valid_url|xss_clean');
+				$this->form_validation->set_rules('url', ': Lien du concours ', 'trim|required|min_length[5]|valid_url');
 				$this->form_validation->set_rules('text', ': Astuces pour ce concours ', 'trim|required|encode_php_tags|xss_clean');
 				$this->form_validation->set_rules('position', ': Position du concours ', 'trim|numeric|encode_php_tags|xss_clean');
 
