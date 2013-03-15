@@ -79,9 +79,9 @@
 			
 		}
 		
-		window.location.href = url;
+		window.open(url);
 	}
-	
+
 
     // SaveFielData récupère toutes les données du formulaire et appelle la fonction update Cookie.
 	var saveFieldData = function ( e )
@@ -110,7 +110,7 @@
 		// array to string 
 		var dataToString = JSON.stringify(userData);
 		
-		document.cookie = "userData=" + dataToString + ";expires=" + expires.toGMTString();
+		document.cookie = "userData=" + dataToString + ";expires=" + expires.toGMTString()+"; path=/";
 	}
 
 
@@ -129,9 +129,14 @@
 				for ( var i = 0; i < cookies.length; i++ )
 				{
 					var tmp = cookies[i].split('=');
-					
-					if ( tmp[0] == 'userData' )
-					{
+
+					if ( tmp[0] == "userData" )
+					{	
+						userData = jQuery.parseJSON(tmp[1]); 						
+						break;
+					}
+					else if ( tmp[0] == " userData")
+					{	
 						userData = jQuery.parseJSON(tmp[1]); 						
 						break;
 					}
@@ -186,7 +191,7 @@
 		$('#ville').on('blur', saveFieldData);
 
 		// Si une balise "a" être actionné on appelle la fonction getUrl 
-		$('a').on("click", processURL);
+		$('a.btn').on("click", processURL);
 	} );
 
 }( jQuery ) );

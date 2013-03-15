@@ -1,20 +1,46 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+* @file admin.php
+* @author M. D. (mikanono01@hotmail.com)
+* @version 1 (15/03/2013)
+* @brief Admin class CI_Controller. 
+* @brief Cette class sert à contrôler les affichages, les ajouts, ....
+*/
+
+/**
+* @class Admin
+* @author M. D. (mikanono01@hotmail.com)
+* @version 1 (15/03/2013)
+* @brief Cette class sert à contrôler les affichages, les ajouts, ....
+*/	
 class Admin extends CI_Controller 
 {
+	/** 
+	* @brief La function principale.
+	* @details Indique lors de la venue sur le site quelle action faire.
+	* @details Ici on lui demande de charger les sessions et d'exécuter la fonction afficher.
+	*/
 	public function index()
 	{	
 		$this->load->library('session');
 		$this->afficher();
 	}
 
+	/** 
+	* @brief La function afficher.
+	* @details Elle récupère tous les concours ainsi que tous les cadeaux.
+	* @details Pour se faire on charge le modèle M Admin qui lui comporte la requête Sql adaptée.
+	* @details Elle charge ensuite le nom et le titre de la vue à afficher.
+	*/
 	public function afficher()
 	{	
-		$this->load->helper('form');
 		$this->load->model('M_Admin'); 
 
+		// on récupère les concours.
 		$dataList['contests_with_prizes'] = $this->M_Admin->getContestsList();
 
+		// on associe chaque concours à son/ses cadeau(x).
 		foreach ( $dataList['contests_with_prizes'] as $key => $value ) 
 			$dataList['contests_with_prizes'][$key]['prizes_data'] = $this->M_Admin->getPrizesList($value['id']);
 
@@ -24,10 +50,19 @@ class Admin extends CI_Controller
 		$this->load->view('layout', $dataLayout);		
 	}
 
+	/** 
+	* @brief La function connect.
+	* @details Elle permet de se connecter comme son nom l'indique.
+	* @details On charge la librairie Form Validation qui va nous aidera à traiter les informations que l'on va recevoir.
+	* @details On crée les règles de validation pour chacun des champs.
+	* @details On lance la validation dans un if comme cela si c'est faux on charge l'helper form et on renvoie la page de connexion avec les messages d'erreur.
+	* @details Si la vérification est réussie, on crypte le mot de passe, on crée le tableau qui servira de comparaison avec la base de données.
+	* @details On charge le model et on appele sa fonction checkUser en lui passant le tableau, si l'utilisateur existe on lui créer une session et on le renvoie à la page d'accueil.
+	*/
 	public function connect () 
 	{
 		$this->load->library('form_validation');
-		$this->form_validation->set_error_delimiters('<p class="alert alert-error">', '</p>');
+		$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
 
 		$this->form_validation->set_rules('username', 'nom d\'utilisateur ', 'trim|required|min_length[5]|alpha_dash|encode_php_tags|xss_clean');
 		$this->form_validation->set_rules('password', 'mot de passe ', 'trim|required|min_length[5]|max_length[64]|alpha_dash|encode_php_tags|xss_clean');
@@ -45,10 +80,6 @@ class Admin extends CI_Controller
 				$this->session->set_userdata('Connected', true);
 				redirect('admin/afficher');
 			}
-			else 
-			{
-				echo "Utilisateur et/ou mot de passe inconnu";
-			}
 		}
 
 		$this->load->helper('form');
@@ -58,12 +89,20 @@ class Admin extends CI_Controller
         $this->load->view('layout', $dataLayout);
 	}
 
+	/** 
+	* @brief La function Disconnect.
+	* @details Elle détruit toutes les sessions et ainsi déconnect l'utilisateur avant de le renvoyer sur la page d'accueil.
+	*/
 	public function disconnect ()
 	{
 		$this->session->sess_destroy();
 		redirect('admin/afficher');
 	}
 
+	/** 
+	* @brief La function addContestView.
+	* @details Elle sert uniquement à charger l'helper form ainsi que la vue contest qui servira à l'ajout d'un concours.
+	*/
 	public function addContestView () 
 	{
 		$this->load->helper('form');
@@ -73,12 +112,21 @@ class Admin extends CI_Controller
         $this->load->view('layout', $dataLayout);		
 	}
 
+	/** 
+	* @brief La function addContest.
+	* @details Elle sert à l'ajout d'un concours.
+	* @details On vérifie que l'on est bien connecté, si on ne l'ait pas on est redirigé vers l'accueil.
+	* @details On charge la librairie form validation, on crée également les règles de validations pour les champs.
+	* @details Si la validation est correcte, on charge le model M_Admin, on crée le tableau de données et on l'envoie a la fonction addcontest du model.
+	* @details On récupère en même temps le dernier id ajouter avant de la passer à la fonction addPrizeVieuw.
+	* @details Si la validation a échoué on redirige vers le formulaire d'ajout de concours avec les erreurs et les champs compléter si c'est dernier son valid.
+	*/
 	public function addContest ()
 	{
 		if ( $this->session->userdata('Connected') ) 
 		{
 			$this->load->library('form_validation');			
-			$this->form_validation->set_error_delimiters('<p class="alert alert-error">', '</p>');
+			$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
 
 			$this->form_validation->set_rules('title', 'titre', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
 			$this->form_validation->set_rules('url', 'lien', 'trim|required|min_length[5]|valid_url');
@@ -92,7 +140,9 @@ class Admin extends CI_Controller
 							 'text' => $this->input->post('text')
 				);
 
+				// on récupère le dernier id entrer dans la base de données.
 				$last_contest_id = $this->M_Admin->addContest($data);
+				// on appele la fonction pour ajouter un cadeau et on lui donne l'id.
 				$this->addPrizesView($last_contest_id);
 			}
 			else
@@ -110,8 +160,14 @@ class Admin extends CI_Controller
 	    }
 	}
 
+	/** 
+	* @brief La function addPrizesView.
+	* @param $last_contest_id comporte l'id du concours auquel on va lui ajouter un cadeau.
+	* @details Elle sert à charger le helper form ainsi que la vue prize qui servira à l'ajout d'un cadeau, on passe à la vue l'id du concours.
+	*/
 	public function addPrizesView ( $last_contest_id = 0 )
 	{
+		// on regarde si l'id est donné par last_contest_id ou par l'URL
 		if ( $last_contest_id )
 			$contest_id = $last_contest_id;
 		else
@@ -125,12 +181,24 @@ class Admin extends CI_Controller
         $this->load->view('layout', $dataLayout);
 	}
 
+	/** 
+	* @brief La function addPrizes.
+	* @details Elle sert à l'ajout d'un cadeau.
+	* @details On vérifie que l'on est bien connecté, si on ne l'ait pas on est redirigé vers l'accueil.
+	* @details On charge la librairie form validation, on crée également les règles de validations pour les champs.
+	* @details Si la validation est correcte, on charge le model M_Admin, on crée le tableau de données et on l'envoie a la fonction addprize du model.
+	* @details On crée ensuite un tableau avec l'id du concours et celui du cadeau que l'ont envois à la fonction contests_to_prizes.
+	* @details On l'id du cadeau ainsi que l'image à la fonction saveImage.
+	* @details Si saveimage renvoie une erreur on supprime la dernière entrée de la table prise et on renvoie le formulaire d'ajout de cadeau.
+	* @details Si il n'y a pas d'erreur on renvois vers la page d'accueil.
+	* @details Si la validation a échoué on redirige vers le formulaire d'ajout de concours avec les erreurs et les champs compléter si c'est dernier son valid.
+	*/
 	public function addPrize ()
 	{
 		if ( $this->session->userdata('Connected') ) 
 		{
 			$this->load->library('form_validation');
-			$this->form_validation->set_error_delimiters('<p class="alert alert-error">', '</p>');
+			$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
 
 			$this->form_validation->set_rules('title', 'titre ', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
 			$this->form_validation->set_rules('value', 'valeur ', 'trim|required|numeric|min_length[1]|max_length[12]|encode_php_tags|xss_clean');
@@ -152,16 +220,19 @@ class Admin extends CI_Controller
 							 'value' => $this->input->post('value')
 				);
 
+				// on récupère le dernier id cadeau rentrer dans la base de données.
 				$last_prize_id = $this->M_Admin->addPrize($data);
 
 				$id = array('test_id' => $contest_id, 'test2_id' => $last_prize_id);
 
 				$this->M_Admin->contests_to_prizes($id);
 
+				// on regarde si l'image renvois une erreur.
 				$imageErreur = $this->saveImage($last_prize_id, $image);
 
 				if ( $imageErreur  !== TRUE )
 				{
+					// on supprime la dernière entrée en cas d'erreur.
 					$this->M_Admin->deletePrize($last_prize_id);
 
 					$this->load->helper('form');
@@ -194,6 +265,16 @@ class Admin extends CI_Controller
 	    }
 	}
 
+	/** 
+	* @brief La function addPrizesView.
+	* @param $id comporte l'id du cadeau qui servira de nom à l'image.
+	* @param $image comporte l'image.
+	* @details On teste si on a bien l'id et l'image sinon on return false.
+	* @details On crée le nom de l'image et on sélectionne son type grâce au switch.
+	* @details On crée une boucle afin de savoir si l'image peut être stockée dans le dossier ou s'il faut en créer un autre pour éviter des problèmes de surcharge.
+	* @details On teste si le dossier existe sinon on le crée avant d'écrire dedans.
+	* @details On charge la librairie image_lib qui va nous servire a créé une miniature.
+	*/
 	private function saveImage ($id, $image)
 	{
 		if ( $id && $image)
@@ -215,6 +296,7 @@ class Admin extends CI_Controller
 				break;
 			}		
 
+			// on regarde s'il faut créer un nouveau dossier et/ou s'il existe
 			for ( $i = 0; $i < $id; $i++ )
 			{
 				$n = $i * 100;
@@ -242,12 +324,9 @@ class Admin extends CI_Controller
 						break;
 					}
 				}
-				else
-				{
-					echo 'bug';
-				}
 			}
 
+			// on crée la miniature a partir de l'image enregistrer dans le dossier thumbnail.
 			$this->load->library('image_lib');
 
 			$config['image_library'] = 'gd2';
@@ -265,6 +344,12 @@ class Admin extends CI_Controller
 		return $erreur;	
 	}
 
+	/** 
+	* @brief La function deleteView.
+	* @details On récupére le type de contenu que l'on va modifier ainsi que son id grâce à l'URL.
+	* @details Suivant le type de contenu que l'on possède on donne une valeur spécifique à dataList['type'].
+	* @details On charge la vue en lui donnant les données nécessaires.
+	*/
 	public function deleteView ()
 	{
 		$type = $this->uri->segment(4);
@@ -287,6 +372,13 @@ class Admin extends CI_Controller
         $this->load->view('layout', $dataLayout);
 	}
 
+	/** 
+	* @brief La function delete.
+	* @details On vérifie que l'on est bien connecter.
+	* @details On récupére le type de contenu que ainsi que son id grâce à l'URL.
+	* @details Suivant le type de contenu que l'on possède on exécute une action bien définie.
+	* @details Pour un concours on va appeler la fonction qui va l'archiver et pour un cadeau celle qui va le supprimer. 
+	*/
 	public function delete ()
 	{
 		if ( $this->session->userdata('Connected') ) 
@@ -306,7 +398,7 @@ class Admin extends CI_Controller
 
 		        	case 'prize':
 
-		        		//                     TEST SUPPRESSION OK                      //
+		        		//  suppresion de l'image a partir de l'id.
 						/*
 		        		for ( $i = 0; $i < $id; $i++ )
 						{
@@ -339,6 +431,12 @@ class Admin extends CI_Controller
 		}
 	}
 
+	/** 
+	* @brief La function updateView.
+	* @details On récupére le type de contenu que l'on va modifier ainsi que son id grâce à l'URL.
+	* @details Suivant le type de contenu que l'on possède on récupère les informations concernant l'id et on déclare la vue que l'on souhaite charger.
+	* @details On charge la vue en lui donnant les données nécessaires.
+	*/
 	public function updateView ()
 	{
 		$this->load->model('M_Admin');
@@ -347,6 +445,7 @@ class Admin extends CI_Controller
 		$type  = $this->uri->segment(4);
         $id    = $this->uri->segment(3);
 
+        // on récupère les informations d'un cadeau ou d'un concours selon son id
         switch ( $type )
         {
         	case 'contest':
@@ -367,12 +466,24 @@ class Admin extends CI_Controller
         $this->load->view('layout', $dataLayout);
 	}
 
+
+	/** 
+	* @brief La function update.
+	* @details On vérifie que l'on est bien connecter.
+	* @details On charge le model et le helper.
+	* @details On récupère le type et l'id.
+	* @details Selon le type de contenu on suit des instructions précises.
+	* @details On déclare les règles de vérification et on teste les champs pour les deux types, en cas d'erreur on renvois vers le formulaire.
+	* @details Pour le type cadeau on vérifie si l'utilisateur a uploadé une nouvelle image, si une image est uploader alors on l'enregistre grace à saveImage.
+	* @details Si l'image ne retourne aucune erreur on enregistre les modifications apporter au cadeau.
+	* @details Pour le type concours on récupère les informations les vérifient et ont les envois à la fonction update.
+	*/
 	public function update () 
 	{
 		if ( $this->session->userdata('Connected') ) 
 		{
 			$this->load->library('form_validation');
-			$this->form_validation->set_error_delimiters('<p class="alert alert-error">', '</p>');
+			$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
 			$this->load->model('M_Admin');
 
 			$type 	=  $this->input->post('type');
@@ -451,4 +562,3 @@ class Admin extends CI_Controller
 
 
 }
-
