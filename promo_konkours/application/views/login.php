@@ -11,7 +11,6 @@
 				<input type="text" name="username" id="username" placeholder="anonymous" value="<?php echo set_value('username'); ?>" />
 				<?= form_error('username'); ?>
 
-
 				<label for="password">Mot de passe</label>
 				<input type="password" name="password" id="password" placeholder="***********" />
 				<?= form_error('password'); ?>

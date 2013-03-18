@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <title><?php echo $titre; ?></title>
         <link rel="stylesheet" type="text/css" href="<?= base_url() . CSS_DIR ?>style.css" media="screen" />
+        <!--[if lt IE 9]>
+            <script src="<?= base_url() . JS_DIR ?>html5shiv.js"></script>
+        <![endif]-->
         <meta name="viewport" content="width=device-width; initial-scale=1.0;">
     </head>
     <body>
@@ -27,7 +30,10 @@
             <?php echo $vue; ?>
 
         </div>
-        <script src="<?= base_url() . JS_DIR?>jquery.min.js"></script>
+        <script src="<?= base_url() . JS_DIR?>jquery.js"></script>
+        <script src="<?= base_url() . JS_DIR?>jquery.ui.js"></script>
+        <script src="<?= base_url() . JS_DIR?>bootstrap.js"></script>
         <script src="<?= base_url() . JS_DIR?>script.js"></script>
+        <script src="<?= base_url() . JS_DIR?>script2.js"></script>
     </body>
 </html>

@@ -4,7 +4,7 @@
 
 // -- variables globals
 
-	var userData = {'civilite' : '' ,'nom' : '', 'prenom' : '', 'jour': '', 'mois' : '', 'annee' : '', 'email' : '', 'adresse' : '', 'code_postal' : '', 'ville' : '' },
+	var userData = {'civilite' : 'man' ,'nom' : 'Rambo', 'prenom' : 'John', 'jour': '1', 'mois' : '1', 'annee' : '1985', 'email' : 'john.rambo@exemple.be', 'adresse' : '62 Rue de Lille', 'code_postal' : '75343', 'ville' : 'Paris' },
 		key = new Array('civilite', 'nom' , 'prenom', 'jour', 'mois', 'annee', 'email', 'adresse', 'code_postal', 'ville');
 
 	var mois = new Array();
@@ -46,6 +46,9 @@
 		var url = $(this).attr('href');
 		
 		e.preventDefault();
+
+		if ( userData['nom'] == 'Rambo' && userData['prenom'] == 'John' )
+			alert('ATTENTION, remplissez le formulaire pour que tous les concours soient complétés AUTOMATIQUEMENT avec vos informations.');
 		
 		for (var i = 0; i < key.length; i++) 
 		{
@@ -160,7 +163,10 @@
 			if ( fieldName == 'annee' )
 				$('option[name="' + userData[fieldName] +'"]').attr('selected', 'selected');
 
-			$('#'+ fieldName).attr('value', userData[fieldName]);
+			if ( tmp[0] == "userData" || tmp[0] == " userData")
+				$('#'+ fieldName).attr('value', userData[fieldName]);
+			else
+				$('#'+ fieldName).attr('placeholder', userData[fieldName]);
 		} 
 	}
 
@@ -168,7 +174,7 @@
 
     // On appelle la fonction servant à creer les Select du formulaire.
     // On appelle la fonction servant à remettre les informations dans les champs du formulaire.
-    // on met un écouteur d'événement sur chacun des champs à fin de récupéré les valeurs une fois que le champ a perdu le focus.
+    // on met un écouteur d'événement sur chacun des champs à fin de récupéré les valeurs une fois que le champ a perdu le focus ou au clic pour les boutons radio.
 	$( function () {
 
 		// -- onload routines

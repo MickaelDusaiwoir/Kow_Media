@@ -39,12 +39,11 @@ class Admin extends CI_Controller
 
 		// on récupère les concours.
 		$dataList['contests_with_prizes'] = $this->M_Admin->getContestsList();
-
 		// on associe chaque concours à son/ses cadeau(x).
 		foreach ( $dataList['contests_with_prizes'] as $key => $value ) 
 			$dataList['contests_with_prizes'][$key]['prizes_data'] = $this->M_Admin->getPrizesList($value['id']);
 
-		$dataLayout['titre']	=  'Administration - Accueil';
+		$dataLayout['titre']	=  'Accueil';
         $dataLayout['vue'] 		=  $this->load->view('index', $dataList ,true);
 
 		$this->load->view('layout', $dataLayout);		
@@ -84,7 +83,7 @@ class Admin extends CI_Controller
 
 		$this->load->helper('form');
 
-		$dataLayout['titre'] 	= 'Administration - Connection';
+		$dataLayout['titre'] 	= 'Connection';
         $dataLayout['vue'] 		=  $this->load->view('login', null ,true);
         $this->load->view('layout', $dataLayout);
 	}
@@ -96,7 +95,7 @@ class Admin extends CI_Controller
 	public function disconnect ()
 	{
 		$this->session->sess_destroy();
-		redirect('admin/afficher');
+		redirect(base_url());
 	}
 
 	/** 
@@ -107,7 +106,7 @@ class Admin extends CI_Controller
 	{
 		$this->load->helper('form');
 
-		$dataLayout['titre'] 	=  'Administration - Ajouter un concours';
+		$dataLayout['titre'] 	=  'Ajouter un concours';
         $dataLayout['vue'] 		=  $this->load->view('contest', null ,true);
         $this->load->view('layout', $dataLayout);		
 	}
@@ -149,14 +148,14 @@ class Admin extends CI_Controller
 			{
 				$this->load->helper('form');
 
-				$dataLayout['titre'] 	=  'Administration - Ajouter un concours';
+				$dataLayout['titre'] 	=  'Ajouter un concours';
 		        $dataLayout['vue'] 		=  $this->load->view('contest', null ,true);
 		        $this->load->view('layout', $dataLayout);
 			}
 	    }
 	    else
 	    {
-	    	redirect('admin/afficher');
+	    	redirect(base_url());
 	    }
 	}
 
@@ -176,7 +175,7 @@ class Admin extends CI_Controller
 		$this->load->helper('form');
 
 		$dataList['id'] 		= $contest_id;
-		$dataLayout['titre'] 	=  'Administration - Ajouter un concours';
+		$dataLayout['titre'] 	=  'Ajouter un cadeau';
         $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
         $this->load->view('layout', $dataLayout);
 	}
@@ -223,7 +222,7 @@ class Admin extends CI_Controller
 				// on récupère le dernier id cadeau rentrer dans la base de données.
 				$last_prize_id = $this->M_Admin->addPrize($data);
 
-				$id = array('test_id' => $contest_id, 'test2_id' => $last_prize_id);
+				$id = array('contest_id' => $contest_id, 'prize_id' => $last_prize_id);
 
 				$this->M_Admin->contests_to_prizes($id);
 
@@ -239,7 +238,7 @@ class Admin extends CI_Controller
 
 					$dataList['erreur']		=  $imageErreur ;
 					$dataList['id'] 		=  $contest_id; 
-					$dataLayout['titre'] 	=  'Administration - Ajouter un cadeau';
+					$dataLayout['titre'] 	=  'Ajouter un cadeau';
 			        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
 			        $this->load->view('layout', $dataLayout);
 				}
@@ -254,14 +253,14 @@ class Admin extends CI_Controller
 
 				$dataList['erreur']		=  $erreur;
 				$dataList['id'] 		=  $contest_id; 
-				$dataLayout['titre'] 	=  'Administration - Ajouter un cadeau';
+				$dataLayout['titre'] 	=  'Ajouter un cadeau';
 		        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
 		        $this->load->view('layout', $dataLayout);
 			}			
 	    }
 	    else
 	    {
-	    	redirect('admin/afficher');
+	    	redirect(base_url());
 	    }
 	}
 
@@ -367,7 +366,7 @@ class Admin extends CI_Controller
         }
 
 		$dataList['id'] 		=  $id; 
-		$dataLayout['titre'] 	=  'Administration - Supprimer ce '.$type;
+		$dataLayout['titre'] 	=  'Supprimer ce '.$type;
         $dataLayout['vue'] 		=  $this->load->view('deleteContent', $dataList ,true);
         $this->load->view('layout', $dataLayout);
 	}
@@ -427,7 +426,7 @@ class Admin extends CI_Controller
 		    }
 		}
 		else {
-			redirect('admin/afficher');
+			redirect(base_url());
 		}
 	}
 
@@ -449,19 +448,19 @@ class Admin extends CI_Controller
         switch ( $type )
         {
         	case 'contest':
-        		$dataList['data'] = $this->M_Admin->getItem($id, 'test'); //contest
+        		$dataList['data'] = $this->M_Admin->getItem($id, 'contests'); 
         		$view = 'contest';
         		break;
 
         	case 'prize':
-        		$dataList['data'] = $this->M_Admin->getItem($id, 'test2'); // prizes
+        		$dataList['data'] = $this->M_Admin->getItem($id, 'prizes'); 
         		$view = 'prize';
         		break;
         }
 
         $dataList['id']			=  $id;
         $dataList['type'] 		=  $type;
-		$dataLayout['titre'] 	=  'Administration - Modifier ce '.$type;
+		$dataLayout['titre'] 	=  'Modifier ce '.$type;
         $dataLayout['vue'] 		=  $this->load->view( $view , $dataList ,true);
         $this->load->view('layout', $dataLayout);
 	}
@@ -493,7 +492,7 @@ class Admin extends CI_Controller
 			{
 				$this->form_validation->set_rules('title', 'titre', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
 				$this->form_validation->set_rules('value', 'valeur', 'trim|required|numeric|min_length[1]|max_length[12]|encode_php_tags|xss_clean');
-				$this->form_validation->set_rules('position', ': Position du cadeau ', 'trim|numeric|encode_php_tags|xss_clean');
+				$this->form_validation->set_rules('position', 'position', 'trim|numeric|encode_php_tags|xss_clean');
 
 				$image = isset($_FILES['image']) ?  $_FILES['image'] : null ;
 
@@ -512,14 +511,14 @@ class Admin extends CI_Controller
 						$erreur = $this->saveImage($id, $image);
 
 					if ( $erreur == TRUE ) 
-						$this->M_Admin->update($data, 'test2', $id); //'prizes'
+						$this->M_Admin->update($data, 'prizes', $id); 
 					
 				}
 				else
 				{
 					$dataList['id']			=  $id;
 			        $dataList['type'] 		=  $type;
-					$dataLayout['titre'] 	=  'Administration - Modifier ce '.$type;
+					$dataLayout['titre'] 	=  'Modifier ce '.$type;
 			        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
 			        $this->load->view('layout', $dataLayout);
 				}
@@ -529,7 +528,7 @@ class Admin extends CI_Controller
 				$this->form_validation->set_rules('title', ': Titre du concours ', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
 				$this->form_validation->set_rules('url', ': Lien du concours ', 'trim|required|min_length[5]|valid_url');
 				$this->form_validation->set_rules('text', ': Astuces pour ce concours ', 'trim|required|encode_php_tags|xss_clean');
-				$this->form_validation->set_rules('position', ': Position du concours ', 'trim|numeric|encode_php_tags|xss_clean');
+				$this->form_validation->set_rules('position', 'position', 'trim|numeric|encode_php_tags|xss_clean');
 
 				if ( $this->form_validation->run() )
 				{
@@ -542,13 +541,13 @@ class Admin extends CI_Controller
 								 'position' => $position
 					);
 
-					$this->M_Admin->update($data, 'test', $id); //'contests'
+					$this->M_Admin->update($data, 'contests', $id); 
 				}
 				else
 				{
 					$dataList['id']			=  $id;
 			        $dataList['type'] 		=  $type;
-					$dataLayout['titre'] 	=  'Administration - Modifier ce '.$type;
+					$dataLayout['titre'] 	=  'Modifier ce '.$type;
 			        $dataLayout['vue'] 		=  $this->load->view('contest', $dataList ,true);
 			        $this->load->view('layout', $dataLayout);
 				}
@@ -556,7 +555,7 @@ class Admin extends CI_Controller
 		}
 		else 
 		{
-			redirect('admin/afficher');
+			redirect(base_url());
 		}
 	}
 
