@@ -1,4 +1,4 @@
-<section id="dialog-message" title="promokonkours.be" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+﻿<section id="dialog-message" title="promokonkours.be" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
   <header>
 	PromoKonkours.be
   </header>
@@ -13,7 +13,7 @@
   </footer>
 </section>
 
-<div id="userData">
+<section id="userData">
 	<h2>
 		1. Complétez 1X
 	</h2>
@@ -24,7 +24,7 @@
 		<input id="nom" name="nom" type="text" placeholder="Rambo" />
 
 		<label for="prenom" id="firstname">Pr&eacute;nom</label>
-		<input id="prenom" name="prenom" type="text" placeholder="John" />
+		<input id="prenom" name="prenom" type="text" />
 
 		<label for="man" class="radio">Monsieur
 			<input type="radio" id="man" name="civilite" value="man"/>
@@ -44,27 +44,42 @@
 		<select id="annee" name="annee" ></select>
 
 		<label for="email">E-mail</label>
-		<input id="email" name="email" type="email" placeholder="john.rambo@exemple.com" />
+		<input id="email" name="email" type="email" />
 
 		<label for="add">Adresse</label>
-		<input id="adresse" name="adresse" type="text" placeholder="Rue du champ de mine n°1" />
+		<input id="adresse" name="adresse" type="text" />
 
 		<label for="cp">CP</label>
-		<input id="code_postal" name="code_postal" type="text" placeholder="4000" />
+		<input id="code_postal" name="code_postal" type="text" />
 
 		<label for="ville" id="city">Ville</label>
-		<input id="ville" name="ville" type="text" placeholder="Li&egrave;ge" />
+		<input id="ville" name="ville" type="text" />
 	
 	</form>
 
-	<div id="progress">
-		<p>0%</p>
-		<progress value="5" min="0" max="100"></progress>
-	</div>
+	<section id="progress">
+	<h1 class="no_show">Barre de progression</h1>		
+		<progress value="0" min="0" max="100"><span></span></progress>
+		<p class="pourcentage">
+			0%
+		</p>
+	</section>
 
-</div>
+	<section id="intro">
+		<h1 class="no_show">Introduction</h1>
+		<p><a href="http://www.kowmedia.com/" title="Visiter le site KowMedia" target="_blank">Kow<span>Media</span></a> a créé <em>pour vous</em> un système permettant de participer à une tonne de concours en ne remplissant qu'<strong>UNE SEULE FOIS</strong> le formulaire.</p>
+		<p>Pour cela, rien de plus simple&nbsp;!</p>
+		<ol>
+			<li><strong>Complétez 1x le formulaire</strong> ci-dessus.</li>
+			<li><strong>Suivez les instructions</strong> de chaque concours</li>
+		</ol>
+	</section>
 
-<div id="contests">
+	
+
+</section>
+
+<section id="contests">
 <h2>
 	2. Jouez <?= count($contests_with_prizes) ?>X
 </h2>
@@ -83,7 +98,7 @@
 
 		// Déclaration du conteneur et du titre du concours.
 		$display .= '<article class="contest">';
-		$display .= '<header><h3><a href="'.$contest_with_prize['url'].'title="Cliquez pour participer à ce concours">Concours GRATUIT ' . $countContest.'&nbsp;: '. $contest_with_prize['title'] .'</a></h3></header>';
+		$display .= '<header><h3><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours">Concours GRATUIT ' . $countContest.'&nbsp;: '. $contest_with_prize['title'] .'</a></h3></header>';
 
 		$display .= '<div class="content_prize">';
 
@@ -165,4 +180,4 @@
 	echo $display; 
 ?>
 
-</div>
+</section>

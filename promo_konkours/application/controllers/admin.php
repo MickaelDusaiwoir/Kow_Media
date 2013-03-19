@@ -23,6 +23,9 @@ class Admin extends CI_Controller
 	*/
 	public function index()
 	{	
+		if ( $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'] == $_SERVER['SERVER_NAME'].'/promo_konkours/index.php' )
+			header('Location :'.$_SERVER['SERVER_NAME'].'/promo_konkours/index.php?mb=1');
+
 		$this->load->library('session');
 		$this->afficher();
 	}

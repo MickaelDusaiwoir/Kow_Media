@@ -4,11 +4,12 @@
 
 // -- variables globals
 
-	var userData = {'civilite' : 'man' ,'nom' : 'Rambo', 'prenom' : 'John', 'jour': '1', 'mois' : '1', 'annee' : '1985', 'email' : 'john.rambo@exemple.be', 'adresse' : '62 Rue de Lille', 'code_postal' : '75343', 'ville' : 'Paris' },
-		key = new Array('civilite', 'nom' , 'prenom', 'jour', 'mois', 'annee', 'email', 'adresse', 'code_postal', 'ville');
+	var userData = {'civilite' : '' ,'nom' : '', 'prenom' : '', 'jour': '', 'mois' : '', 'annee' : '', 'email' : '', 'adresse' : '', 'code_postal' : '', 'ville' : '' },
+		key = new Array('civilite', 'nom' , 'prenom', 'jour', 'mois', 'annee', 'email', 'adresse', 'code_postal', 'ville'),
+		defaultValue = {'civilite' : 'man' ,'nom' : 'Rambo', 'prenom' : 'John', 'jour': '1', 'mois' : '1', 'annee' : '1985', 'email' : 'john.rambo@exemple.be', 'adresse' : '62 Rue de Lille', 'code_postal' : '75343', 'ville' : 'Paris' },
+		settings = {};
 
 	var mois = new Array();
-
 		mois = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
 // -- methods
 
@@ -34,22 +35,37 @@
 
 	}
 
-
     // processURL annule le comportement par defaut du lien.
-    // Cette fonction prépare également le lien avec les données personnelles de l'utilisateur,
-    // en remplacent toutes les chaines de caractères commencent préfixe de % par la valeur lui correspondante.
+    
     // Une fois l'URL créer la personne est redirigée vers la page du concours. 
     // La condition sert à mettre le paramètre représentant le sexe de la personne dans l'URL du concours cible
     // Ce paramètre voit sa valeur varier selon les paramètres attendus par le site exemple ( H|F ou M.|Mme, ....).
 	var processURL = function ( e ) 
     {
-		var url = $(this).attr('href');
+		var url = $(this).attr('href'),
+			param;
 		
 		e.preventDefault();
 
-		if ( userData['nom'] == 'Rambo' && userData['prenom'] == 'John' )
-			alert('ATTENTION, remplissez le formulaire pour que tous les concours soient complétés AUTOMATIQUEMENT avec vos informations.');
+		if ( userData['nom'] == '' && userData['prenom'] == '' )
+		{
+			if ( settings['alert_data'] == '1')
+				alert('ATTENTION, remplissez le formulaire pour que tous les concours soient complétés AUTOMATIQUEMENT avec vos informations.');
+			url = buildRequest(defaultValue, url);
+		}
+		else
+		{
+			url = buildRequest(userData, url);
+		}		
 		
+		//window.open(url);
+	}
+
+	// Cette fonction prépare le lien avec les données personnelles de l'utilisateur,
+    // en remplacent toutes les chaines de caractères commencent par le préfixe % et ayant la valeur lui correspondante.
+    // Les paramètre sont l'url et le tableau a parcourir.
+	var buildRequest = function ( data, url ) {
+
 		for (var i = 0; i < key.length; i++) 
 		{
             var fieldName = key[i]; 
@@ -59,7 +75,7 @@
                 var reg = new RegExp("[( | )]+","g");
                 var match = url.split(reg);
 
-                switch( userData[fieldName] )
+                switch( data[fieldName] )
                 {
                     case 'woman':
                         url = match[0].replace('%sexe', match[2]);
@@ -77,12 +93,11 @@
             }		
             else
             {
-                url = url.replace('%' + fieldName, userData[fieldName]);
-            }
-			
+                url = url.replace('%' + fieldName, data[fieldName]);
+            }		
 		}
-		
-		window.open(url);
+
+		return url;
 	}
 
 
@@ -114,6 +129,8 @@
 		var dataToString = JSON.stringify(userData);
 		
 		document.cookie = "userData=" + dataToString + ";expires=" + expires.toGMTString()+"; path=/";
+
+		progressBar();
 	}
 
 
@@ -163,12 +180,97 @@
 			if ( fieldName == 'annee' )
 				$('option[name="' + userData[fieldName] +'"]').attr('selected', 'selected');
 
-			if ( tmp[0] == "userData" || tmp[0] == " userData")
+			if ( userData[fieldName] !== '' )
 				$('#'+ fieldName).attr('value', userData[fieldName]);
 			else
-				$('#'+ fieldName).attr('placeholder', userData[fieldName]);
+				$('#'+ fieldName).attr('placeholder', defaultValue[fieldName]);
 		} 
 	}
+
+
+	var getSettings = function () 
+	{
+		var url = document.URL,
+			tmp;
+
+		tmp = url.split('?');
+
+		if ( tmp[1] )
+		{
+			var param = tmp[1].split('&');
+
+			for ( var i = 0; i < param.length; i++ ) 
+			{
+				var tmp = param[i].split('=');
+
+				settings[tmp[0]] = tmp[1];
+			}
+		}
+
+		progressBar();
+		console.log(settings);
+	}
+
+	var progressBar = function () 
+	{
+		var nbInputText = 0, nbInputSelect = 0, nbInputEmail = 0, nbInputRadio = 0, nbInputs = 0, formComplete = new Array;
+		nbInputText = $('#userData').find('input[type="text"]').length;
+		nbInputSelect = $('#userData').find('select').length;
+		nbInputEmail = $('#userData').find('input[type="email"]').length;
+		nbInputRadio = $('#userData').find('input[type="radio"]').length - 2;
+		nbInputs = nbInputText + nbInputSelect + nbInputEmail + nbInputRadio;
+		
+		if ( settings['pb'] == 1 )
+		{ 
+			if ( document.cookie )
+			{
+				var cookies = document.cookie.split(';');
+
+				if ( cookies )
+				{
+					var pourcentage = 0, 
+						totalPourcentage = 0;
+
+					pourcentage = 100 / nbInputs;
+
+					for ( var i = 0; i < cookies.length; i++ )
+					{
+						var tmp = cookies[i].split('=');
+
+						if ( tmp[0] == "userData" || tmp[0] == " userData")
+						{	
+							formComplete = jQuery.parseJSON(tmp[1]);
+
+							for( var y = 0; y < key.length; y++ ) 
+							{
+								if( formComplete[key[y]] !== '' )
+								{
+									totalPourcentage += pourcentage;
+								}
+							}
+							break;
+						}
+					}
+				}
+			}
+
+			$('progress').attr('value', totalPourcentage);
+			$('#progress p').text(totalPourcentage + ' %');
+
+			if( totalPourcentage == '100' ) 
+			{
+				$('.pourcentage').fadeOut();
+				$('#progress progress').fadeOut( function() {
+					$('#progress').append('<div class="formCompleted"><strong class="icon-ok">Formulaire complet&nbsp;!</strong><p>Il ne vous reste plus qu\'à choisir <span>vos cadeaux</span></p></div>');
+				});
+			}
+		}
+		else
+		{
+			$('#progress').hide();
+		}
+	}
+
 
 	// Fonction s'exécutant dès le chargement de la page
 
@@ -181,7 +283,12 @@
 		
 		buildSelectsForm();
 		
-		initFormValues();	
+		initFormValues();
+
+		getSettings();	
+
+		if ( settings['mb'] == 1 )
+			$('#dialog-message').modal('toggle');
 
         $('#man').on('click', saveFieldData);
         $('#woman').on('click', saveFieldData);

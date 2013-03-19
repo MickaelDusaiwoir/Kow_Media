@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://local.mickael.com/promo_konkours';
+$config['base_url']	= 'http://'.$_SERVER['SERVER_NAME'].'/promo_konkours/';
 
 /*
 |--------------------------------------------------------------------------

@@ -7,7 +7,7 @@
         <!--[if lt IE 9]>
             <script src="<?= base_url() . JS_DIR ?>html5shiv.js"></script>
         <![endif]-->
-        <meta name="viewport" content="width=device-width; initial-scale=1.0;">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <div id="wrap">                                                        
@@ -15,7 +15,7 @@
                 if ( $this->session->userdata('Connected') )
                 {
                     $admin_navBar  = '<div id="connexion">';
-                    $admin_navBar .='<ul>';
+                    $admin_navBar .= '<ul>';
                     $admin_navBar .= '<li>'.anchor('admin/afficher', 'Accueil', array('title' => 'Retourner sur la page d\'accueil', 'class' => 'icon-home')).'</li>'; 
                     $admin_navBar .= '<li>'.anchor('admin/addContestView', 'Ajouter un concours', array('title' => 'Ajouter un concours', 'class' => 'icon-doc-new')).'</li>'; 
                     $admin_navBar .= '<li>'.anchor('admin/disconnect', 'Se d&eacute;connecter', array('title' => 'Se d&eacute;connecter', 'class' => 'icon-logout'));
@@ -27,7 +27,7 @@
                 
             <h1 id="no_show"><?php echo $titre; ?></h1>
                 
-            <?php echo $vue; ?>
+            <?= $vue; ?>
 
         </div>
         <script src="<?= base_url() . JS_DIR?>jquery.js"></script>
