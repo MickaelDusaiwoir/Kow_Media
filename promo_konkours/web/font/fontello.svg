@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20100429 at Tue Mar 19 10:41:00 2013
+Created by FontForge 20100429 at Wed Mar 20 10:03:01 2013
  By root
 Copyright (C) 2012 by original authors @ fontello.com
 </metadata>
@@ -41,6 +41,8 @@ d="M0 209v282h359v359h282v-359h359v-282h-359v-359h-282v359h-359z" />
 d="M0 -138l68 343l274 -273zM137 254l422 422l259 -260l-422 -421zM668 748q1 28 19 52.5t42 37t53.5 10t51.5 -24.5l131 -131q27 -29 24 -68.5t-30 -66.5t-66.5 -30t-68.5 24l-131 131q-27 27 -25 66z" />
     <glyph glyph-name="uniE070" unicode="&#xe070;" 
 d="M0 260l162 162l166 -164l508 510l164 -164l-672 -672z" />
+    <glyph glyph-name="uniE0AE" unicode="&#xe0ae;" horiz-adv-x="781" 
+d="M0 264l391 586l390 -586h-211v-414h-359v414h-211z" />
     <glyph glyph-name="uniE0BD" unicode="&#xe0bd;" horiz-adv-x="949" 
 d="M0 668l188 182h519v-348h-86v260h-369v-156h-166v-668h418v-88h-504v818zM373 57v162h209v207h160v-207h207v-162h-207v-207h-160v207h-209z" />
     <glyph glyph-name="uniE0E0" unicode="&#xe0e0;" horiz-adv-x="906" 

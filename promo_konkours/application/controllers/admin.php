@@ -23,9 +23,6 @@ class Admin extends CI_Controller
 	*/
 	public function index()
 	{	
-		if ( $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'] == $_SERVER['SERVER_NAME'].'/promo_konkours/index.php' )
-			header('Location :'.$_SERVER['SERVER_NAME'].'/promo_konkours/index.php?mb=1');
-
 		$this->load->library('session');
 		$this->afficher();
 	}
@@ -46,6 +43,20 @@ class Admin extends CI_Controller
 		foreach ( $dataList['contests_with_prizes'] as $key => $value ) 
 			$dataList['contests_with_prizes'][$key]['prizes_data'] = $this->M_Admin->getPrizesList($value['id']);
 
+		$key = array('mb','pb','css','btn','btn','title1','title2','pub','after_title1','after_title2');
+
+		for ( $i = 0; $i < count($key); $i++ )
+			$param[$key[$i]] = isset($_GET[$key[$i]]) ? $_GET[$key[$i]] : '0';
+
+		//$param['mb'] = isset($_GET['mb']) ? $_GET['mb'] : '0';
+		//$param['pb'] = isset($_GET['pb']) ? $_GET['pb'] : '0';
+		//$param['css'] = isset($_GET['css']) ? $_GET['css'] : '0';
+		//$param['btn'] = isset($_GET['btn']) ? $_GET['btn'] : '0';
+		//$param['title1'] = isset($_GET['title1']) ? $_GET['title1'] : 0;
+		//$param['title2'] = isset($_GET['title2']) ? $_GET['title2'] : 0;
+
+
+		$dataList['param']		=  $param;
 		$dataLayout['titre']	=  'Accueil';
         $dataLayout['vue'] 		=  $this->load->view('index', $dataList ,true);
 
@@ -247,7 +258,7 @@ class Admin extends CI_Controller
 				}
 				elseif ( $imageErreur == TRUE) 
 				{
-					redirect('admin/afficher');
+					redirect(base_url());
 				}				
 			}
 			else

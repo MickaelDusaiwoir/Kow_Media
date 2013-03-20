@@ -15,7 +15,7 @@
 
 <section id="userData">
 	<h2>
-		1. Complétez 1X
+		1. Complétez <em>1X</em>
 	</h2>
 	<form method="post" action="#" id="form">
 
@@ -58,21 +58,28 @@
 	</form>
 
 	<section id="progress">
-	<h1 class="no_show">Barre de progression</h1>		
+	<h1 class="no_show">Barre de progression</h1>
+		<strong class="current icon-cancel"></strong>		
 		<progress value="0" min="0" max="100"><span></span></progress>
 		<p class="pourcentage">
-			0%
+			<span>0</span>%
 		</p>
+		<small class="icon-cancel">Etape 2&nbsp;: Choisissez vos cadeaux</small>
 	</section>
 
 	<section id="intro">
-		<h1 class="no_show">Introduction</h1>
-		<p><a href="http://www.kowmedia.com/" title="Visiter le site KowMedia" target="_blank">Kow<span>Media</span></a> a créé <em>pour vous</em> un système permettant de participer à une tonne de concours en ne remplissant qu'<strong>UNE SEULE FOIS</strong> le formulaire.</p>
-		<p>Pour cela, rien de plus simple&nbsp;!</p>
+		<article class="pub" id="pub_1">
+			<h1 class="no_show">Introduction</h1>
+			<p><a href="http://www.kowmedia.com/" title="Visiter le site KowMedia" target="_blank">Kow<span>Media</span></a> a créé <em>pour vous</em> un système permettant de participer à une tonne de concours en ne remplissant qu'<strong>UNE SEULE FOIS</strong> le formulaire.</p>
+			<p>Pour cela, rien de plus simple&nbsp;!</p>
 		<ol>
 			<li><strong>Complétez 1x le formulaire</strong> ci-dessus.</li>
 			<li><strong>Suivez les instructions</strong> de chaque concours</li>
 		</ol>
+		</article>
+		<article class="pub" id="pub_2">
+			<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here'</p>
+		</article>
 	</section>
 
 	
@@ -81,7 +88,7 @@
 
 <section id="contests">
 <h2>
-	2. Jouez <?= count($contests_with_prizes) ?>X
+	2. Jouez <em><?= count($contests_with_prizes) ?>X</em>
 </h2>
 
 <?php 
@@ -161,6 +168,8 @@
 
 		$display .= anchor($contest_with_prize['url'], 'Je valide&nbsp;!', array('title' => 'Cliquez ICI pour participer à ce concours', 'class' => 'btn'));
 
+		$display .= '</aside>';
+
 		// Si on est connecté ont affiche les options d'administrations des concours (modifier / supprimer).
 		if ( $this->session->userdata('Connected') ) 
 		{
@@ -169,7 +178,7 @@
 			$display .= anchor('admin/deleteView/'.$contest_with_prize['id'].'/contest', '<span>Supprimer ce concours</span>', array('title' => 'Supprimer ce concours', 'class' => 'icon-cancel')); 
 			$display .= '</div>';
 		}
-		$display .= '</aside>';
+		
 		$display .= '</article>';		
 
 		$countContest += 1;

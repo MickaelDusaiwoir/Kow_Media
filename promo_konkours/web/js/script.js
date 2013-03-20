@@ -6,11 +6,11 @@
 
 	var userData = {'civilite' : '' ,'nom' : '', 'prenom' : '', 'jour': '', 'mois' : '', 'annee' : '', 'email' : '', 'adresse' : '', 'code_postal' : '', 'ville' : '' },
 		key = new Array('civilite', 'nom' , 'prenom', 'jour', 'mois', 'annee', 'email', 'adresse', 'code_postal', 'ville'),
-		defaultValue = {'civilite' : 'man' ,'nom' : 'Rambo', 'prenom' : 'John', 'jour': '1', 'mois' : '1', 'annee' : '1985', 'email' : 'john.rambo@exemple.be', 'adresse' : '62 Rue de Lille', 'code_postal' : '75343', 'ville' : 'Paris' },
-		settings = {};
+		defaultValue = {'civilite' : 'man' ,'nom' : 'Rambo', 'prenom' : 'John', 'jour': '1', 'mois' : '1', 'annee' : '1985', 'email' : 'john.rambo@exemple.be', 'adresse' : '62 Rue de Lille', 'code_postal' : '75343', 'ville' : 'Paris' };
 
 	var mois = new Array();
 		mois = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
+
 // -- methods
 
 
@@ -32,7 +32,6 @@
 		{
 			$('<option></option').attr('value', u).attr('name', u).text(u).appendTo($('#annee'));
 		};
-
 	}
 
     // processURL annule le comportement par defaut du lien.
@@ -168,47 +167,29 @@
 		{
 			var fieldName = key[i];
 			
-			if ( fieldName == 'civilite' )
+			if ( fieldName == 'civilite' &&  userData['civilite'] !== ''  )
 				$('#' + userData[fieldName]).attr('checked', 'checked');
 
-			if ( fieldName == 'mois')
+			if ( fieldName == 'mois' &&  userData['mois'] !== '' )
 				$('option[name="' + mois[userData[fieldName] - 1] +'"]').attr('selected', 'selected');
+			else
+				$('option[name="' + defaultValue[fieldName] +'"]').attr('selected', 'selected');
 
-			if ( fieldName == 'jour' )
+			if ( fieldName == 'jour' &&  userData['jour'] !== '' )
 				$('option[name="' + userData[fieldName] +'"]').attr('selected', 'selected');
+			else
+				$('option[name="' + defaultValue[fieldName] +'"]').attr('selected', 'selected');
 
-			if ( fieldName == 'annee' )
+			if ( fieldName == 'annee' &&  userData['annee'] !== '' )
 				$('option[name="' + userData[fieldName] +'"]').attr('selected', 'selected');
+			else
+				$('option[name="' + defaultValue[fieldName] +'"]').attr('selected', 'selected');
 
 			if ( userData[fieldName] !== '' )
 				$('#'+ fieldName).attr('value', userData[fieldName]);
 			else
 				$('#'+ fieldName).attr('placeholder', defaultValue[fieldName]);
 		} 
-	}
-
-
-	var getSettings = function () 
-	{
-		var url = document.URL,
-			tmp;
-
-		tmp = url.split('?');
-
-		if ( tmp[1] )
-		{
-			var param = tmp[1].split('&');
-
-			for ( var i = 0; i < param.length; i++ ) 
-			{
-				var tmp = param[i].split('=');
-
-				settings[tmp[0]] = tmp[1];
-			}
-		}
-
-		progressBar();
-		console.log(settings);
 	}
 
 	var progressBar = function () 
@@ -255,13 +236,22 @@
 			}
 
 			$('progress').attr('value', totalPourcentage);
-			$('#progress p').text(totalPourcentage + ' %');
+			$('#progress p span').text(totalPourcentage );
 
 			if( totalPourcentage == '100' ) 
 			{
 				$('.pourcentage').fadeOut();
 				$('#progress progress').fadeOut( function() {
-					$('#progress').append('<div class="formCompleted"><strong class="icon-ok">Formulaire complet&nbsp;!</strong><p>Il ne vous reste plus qu\'à choisir <span>vos cadeaux</span></p></div>');
+					$('#progress strong').text('Etape 1: Formulaire complet à 100% !').removeClass('current icon-cancel').addClass('icon-ok');
+					$('#progress small').addClass('current');
+				});
+			}
+			else
+			{
+				$('.pourcentage').fadeIn();
+				$('#progress progress').fadeIn(function() {
+					$('#progress strong').text('Etape 1: Formulaire complet à:').addClass('current icon-cancel').removeClass('icon-ok');
+					$('#progress small').removeClass('current');
 				});
 			}
 		}
@@ -271,6 +261,144 @@
 		}
 	}
 
+	var putSettings = function () {
+
+		var url_css;
+		url_css = $('#design_css').attr('href');
+
+		switch ( settings['css'] )
+		{
+			case 1:
+				url_css = url_css.replace('style.css', 'style2.css');
+				$('#design_css').attr('href', url_css);
+				break;
+
+			case 2:
+				url_css = url_css.replace('style.css', 'style3.css');
+				$('#design_css').attr('href', url_css);
+				break;
+
+			case 0:
+			default :
+				break;
+		}
+		
+		switch ( settings['btn'] )
+		{
+			case 1:
+				$('.astuces .btn').text('Je participe !');
+				break;
+
+			case 2:
+				$('.astuces .btn').text('Je gagne !');
+				break;
+
+			case 0:
+			default:
+				break;
+		}
+
+		switch ( settings['title1'] )
+		{
+			case 1:
+				$('#userData h2 span').text('Remplissez');
+				break;
+
+			case 2:
+				$('#userData h2 span').text('Répondez');
+				break;
+
+			case 0:
+			default:
+				break;
+		}
+
+		switch ( settings['title2'] )
+		{
+			case 1:
+				$('#contests h2 span').text('Participez');
+				break;
+
+			case 2:
+				$('#contests h2 span').text('Gagnez');
+				break;
+
+			case 3:
+				$('#contests h2 span').text('Choisissez');
+				break;
+
+			case 4:
+				$('#contests h2 span').text('Concourez');
+				break;
+
+			case 0:
+			default:
+				break;
+		}
+
+		switch ( settings['after_title1'] )
+		{
+			case 1:
+				$('#userData h2 em').append(' et jouez');
+				break;
+
+			case 2:
+				$('#userData h2 em').append(' et gagnez');
+				break;
+
+			case 3:
+				$('#userData h2 em').append(' et amusez vous');
+				break;
+
+			case 0:
+			default:
+				break;
+		}	
+
+		switch ( settings['after_title2'] )
+		{
+			case 1:
+				$('#contests h2 em').append(' et gagnez');
+				break;
+
+			case 2:
+				$('#contests h2 em').append(' c\'est gratuit');
+				break;
+
+			case 3:
+				$('#contests h2 em').append(' tentez votre chance');
+				break;
+
+			case 0:
+			default:
+				break;
+		}			
+
+		switch ( settings['pub'] ) 
+		{
+			case 1:
+				$('.pub').attr('class', 'no_show');
+				$('#pub_1').attr('class','pub show');
+				break;
+
+			case 2:
+				$('.pub').attr('class', 'no_show');
+				$('#pub_2').attr('class','pub show');
+				break;
+
+			case 3:
+				$('.pub').attr('class', 'no_show');
+				$('#pub_3').attr('class','pub show');
+				break;
+
+			case 0:
+				$('.pub').attr('class', 'no_show');
+				break;
+				
+			default:			
+				break;
+		}
+	}
 
 	// Fonction s'exécutant dès le chargement de la page
 
@@ -280,12 +408,25 @@
 	$( function () {
 
 		// -- onload routines
-		
-		buildSelectsForm();
-		
+		putSettings();
+
+		$('body').prepend('<a href="#top" class="top_link" title="Revenir en haut de page"><i class="icon-up"></i></a>');
+		$('.top_link').addClass('top_link');
+
+		$(window).scroll( function()
+		{  
+		    var posScroll = $(document).scrollTop(); 
+
+		    if( posScroll >=300 )  
+		        $('.top_link').fadeIn(600);  
+		    else  
+		        $('.top_link').fadeOut(600);  
+		} );
+
+		buildSelectsForm();		
 		initFormValues();
 
-		getSettings();	
+		progressBar();
 
 		if ( settings['mb'] == 1 )
 			$('#dialog-message').modal('toggle');
