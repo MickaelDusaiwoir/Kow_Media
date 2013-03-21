@@ -34,7 +34,9 @@
         <script src="<?= base_url() . JS_DIR?>jquery.ui.js"></script>
         <script src="<?= base_url() . JS_DIR?>bootstrap.js"></script>
         <script>
+            // Tableau servant à récupère les paramètres. 
             var settings = new Array();
+
             <?php 
                 foreach ($param as $key => $value) :
             ?>

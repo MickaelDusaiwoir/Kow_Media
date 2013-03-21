@@ -34,11 +34,12 @@
 		};
 	}
 
-    // processURL annule le comportement par defaut du lien.
-    
+
+    // processURL annule le comportement par defaut du lien.    
     // Une fois l'URL créer la personne est redirigée vers la page du concours. 
     // La condition sert à mettre le paramètre représentant le sexe de la personne dans l'URL du concours cible
     // Ce paramètre voit sa valeur varier selon les paramètres attendus par le site exemple ( H|F ou M.|Mme, ....).
+
 	var processURL = function ( e ) 
     {
 		var url = $(this).attr('href'),
@@ -57,12 +58,14 @@
 			url = buildRequest(userData, url);
 		}		
 		
-		//window.open(url);
+		window.open(url);
 	}
+
 
 	// Cette fonction prépare le lien avec les données personnelles de l'utilisateur,
     // en remplacent toutes les chaines de caractères commencent par le préfixe % et ayant la valeur lui correspondante.
     // Les paramètre sont l'url et le tableau a parcourir.
+
 	var buildRequest = function ( data, url ) {
 
 		for (var i = 0; i < key.length; i++) 
@@ -101,6 +104,7 @@
 
 
     // SaveFielData récupère toutes les données du formulaire et appelle la fonction update Cookie.
+
 	var saveFieldData = function ( e )
 	{
 		var fieldName = $(this).attr('name');
@@ -110,7 +114,6 @@
 		else
 			userData[fieldName] = '';
 		
-		//console.log('var ' + fieldName + ' = ' + userData[fieldName]);
 		updateCookie();
 	}
 
@@ -118,6 +121,7 @@
     // Update Cookie cree un cookie comportant toutes les informations de l'utilisateur.
     // Tout d'abord on initialise la date d'aujourd'hui à laquelle on rajoutera un an afin d'obtenir la date d'expiration du cookie.
     // On transforme le tableau en chaine de caractère avant de creer le cookie.
+
 	var updateCookie = function ()
 	{
 		var today = new Date();
@@ -137,6 +141,7 @@
     // dans le champ qui lui a été attribué.
     // Pour se faire ont parcour le tableau de cookie a la recherche de celui qui nous intéresse ici userData.
     // on le parse afin de récupéré les données avant de les remettre dans le champ grace au tableau de clé. 
+
 	var initFormValues = function ()
 	{
 		if ( document.cookie )
@@ -191,6 +196,12 @@
 				$('#'+ fieldName).attr('placeholder', defaultValue[fieldName]);
 		} 
 	}
+
+
+	// Cette fonction permet l'affichage d'une barre de progression si le paramètre pb est égal à 1.
+	// Cette dernière calcule le nombre d'input afin de pouvoir déduire la valeur en pourcentage d'une donnée.
+	// Elle lit le cookie afin de savoir combien de champs ont été remplis et affiche en conséquence le pourcentage de remplissage du formulaire.
+	// Si elle est à 100% on affiche un message et on modifie par la même occasion l'affichage.
 
 	var progressBar = function () 
 	{
@@ -250,7 +261,7 @@
 			{
 				$('.pourcentage').fadeIn();
 				$('#progress progress').fadeIn(function() {
-					$('#progress strong').text('Etape 1: Formulaire complet à:').addClass('current icon-cancel').removeClass('icon-ok');
+					$('#progress strong').text('Etape 1: ').addClass('current icon-cancel').removeClass('icon-ok');
 					$('#progress small').removeClass('current');
 				});
 			}
@@ -260,6 +271,10 @@
 			$('#progress').hide();
 		}
 	}
+
+
+	// Cette fonction permet de choisir quel message où Css on souhaite afficher.
+	// Chacun des paramètres possède un switch qui lui permet de délivrer une valeur différente selon la valeur du paramètre.
 
 	var putSettings = function () {
 
@@ -400,16 +415,21 @@
 		}
 	}
 
+
 	// Fonction s'exécutant dès le chargement de la page
 
+	// On appelle la fonction servant à lire les paramètres.
+	// On appelle la fonction servant à afficher ou non la barre de progression.
     // On appelle la fonction servant à creer les Select du formulaire.
     // On appelle la fonction servant à remettre les informations dans les champs du formulaire.
     // on met un écouteur d'événement sur chacun des champs à fin de récupéré les valeurs une fois que le champ a perdu le focus ou au clic pour les boutons radio.
+	
 	$( function () {
 
 		// -- onload routines
 		putSettings();
 
+		// Affiche un lien afin d'aider l'utilisateur à retourner au sommet de la page et fait apparaître le formulaire une fois le scroll limite atteint.
 		$('body').prepend('<a href="#top" class="top_link" title="Revenir en haut de page"><i class="icon-up"></i></a>');
 		$('.top_link').addClass('top_link');
 
@@ -420,7 +440,22 @@
 		    if( posScroll >=300 )  
 		        $('.top_link').fadeIn(600);  
 		    else  
-		        $('.top_link').fadeOut(600);  
+		        $('.top_link').fadeOut(600);
+
+			var distTop;
+
+		    distTop = $('#userData').height() + 20;
+
+		    if( posScroll >= distTop && $(window).width() > 520 ) 
+		    {
+	    		$('#fixedbug').css('display','inline-block'); 
+	        	$('.fixed').css({'position' : 'fixed', 'width' : '28%'});       
+		    } 
+		    else 
+		    { 
+		    	$('.fixed').css({'position' : 'static', 'width' : '100%'});
+		        $('#fixedbug').css('display','inline'); 
+		    }
 		} );
 
 		buildSelectsForm();		
@@ -428,6 +463,7 @@
 
 		progressBar();
 
+		// Active la modalBox
 		if ( settings['mb'] == 1 )
 			$('#dialog-message').modal('toggle');
 
@@ -444,8 +480,9 @@
 		$('#code_postal').on('blur', saveFieldData);
 		$('#ville').on('blur', saveFieldData);
 
-		// Si une balise "a" être actionné on appelle la fonction getUrl 
+		// Si une balise "a" possèdant la class btn est actionnée on appelle la fonction getUrl 
 		$('a.btn').on("click", processURL);
+
 	} );
 
 }( jQuery ) );

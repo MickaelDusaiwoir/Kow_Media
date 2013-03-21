@@ -31,7 +31,6 @@
 				?> />
 				<?= form_error('title'); ?>
 
-
 				<?= form_label('Image du cadeau', 'image'); ?>
 				<input type="file" name="image" id="image" />
 				<?php 
@@ -55,19 +54,21 @@
 				
 				<?php 
 					if ( isset($erreur) && $erreur !== null )
-						echo '<p class="alert alert-error">'.$erreur.'</p>';
+						echo '<p class="error">'.$erreur.'</p>';
 				?>
 
 
 				<?= form_label('Valeur du cadeau', 'value'); ?>
-				<input type="text" name="value" id="value" maxlength="12"
-				<?php 
-					if ( set_value('value') ) 
-						echo 'value="'.set_value('value').'"'; 
-					elseif ( isset($data->value) )
-						echo 'value="'.$data->value.'"';
-				?> />
-				<span class="euro_btn">&euro;</span>
+				<div class="group">
+					<input type="text" name="value" id="value" maxlength="12"
+					<?php 
+						if ( set_value('value') ) 
+							echo 'value="'.set_value('value').'"'; 
+						elseif ( isset($data->value) )
+							echo 'value="'.$data->value.'"';
+					?> />
+					<span class="euro_btn">&euro;</span>
+				</div>
 				<?= form_error('value'); ?>
 
 

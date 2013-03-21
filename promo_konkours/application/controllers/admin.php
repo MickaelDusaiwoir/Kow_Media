@@ -32,6 +32,7 @@ class Admin extends CI_Controller
 	* @details Elle récupère tous les concours ainsi que tous les cadeaux.
 	* @details Pour se faire on charge le modèle M Admin qui lui comporte la requête Sql adaptée.
 	* @details Elle charge ensuite le nom et le titre de la vue à afficher.
+	* @details On récupère les paramètres destinés à Javascript s'il y en a pas on initialise le paramètre à 0.
 	*/
 	public function afficher()
 	{	
@@ -43,18 +44,12 @@ class Admin extends CI_Controller
 		foreach ( $dataList['contests_with_prizes'] as $key => $value ) 
 			$dataList['contests_with_prizes'][$key]['prizes_data'] = $this->M_Admin->getPrizesList($value['id']);
 
+		// Tableau contenant les clés désignant les paramètres utilisés par Javascript.
 		$key = array('mb','pb','css','btn','btn','title1','title2','pub','after_title1','after_title2');
 
+		// Parcours de l'URL afin de récupère tous les paramètres et des initialise s'il n'existe pas.
 		for ( $i = 0; $i < count($key); $i++ )
 			$param[$key[$i]] = isset($_GET[$key[$i]]) ? $_GET[$key[$i]] : '0';
-
-		//$param['mb'] = isset($_GET['mb']) ? $_GET['mb'] : '0';
-		//$param['pb'] = isset($_GET['pb']) ? $_GET['pb'] : '0';
-		//$param['css'] = isset($_GET['css']) ? $_GET['css'] : '0';
-		//$param['btn'] = isset($_GET['btn']) ? $_GET['btn'] : '0';
-		//$param['title1'] = isset($_GET['title1']) ? $_GET['title1'] : 0;
-		//$param['title2'] = isset($_GET['title2']) ? $_GET['title2'] : 0;
-
 
 		$dataList['param']		=  $param;
 		$dataLayout['titre']	=  'Accueil';

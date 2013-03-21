@@ -29,7 +29,6 @@
 			?> />
 			<?= form_error('title'); // Affiche un message d'erreur expliquant cette dernière. ?>
 
-
 			<?= form_label('Lien du concours','url'); ?>
 			<input type='text' id="url" name="url" placeholder="http://konkours.be" 
 			<?php 
@@ -39,7 +38,6 @@
 					echo 'value="'.$data->url.'"';
 			?> />
 			<?= form_error('url'); // Affiche un message d'erreur expliquant cette dernière. ?>
-
 
 			<?php echo form_label('Astuces', 'text'); 
 
@@ -51,7 +49,6 @@
 					echo '<textarea id="text" name="text" rows="4" cols="36" placeholder="Compléter le formulaire  Accepter le règlement  Gagner votre voyage !! "></textarea>';
 			?>
 			<?= form_error('text'); // Affiche un message d'erreur expliquant cette dernière. ?>
-
 
 			<?php 
 
@@ -78,11 +75,37 @@
 			<?php else : ?>
 
 				<input type="submit" name="envoyer" value="Ajouter ce concours" />
+				<p class="info">Vous allez passer à l'étape d'ajout des cadeaux</p>
 
 			<?php endif; ?>
 
 		<?= form_fieldset_close(); ?>
 	<?= form_close(); ?>
+
+	<section id="explications">
+		<h3>Comment faire&nbsp;?</h3>
+		<ol>
+			<li>
+				<em>Recherchez un concours</em> qui ne soit pas en <a href="http://www.gralon.net/articles/internet-et-webmaster/multimedia/article-la-technologie-flash---presentation-et-utilisations-1840.htm" title="qu'est-ce que le flash?" target="_blank">"flash"</a>.
+			</li>
+			<li>
+				Cliquez droit de votre souris <strong>sur un des champs</strong> du formulaire. Puis cliquez sur <em>"inspecter cet élément".</em>
+			</li>
+			<li>
+				Regardez le <strong>name="<u>firstName</u>"</strong>. C'est la valeur qui se trouve entre "&nbsp;" qui nous intérèsse. (celle ci est différente selon le concours)
+			</li>
+			<p>
+				<i>Conseil&nbsp;:</i> Pour les 2 étapes qui suivent, testez avec UNE SEULE valeur afin d'être sur que çà fonctionne.
+			</p>
+			<li>
+				Testez en ajoutant, à la fin de l'URL du concours, la valeur reprise ci dessus. <small>Dans l'URL, la première valeur commence par un <u>?</u> firstName et celles qui suivent après sont séparées par un <u>&</u></small>. Voir exemple de droite.
+			</li>
+			<li>
+				<em>Rafraichissez la page</em> et <em>regardez si votre valeur entrée est bien dans le formulaire</em>, si c'est le cas, alors vous pouvez faire pour les autres champs. Si par contre cela ne fonctionne pas, le concours ne pourra pas être ajouté.
+			</li>
+		</ol>
+	</section>
+
 </div>
 
 <div id="legend">
@@ -154,4 +177,10 @@
 			</p>
 		</li>		
 	</ul>
+	<div class="exemple">
+		<h3>Exemple</h3>
+		<p>
+			<small>http://vacancesadeux.com/?a_aid=PU83&a_bid=ed333e95</small><u>&</u><strong>email</strong>=%email<u>&</u><strong>nom</strong>=%nom<u>&</u><strong>prenom</strong>=<u>%</u>prenom<u>&</u><strong>day_birthdate</strong>=%jour<u>&</u><strong>month_birthdate</strong>=%mois<u>&</u><strong>year_birthdate</strong>=%annee<u>&</u><strong>zipcode</strong>=%code_postal<u>&</u><strong>civilite</strong>=%sexe(H|F)
+		</p>
+	</div>
 </div>
