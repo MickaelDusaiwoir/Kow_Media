@@ -40,9 +40,35 @@
 			</label>
 
 			<label  id="ddn">Date de naissance</label>
-			<select id="jour" name="jour" ></select>
-			<select id="mois" name="mois" ></select>
-			<select id="annee" name="annee" ></select>
+			<select id="jour" name="jour" >
+				<?php 
+					$jour = '';
+					for ( $j = 1; $j < 32; $j++ )
+						$jour .= '<option value="'.$j.'" name="'.$j.'">'.$j.'</option>';
+
+					echo $jour;
+				?>
+			</select>
+			<select id="mois" name="mois" >
+				<?php 
+					$mois = array('Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre');
+					$options = '';
+
+					for ( $m = 0; $m < count($mois); $m++ )
+						$options .= '<option value="'.($m + 1).'" name="'.$mois[$m].'">'.$mois[$m].'</option>';
+
+					echo $options;
+				?>
+			</select>
+			<select id="annee" name="annee" >
+				<?php 
+					$annee = '';
+					for ( $a = 1920; $a < 2030; $a++ )
+						$annee .= '<option value="'.$a.'" name="'.$a.'">'.$a.'</option>';
+
+					echo $annee;
+				?>
+			</select>
 
 			<label for="email">E-mail</label>
 			<input id="email" name="email" type="email" />

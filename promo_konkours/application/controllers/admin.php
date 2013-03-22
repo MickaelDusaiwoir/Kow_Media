@@ -35,8 +35,10 @@ class Admin extends CI_Controller
 	* @details On récupère les paramètres destinés à Javascript s'il y en a pas on initialise le paramètre à 0.
 	*/
 	public function afficher()
-	{	
+	{
 		$this->load->model('M_Admin'); 
+
+		$dataList['visitor'] = $this->checkCookie();
 
 		// on récupère les concours.
 		$dataList['contests_with_prizes'] = $this->M_Admin->getContestsList();
@@ -49,7 +51,7 @@ class Admin extends CI_Controller
 
 		// Parcours de l'URL afin de récupère tous les paramètres et des initialise s'il n'existe pas.
 		for ( $i = 0; $i < count($key); $i++ )
-			$param[$key[$i]] = isset($_GET[$key[$i]]) ? $_GET[$key[$i]] : '0';
+			$param[$key[$i]] = isset($_GET[$key[$i]]) ? intval($_GET[$key[$i]]) : 0;
 
 		$dataList['param']		=  $param;
 		$dataLayout['titre']	=  'Accueil';
@@ -57,6 +59,73 @@ class Admin extends CI_Controller
 
 		$this->load->view('layout', $dataLayout);		
 	}
+
+
+	function checkCookie ()
+	{
+		if ( !isset($_COOKIE['stats_visitor']) )
+		{
+			$data = $this->initialiseCookie();
+
+			return $data;
+		}
+		else
+		{
+			$data = $this->readCookie();
+
+			return $data;
+		}
+	}
+
+	function initialiseCookie ()
+	{
+		$this->load->model('M_Admin');
+
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+		$source = isset($_GET['src']) ? $_GET['src'] : null;
+		$time = time();
+
+		$data = array('ip' => $ip, 'c_date' => $time, 'm_date' => $time, 'referer' => $referer, 'source' => $source, 'visit_count' => '1' ); 
+		$last_id = $this->M_Admin->setVisitor($data);
+		$save_to_cookie = array('visitor_id' => $last_id, 'm_date' => $time );
+
+		$this->createCookie($save_to_cookie);
+
+		return array('ip' => $ip, 'visitor_id' => $last_id);
+	}
+
+	function createCookie ($data)
+	{
+		setcookie('stats_visitor', json_encode($data), time() + (365*86400), '/' );
+	}
+
+	function readCookie ()
+	{
+		$this->load->model('M_Admin');
+		$visitorData = json_decode($_COOKIE['stats_visitor']);
+
+		$data = array('id' => $visitorData['id']);
+
+		if ( $this->M_Admin->checkVisitor($data) )
+		{
+			$ip = $_SERVER['REMOTE_ADDR'];
+			$time = time();
+
+			$this->M_Admin->updateVisitor(array('m_date' => $time), 'visitor', $visitorData['id']);
+
+			$save_to_cookie = array('visitor_id' => $visitorData['id'], 'm_date' => $time );
+
+			$this->createCookie($save_to_cookie);
+
+			return array('ip' => $ip, 'visitor_id' => $visitorData['id']);
+		}
+		else
+		{
+			return $this->initialiseCookie();
+		}
+	}
+
 
 	/** 
 	* @brief La function connect.

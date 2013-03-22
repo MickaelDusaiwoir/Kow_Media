@@ -145,7 +145,27 @@
 			$this->db->where('id', $id); 
 	        $this->db->update($table, $data);
 
-        	redirect('admin/afficher');
+	        if ( $table !== 'visitor' )
+        		redirect('admin/afficher');
+        	else
+        		return true;
 		}
+
+
+		public function checkVisitor ($data)
+		{
+			$query = $this->db->get_where('visitor', $data );
+       		return $query->row();
+		}
+
+		public function setVisitor ($data)
+		{
+			$this->db->insert('visitor', $data);
+			$last_id = $this->db->insert_id();
+
+			return $last_id;
+		}
+
+
 	}
 ?>

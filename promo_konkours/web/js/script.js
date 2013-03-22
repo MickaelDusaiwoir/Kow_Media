@@ -13,28 +13,6 @@
 
 // -- methods
 
-
-    // BuildSelectForm sert à créer les options du Select des jours, des mois et des années.  
-
-	var buildSelectsForm = function () {
-
-		for ( var i = 0; i <= 11; i++ ) 
-		{
-			$('<option></option').attr('value', i + 1).attr('name', mois[i]).text(mois[i]).appendTo($('#mois'));
-		};
-
-		for ( var j = 1; j <= 31; j++ ) 
-		{
-			$('<option></option').attr('value', j).attr('name', j).text(j).appendTo($('#jour'));
-		};
-
-		for ( var u = 1920; u <= 2030; u++ ) 
-		{
-			$('<option></option').attr('value', u).attr('name', u).text(u).appendTo($('#annee'));
-		};
-	}
-
-
     // processURL annule le comportement par defaut du lien.    
     // Une fois l'URL créer la personne est redirigée vers la page du concours. 
     // La condition sert à mettre le paramètre représentant le sexe de la personne dans l'URL du concours cible
@@ -109,10 +87,27 @@
 	{
 		var fieldName = $(this).attr('name');
 		
-		if ( fieldName !== '' )
-			userData[fieldName] = $(this).val();
+		if ( $(this).val() !== '' )
+		{
+			if ( fieldName == 'email' ) 
+			{
+				var regEmail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$','i');
+
+				if ( regEmail.test( $(this).val() ) )
+					userData[fieldName] = $(this).val();
+				else
+					if ( $('#form').find('.error').size() == 0 )
+						$('<p></p>').attr('class', 'error').text('Email invalide').css({'margin-bottom':'5px', 'padding': '5px 10px'}).insertAfter('#'+fieldName);
+			}
+			else
+			{
+				userData[fieldName] = $(this).val();
+			}
+		}
 		else
-			userData[fieldName] = '';
+		{
+			userData[fieldName] = '';	
+		}
 		
 		updateCookie();
 	}
@@ -457,8 +452,7 @@
 		        $('#fixedbug').css('display','inline'); 
 		    }
 		} );
-
-		buildSelectsForm();		
+	
 		initFormValues();
 
 		progressBar();
