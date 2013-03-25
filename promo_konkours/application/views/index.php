@@ -1,4 +1,4 @@
-<section id="dialog-message" title="promokonkours.be" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+﻿<section id="dialog-message" title="promokonkours.be" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
   <header>
 	PromoKonkours.be
   </header>
@@ -85,15 +85,15 @@
 		</form>
 	</div>
 	<span id="fixedbug"></span>
-		<section id="progress">
-		<h1 class="no_show">Barre de progression</h1>
-			<strong class="current icon-cancel"></strong>		
-			<progress value="0" min="0" max="100"><span></span></progress>
-			<p class="pourcentage">
-				Remplissage à <span>0</span>%
-			</p>
-			<small class="icon-cancel">Etape 2&nbsp;: Choisissez vos cadeaux</small>
-		</section>
+	<section id="progress">
+	<h1 class="no_show">Barre de progression</h1>
+		<strong class="current icon-cancel"></strong>		
+		<progress value="0" min="0" max="100"><span></span></progress>
+		<p class="pourcentage">
+			Remplissage à <span>0</span>%
+		</p>
+		<small class="icon-cancel">Etape 2&nbsp;: Choisissez vos cadeaux</small>
+	</section>
 	<section id="intro">
 		<article class="pub" id="pub_1">
 			<h1 class="no_show">Introduction</h1>
@@ -162,7 +162,7 @@
 				}
 
 				// Déclaration du titre, de la valeur et de l'image du cadeau.
-				$display .= '<figure><a href="'.$contest_with_prize['url'].'title="Cliquez pour participer à ce concours"><img src="'.base_url() . THUMB_IMG . $folderName . $prize['id'] .'.jpg" title="'.$prize['title'].'" style="max-width: 128px;max-height:128px;"/></a></figure>';
+				$display .= '<figure><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="countClick('.$contest_with_prize['id'].')" target="_blank" class="btn_img" ><img src="'.base_url() . THUMB_IMG . $folderName . $prize['id'] .'.jpg" title="'.$prize['title'].'" width="128" max-height="128" /></a></figure>';
 				$display .= '<h4>'.$prize['title'].'</h4>';
 				$display .= '<p class="valeur">'.$prize['value'].'&euro;</p>';
 
@@ -200,7 +200,7 @@
 
 			$display .= '</ol>';
 
-			$display .= anchor($contest_with_prize['url'], 'Je valide&nbsp;!', array('title' => 'Cliquez ICI pour participer à ce concours', 'class' => 'btn'));
+			$display .= anchor($contest_with_prize['url'], 'Je valide&nbsp;!', array('title' => 'Cliquez ICI pour participer à ce concours', 'class' => 'btn', 'onclick' => 'countClick('.$contest_with_prize['id'].')'));
 
 			$display .= '</aside>';
 

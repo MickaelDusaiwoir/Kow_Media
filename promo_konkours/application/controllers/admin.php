@@ -38,7 +38,8 @@ class Admin extends CI_Controller
 	{
 		$this->load->model('M_Admin'); 
 
-		$dataList['visitor'] = $this->checkCookie();
+		if ( !$this->session->userdata('Connected') ) 
+			$this->checkCookie();
 
 		// on récupère les concours.
 		$dataList['contests_with_prizes'] = $this->M_Admin->getContestsList();
@@ -54,7 +55,7 @@ class Admin extends CI_Controller
 			$param[$key[$i]] = isset($_GET[$key[$i]]) ? intval($_GET[$key[$i]]) : 0;
 
 		$dataList['param']		=  $param;
-		$dataLayout['titre']	=  'Accueil';
+		$dataLayout['titre']	=  'Promo concours';
         $dataLayout['vue'] 		=  $this->load->view('index', $dataList ,true);
 
 		$this->load->view('layout', $dataLayout);		
@@ -64,35 +65,28 @@ class Admin extends CI_Controller
 	function checkCookie ()
 	{
 		if ( !isset($_COOKIE['stats_visitor']) )
-		{
-			$data = $this->initialiseCookie();
-
-			return $data;
-		}
+			$this->initialiseCookie();
 		else
-		{
-			$data = $this->readCookie();
-
-			return $data;
-		}
+			$this->readCookie();
 	}
 
 	function initialiseCookie ()
 	{
-		$this->load->model('M_Admin');
+		$data = array(
+			'ip' => ip2long($_SERVER['REMOTE_ADDR']), 
+			'c_date' => time(), 
+			'm_date' => 0, 
+			'referer' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null, 
+			'source' => isset($_GET['src']) ? $_GET['src'] : null, 
+			'visit_count' => '1'
+		); 
+		
+		if ( $last_id = $this->M_Admin->setVisitor($data) )
+		{
+			$save_to_cookie = array('visitor_id' => $last_id, 'm_date' => $data['c_date'] );
 
-		$ip = $_SERVER['REMOTE_ADDR'];
-		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
-		$source = isset($_GET['src']) ? $_GET['src'] : null;
-		$time = time();
-
-		$data = array('ip' => $ip, 'c_date' => $time, 'm_date' => $time, 'referer' => $referer, 'source' => $source, 'visit_count' => '1' ); 
-		$last_id = $this->M_Admin->setVisitor($data);
-		$save_to_cookie = array('visitor_id' => $last_id, 'm_date' => $time );
-
-		$this->createCookie($save_to_cookie);
-
-		return array('ip' => $ip, 'visitor_id' => $last_id);
+			$this->createCookie($save_to_cookie);
+		}
 	}
 
 	function createCookie ($data)
@@ -102,28 +96,41 @@ class Admin extends CI_Controller
 
 	function readCookie ()
 	{
-		$this->load->model('M_Admin');
 		$visitorData = json_decode($_COOKIE['stats_visitor']);
 
-		$data = array('id' => $visitorData['id']);
-
-		if ( $this->M_Admin->checkVisitor($data) )
+		if ( $this->M_Admin->checkVisitor(array('id' => $visitorData->visitor_id)) )
 		{
-			$ip = $_SERVER['REMOTE_ADDR'];
 			$time = time();
 
-			$this->M_Admin->updateVisitor(array('m_date' => $time), 'visitor', $visitorData['id']);
+			$this->M_Admin->update(array('m_date' => $time), 'visitors', $visitorData->visitor_id);
 
-			$save_to_cookie = array('visitor_id' => $visitorData['id'], 'm_date' => $time );
-
-			$this->createCookie($save_to_cookie);
-
-			return array('ip' => $ip, 'visitor_id' => $visitorData['id']);
+			$this->createCookie(array('visitor_id' => $visitorData->visitor_id, 'm_date' => $time ));
 		}
 		else
 		{
-			return $this->initialiseCookie();
+			$this->initialiseCookie();
 		}
+	}
+
+	public function stats () 
+	{
+		$this->load->model('M_Admin');
+
+		$today_midnight = strtotime("0:00", time());
+		$yesterday_midnight = strtotime("0:00", time()) - 86400;
+
+		if ( $data = $this->M_Admin->stats($today_midnight,$yesterday_midnight) )
+		{
+			$dataList['stats'] = $data;
+			$dataLayout['vue'] =  $this->load->view('stats', $dataList, true);
+		}
+		else 
+		{
+			$dataLayout['vue'] =  $this->load->view('stats', null, true);
+		}
+
+		$dataLayout['titre']	=  'Statistique';
+		$this->load->view('layout', $dataLayout);
 	}
 
 
@@ -636,6 +643,5 @@ class Admin extends CI_Controller
 			redirect(base_url());
 		}
 	}
-
 
 }

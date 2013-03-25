@@ -142,28 +142,47 @@
 		*/
 		public function update ($data, $table, $id)
 		{
-			$this->db->where('id', $id); 
-	        $this->db->update($table, $data);
-
-	        if ( $table !== 'visitor' )
+	        if ( $table !== 'visitors' )
+	        {
+	        	$this->db->where('id', $id); 
+	        	$this->db->update($table, $data);
         		redirect('admin/afficher');
+        	}
         	else
+        	{
+        		$req = ' UPDATE visitors SET visit_count = visit_count+1, m_date ='.$data['m_date'].' where id = '.$id;
+	        	$this->db->query($req);
         		return true;
+        	}
+        		
 		}
-
 
 		public function checkVisitor ($data)
 		{
-			$query = $this->db->get_where('visitor', $data );
+			$query = $this->db->get_where('visitors', $data );
        		return $query->row();
 		}
 
 		public function setVisitor ($data)
 		{
-			$this->db->insert('visitor', $data);
+			$this->db->insert('visitors', $data);
 			$last_id = $this->db->insert_id();
 
 			return $last_id;
+		}
+
+		public function stats ($today, $yesterday) 
+		{
+			$this->db->where(array('date >=' => $yesterday, 'date <=' => time()));
+			$nbClick = $this->db->count_all_results('stats');
+
+			$this->db->where(array('m_date >=' => $yesterday, 'm_date <=' => time()));
+			$nbVisit = $this->db->count_all_results('visitors');
+
+			if ( $nbVisit && $nbClick )
+				return array('nbClick' => $nbClick, 'nbVisit' => $nbVisit);
+			else
+				return null;
 		}
 
 

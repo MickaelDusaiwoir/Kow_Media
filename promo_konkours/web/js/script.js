@@ -1,3 +1,14 @@
+function countClick ( id ) {
+	jQuery.ajax({
+		type: "POST",
+		url: url_stats,
+		data: {"contest_id" : id},
+		success: function (data) {
+			console.log(data);
+		}
+	});
+}
+
 ( function ( $ ) {
 
 	"use strict";
@@ -94,10 +105,15 @@
 				var regEmail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$','i');
 
 				if ( regEmail.test( $(this).val() ) )
+				{
+					$('#form p.error').remove();
 					userData[fieldName] = $(this).val();
+				}
 				else
+				{
 					if ( $('#form').find('.error').size() == 0 )
 						$('<p></p>').attr('class', 'error').text('Email invalide').css({'margin-bottom':'5px', 'padding': '5px 10px'}).insertAfter('#'+fieldName);
+				}
 			}
 			else
 			{
@@ -410,7 +426,6 @@
 		}
 	}
 
-
 	// Fonction s'exécutant dès le chargement de la page
 
 	// On appelle la fonction servant à lire les paramètres.
@@ -476,6 +491,7 @@
 
 		// Si une balise "a" possèdant la class btn est actionnée on appelle la fonction getUrl 
 		$('a.btn').on("click", processURL);
+		$('a.btn_img').on("click", processURL);
 
 	} );
 

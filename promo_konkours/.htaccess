@@ -1,0 +1,37 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+# pour ovh ^(.*)$ index.php?$1 [L] 
+# config / config / URI PROTOCOL QUERY_STRING
+
+<IfModule mod_deflate.c>
+
+AddOutputFilterByType DEFLATE text/text text/xml text/html text/plain text/css text/javascript application/x-javascript application/javascript font/ttf font/otf image/svg+xml
+
+AddType font/ttf .ttf
+AddType font/otf .otf
+AddType font/x-woff .woff
+AddType image/svg+xml .svg
+
+</IfModule>
+
+<filesmatch "\.(ico|pdf|jpeg|jpg|png|gif|js|css)$">
+
+Header set Expires "Tue, 15 Apr 2014 20:00:00 GMT" 
+	
+ExpiresActive On
+	
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType text/javascript "access plus 10 days"
+ExpiresByType font/ttf "access plus 1 year"
+ExpiresByType font/otf "access plus 1 year"
+ExpiresByType font/x-woff "access plus 1 year"
+ExpiresByType image/svg+xml "access plus 1 month"
+
+</filesmatch>
+
+Header unset ETag
+FileETag none
