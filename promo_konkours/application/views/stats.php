@@ -1,39 +1,45 @@
-<?php 
-	if ( isset($stats) ) :
-?>
-	<table>
-		<thead>
-			<tr>
-				<th colspan="7">
-					<h3>
-						Statistiques pour la journée d'hier.
-					</h3>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>
-					Nombre de visiteur
-				</td>
-				<td>
-					<?= $stats['nbVisit']; ?>
-				</td>
-				<td>
-					Nombre de clique
-				</td>
-				<td>
-					<?= $stats['nbClick']; ?>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-<?php 
-	else :
-?>
-	<p>
-		Aucune statistique n'est disponible pour la journée d'hier.
-	</p>
-<?php
-	endif;
-?>
+<h3>
+	Statistiques des 7 derniers jours
+</h3>
+
+<table id="datatable">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Nombre de visites</th>
+			<th>Nombre de clics</th>
+			<th>Taux de clics (%)</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php 
+		foreach( $stats as $stat ) :
+	?>
+		<tr>
+			<th><?= $stat['date'] ?></th>
+			<td><?php
+					$visit =  isset($stat['nbVisit']) ? $stat['nbVisit'] : 0;
+					echo $visit;
+				?>
+			</td>
+			<td><?php 
+					$click =  isset($stat['nbClick']) ? $stat['nbClick'] : 0;
+					echo $click;
+				?>
+			</td>
+			<td>
+				<?php 
+					if ( $click !== 0 && $visit !== 0)
+						$taux = round( ($click / $visit) * 100, 2);
+					else
+						$taux = 0;
+					echo $taux;
+				?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	?>
+	</tbody>
+</table>
+<div id="container"></div>

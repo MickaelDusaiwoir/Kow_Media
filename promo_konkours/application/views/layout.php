@@ -20,7 +20,7 @@
                     $admin_navBar .= '<ul>';
                     $admin_navBar .= '<li>'.anchor('admin/afficher', 'Accueil', array('title' => 'Retourner sur la page d\'accueil', 'class' => 'icon-home')).'</li>'; 
                     $admin_navBar .= '<li>'.anchor('admin/addContestView', 'Ajouter un concours', array('title' => 'Ajouter un concours', 'class' => 'icon-doc-new')).'</li>';
-                    $admin_navBar .= '<li>'.anchor('admin/stats', 'Statistique', array('title' => 'Voir les statistiques')).'</li>';
+                    $admin_navBar .= '<li>'.anchor('admin/stats', 'Statistiques', array('title' => 'Voir les statistiques', 'class' => 'icon-chart-bar')).'</li>';
                     $admin_navBar .= '<li>'.anchor('admin/disconnect', 'Se d&eacute;connecter', array('title' => 'Se d&eacute;connecter', 'class' => 'icon-logout'));
                     $admin_navBar .= '</ul>';
                     $admin_navBar .= '</div>';
@@ -53,6 +53,8 @@
             ?>
 
         </script>
+        <script src="<?= base_url() . JS_DIR?>highcharts.js"></script>
+        <script src="<?= base_url() . JS_DIR?>exporting.js"></script>
         <script src="<?= base_url() . JS_DIR?>script.js"></script>
         <script src="<?= base_url() . JS_DIR?>script2.js"></script>
     </body>

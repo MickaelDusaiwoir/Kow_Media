@@ -134,29 +134,38 @@
 
 		/** 
 		* @brief La function update.
-		* @param $data Comporte toutes les données servant à modification du concours ou du cadeau.
+		* @param $data Comporte toutes les données servant à modification du concours ou du cadeau ainsi que des statistiques.
 		* @param $table Comporte le nom de la table dans laquelle on doit effectuer la recherche.
-		* @param $id Comporte l'id du cadeau ou du concours.
+		* @param $id Comporte l'id du cadeau ou du concours ainsi que celui des statistiques.
 		* @details La fonction met à jour un cadeau ou un concours sur base de son id.
 		* @details Cette fonction étant global on doit lui passer en paramètre le nom de la table que l'on souhaite modifier.
 		*/
 		public function update ($data, $table, $id)
 		{
-	        if ( $table !== 'visitors' )
+	        if ( $table !== 'visitors' && $table !== 'visits' )
 	        {
 	        	$this->db->where('id', $id); 
 	        	$this->db->update($table, $data);
         		redirect('admin/afficher');
         	}
-        	else
+        	elseif ( $table == 'visitors')
         	{
         		$req = ' UPDATE visitors SET visit_count = visit_count+1, m_date ='.$data['m_date'].' where id = '.$id;
-	        	$this->db->query($req);
-        		return true;
+	        	return  $this->db->query($req);        		
+        	}
+        	elseif ( $table == 'visits' ) 
+        	{	
+        		$req = ' UPDATE `visits` SET `visit_count` = visit_count+1 where `visitor_id` = '.$id." AND `date` ='".date('d-m-Y')."';";
+	        	return $this->db->query($req);
         	}
         		
 		}
 
+		/** 
+		* @brief La function checkVisitor.
+		* @param $data comporte les informations servant à vérifier si l'utilisateur existe.
+		* @details la fonction renvoie si l'utilisateur existe.
+		*/
 		public function checkVisitor ($data)
 		{
 			$query = $this->db->get_where('visitors', $data );
@@ -171,18 +180,26 @@
 			return $last_id;
 		}
 
-		public function stats ($today, $yesterday) 
+		public function setVisits ($visitor_id)
 		{
-			$this->db->where(array('date >=' => $yesterday, 'date <=' => time()));
+			$data = array('visitor_id' => $visitor_id, 'visit_count' => '1', 'date' => date('d-m-Y'));
+			return $this->db->insert('visits', $data);			
+		}
+
+		public function stats ($start, $end) 
+		{
+			$this->db->where(array('date >=' => $start, 'date <=' => $end ));
 			$nbClick = $this->db->count_all_results('stats');
 
-			$this->db->where(array('m_date >=' => $yesterday, 'm_date <=' => time()));
-			$nbVisit = $this->db->count_all_results('visitors');
+			$this->db->where('date', date('d-m-Y', $start));
+			$this->db->select_sum('visit_count');
+			$query = $this->db->get('visits');
+			$nbVisit = $query->result_array();
 
-			if ( $nbVisit && $nbClick )
-				return array('nbClick' => $nbClick, 'nbVisit' => $nbVisit);
-			else
-				return null;
+			//$req = 'SELECT SUM(visit_count) as visit_count from visits where `date`='.date('d-m-Y', $start) ;
+			//$nbVisit = $this->db->query($req);
+
+			return array('nbClick' => $nbClick, 'nbVisit' => $nbVisit[0]['visit_count']);
 		}
 
 

@@ -426,6 +426,130 @@ function countClick ( id ) {
 		}
 	}
 
+	var drawGraphicStats = function ( e )
+	{
+
+		Highcharts.visualize = function(table, options) {
+            // the categories
+            options.xAxis.categories = [];
+            $('tbody th', table).each( function(i) {
+                options.xAxis.categories.push(this.innerHTML);
+            });
+    
+            // the data series
+            options.series = [];
+            $('tr', table).each( function(i) {
+                var tr = this;
+                $('th, td', tr).each( function(j) {
+                    if (j > 0) { // skip first column
+                        if (i == 0) { // get the name and init the series
+                            options.series[j - 1] = {
+                                name: this.innerHTML,
+                                data: []
+                            };
+                        } else { // add values
+                            options.series[j - 1].data.push(parseFloat(this.innerHTML));
+                        }
+                    }
+                });
+            });
+    
+            $('#container').highcharts(options);
+        }
+    
+        var table = $('#datatable'),
+        options = {
+            chart: {
+                type: 'column'
+            },
+            navigation: {
+            	buttonOptions: {
+            		enabled: false
+            	} 
+            },
+            title: {
+                text: 'Statistiques des 7 derniers jours'
+            },
+            xAxis: {
+            },
+            yAxis: {
+                title: {
+                    text: 'Nombres'
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.series.name + ' : ' + this.y +'</b><br/>'+ 'Le '+ this.x.toLowerCase();
+                }
+            }
+        };
+
+        Highcharts.theme = 
+        {
+		   colors: ['#27855e', '#e84200', '#1DBECD'],
+		   chart: {
+		   		backgroundColor: 'none'
+		   },
+		   title: {
+		        style: {
+		            color: '#000',
+		            fontWeight: 'bold'
+		        }
+		    },
+		   xAxis: {
+		      gridLineWidth: 1,
+		      lineColor: '#000',
+		      tickColor: '#000',
+		      labels: {
+		         style: {
+		            color: '#000'
+		         }
+		      },
+		      title: {
+		         style: {
+		            color: '#000',
+		            fontWeight: 'bold',
+		            fontSize: '12px'
+		         }
+		      }
+		   },
+		   yAxis: {
+		      minorTickInterval: 'auto',
+		      lineColor: '#000',
+		      lineWidth: 1,
+		      tickWidth: 1,
+		      tickColor: '#000',
+		      labels: {
+		         style: {
+		            color: '#000'
+		         }
+		      },
+		      title: {
+		         style: {
+		            color: '#000',
+		            fontSize: '12px'
+		         }
+		      }
+		   },
+		   legend: {
+		      itemStyle: {
+		         color: 'black'
+
+		      },
+		      itemHoverStyle: {
+		         color: '#039'
+		      },
+		      itemHiddenStyle: {
+		         color: 'gray'
+		      }
+		   }
+		};
+
+		var highchartsOptions = Highcharts.setOptions(Highcharts.theme);
+
+        Highcharts.visualize(table, options);
+	}
+
 	// Fonction s'exécutant dès le chargement de la page
 
 	// On appelle la fonction servant à lire les paramètres.
@@ -492,6 +616,9 @@ function countClick ( id ) {
 		// Si une balise "a" possèdant la class btn est actionnée on appelle la fonction getUrl 
 		$('a.btn').on("click", processURL);
 		$('a.btn_img').on("click", processURL);
+
+		// graphique des statistiques
+		drawGraphicStats ();		
 
 	} );
 
