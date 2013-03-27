@@ -6,7 +6,7 @@
     Voulez-vous jouer à <strong><?php if ( count($contests_with_prizes) > 1 ) echo 'nos '.count($contests_with_prizes); else echo 'notre ';?></strong> concours&nbsp; <u>en moins de 10&nbsp;minutes</u>&nbsp;?
   </p>
   <p>
-	<strong>C'est très simple&nbsp!</strong> Remplissez <em>une SEULE fois le formulaire</em> et <em>jouez <?= count($contests_with_prizes) ?> fois</em>.
+	<strong>C'est très simple&nbsp;!</strong> Remplissez <em>une SEULE fois le formulaire</em> et <em>jouez <?= count($contests_with_prizes) ?> fois</em>.
   </p>
   <footer>
 	<button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>

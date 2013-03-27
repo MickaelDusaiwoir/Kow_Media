@@ -172,6 +172,11 @@
        		return $query->row();
 		}
 
+		/** 
+		* @brief La function setVisitor.
+		* @param $data comporte les informations servant à enregistrer un utilisateur.
+		* @details la fonction renvoie le dernier l'id de l'utilisateur.
+		*/
 		public function setVisitor ($data)
 		{
 			$this->db->insert('visitors', $data);
@@ -180,26 +185,50 @@
 			return $last_id;
 		}
 
+		/** 
+		* @brief La function setVisits.
+		* @param $visitor_id comporte l'id de l'utilisateur.
+		*/
 		public function setVisits ($visitor_id)
 		{
 			$data = array('visitor_id' => $visitor_id, 'visit_count' => '1', 'date' => date('d-m-Y'));
 			return $this->db->insert('visits', $data);			
 		}
 
+		/** 
+		* @brief La function stats.
+		* @param $start comporte la date d'un jour en timestamp.
+		* @param $end comporte la date du lendemain de $start en timestamp.
+		* @details retourne le nombre de clics; le nombre de vue, le nombre de clics uniques ainsi que la moyen des concours vus.
+		*/
 		public function stats ($start, $end) 
 		{
-			$this->db->where(array('date >=' => $start, 'date <=' => $end ));
-			$nbClick = $this->db->count_all_results('stats');
+			// Nombre de clics par jour.
+			$req = 'SELECT count(id) FROM stat_contest_click WHERE `date`>="'.$start.'" AND `date`<="'.$end.'";';
+			$query = $this->db->query($req);
+			$nbClick = $query->result_array();
 
-			$this->db->where('date', date('d-m-Y', $start));
-			$this->db->select_sum('visit_count');
-			$query = $this->db->get('visits');
+			// Nombre de vues par jour.
+			$req = 'SELECT SUM(visit_count) FROM visits WHERE `date`="'. date('d-m-Y', $start).'";';
+			$query = $this->db->query($req);
 			$nbVisit = $query->result_array();
 
-			//$req = 'SELECT SUM(visit_count) as visit_count from visits where `date`='.date('d-m-Y', $start) ;
-			//$nbVisit = $this->db->query($req);
+			// nombre de clics uniques.
+			$req = 'SELECT count(DISTINCT visitor_id) FROM stat_contest_click WHERE `date`>='.$start.' AND `date`<='.$end;
+			$query = $this->db->query($req);
+			$clickUnique = $query->result_array();
 
-			return array('nbClick' => $nbClick, 'nbVisit' => $nbVisit[0]['visit_count']);
+			// Moyenne des concours vus par les utilisateurs.
+			$req = 'SELECT AVG(click_count) FROM stats_visitors_click WHERE `date` = "'.date('d-m-Y', $start).'";';
+			$query = $this->db->query($req);
+			$avgClicK = $query->result_array();
+
+			return array(
+							'nbClick' => $nbClick[0]['count(id)'], 
+							'nbVisit' => $nbVisit[0]["SUM(visit_count)"], 
+							'clickUnique' => $clickUnique[0]['count(DISTINCT visitor_id)'],
+							'avgClick' => $avgClicK[0]['AVG(click_count)']
+			); 
 		}
 
 

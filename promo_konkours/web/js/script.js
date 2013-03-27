@@ -426,6 +426,8 @@ function countClick ( id ) {
 		}
 	}
 
+
+	// Desinne le graphique des statistiques.
 	var drawGraphicStats = function ( e )
 	{
 
@@ -459,8 +461,13 @@ function countClick ( id ) {
     
         var table = $('#datatable'),
         options = {
-            chart: {
+            /*chart: {
                 type: 'column'
+            },*/
+            chart: {
+                type: 'line',
+                marginRight: 130,
+                marginBottom: 25
             },
             navigation: {
             	buttonOptions: {
@@ -468,7 +475,8 @@ function countClick ( id ) {
             	} 
             },
             title: {
-                text: 'Statistiques des 7 derniers jours'
+                text: 'Statistiques des 7 derniers jours',
+                x: -20
             },
             xAxis: {
             },
@@ -476,6 +484,14 @@ function countClick ( id ) {
                 title: {
                     text: 'Nombres'
                 }
+            },
+            legend: {
+                layout: 'horizontal',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -440,
+                y: 328,
+                borderWidth: 0
             },
             tooltip: {
                 formatter: function() {
@@ -486,7 +502,7 @@ function countClick ( id ) {
 
         Highcharts.theme = 
         {
-		   colors: ['#27855e', '#e84200', '#1DBECD'],
+		   colors: ['#27855e', '#e84200', '#EF3CF5', '#F5920C', '#396ADE'],
 		   chart: {
 		   		backgroundColor: 'none'
 		   },
@@ -617,8 +633,11 @@ function countClick ( id ) {
 		$('a.btn').on("click", processURL);
 		$('a.btn_img').on("click", processURL);
 
-		// graphique des statistiques
-		drawGraphicStats ();		
+		// on appelle la fonction pour dessiner le graphique des statistiques que si on est sur la page stats.
+		var tmp = document.location.href.split('/admin/');
+
+		if ( tmp[1] == 'stats' )
+			drawGraphicStats ();		
 
 	} );
 

@@ -3,10 +3,11 @@
     <head>
         <meta charset="utf-8">
         <title><?php echo $titre; ?></title>
-        <link rel="stylesheet" type="text/css" href="<?= base_url() . CSS_DIR ?>style.css" media="screen" id="design_css" />
-        <!--[if lt IE 9]>
+        <!--[if lt IE 10]>
             <script src="<?= base_url() . JS_DIR ?>html5shiv.js"></script>
+            <link rel="stylesheet" type="text/css" href="<?= base_url() . CSS_DIR ?>style_ie7.css" media="screen" />
         <![endif]-->
+        <link rel="stylesheet" type="text/css" href="<?= base_url() . CSS_DIR ?>style.css" media="screen" id="design_css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <LINK REL="icon" HREF="<?= base_url() ?>favicon.ico" TYPE="image/x-icon">
         <LINK REL="shortcut icon" HREF="<?= base_url() ?>favicon.ico" TYPE="image/x-icon"> 
@@ -53,9 +54,10 @@
             ?>
 
         </script>
-        <script src="<?= base_url() . JS_DIR?>highcharts.js"></script>
-        <script src="<?= base_url() . JS_DIR?>exporting.js"></script>
+        <?php if ( isset($type) == 'stast' ) : ?>
+            <script src="<?= base_url() . JS_DIR?>highcharts.js"></script>
+            <script src="<?= base_url() . JS_DIR?>exporting.js"></script>
+        <?php endif; ?>
         <script src="<?= base_url() . JS_DIR?>script.js"></script>
-        <script src="<?= base_url() . JS_DIR?>script2.js"></script>
     </body>
 </html>

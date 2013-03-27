@@ -165,7 +165,8 @@ class Admin extends CI_Controller
 			$start += 86400;
 			$end += 86400;
 		}			
-			
+		
+		$dataList['type'] = 'stats';
 		$dataLayout['vue'] =  $this->load->view('stats', $dataList, true);
 		$dataLayout['titre'] = 'Statistiques';
 		$this->load->view('layout', $dataLayout);
