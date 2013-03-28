@@ -149,20 +149,13 @@
 				$display .= '<section class="prize">';
 
 				// On calcule dans quel dossier se trouve l'image.
-				for ( $i = 0; $i < count($prize); $i++ )
-				{
-					$n = $i * 100;
-					$u = ($i + 1) * 100;
+				$thumbnail = getPath('thumbnail', $prize['id']);
 
-					if ( $n < $prize['id'] && $prize['id'] < $u )
-					{
-						$folderName = $n.'-'.$u.'/';
-						break;
-					}
-				}
+				// on retire les caractères inutiles
+				$tmp = explode('../', $thumbnail);
 
 				// Déclaration du titre, de la valeur et de l'image du cadeau.
-				$display .= '<figure><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="countClick('.$contest_with_prize['id'].')" target="_blank" class="btn_img" ><img src="'.base_url() . THUMB_IMG . $folderName . $prize['id'] .'.jpg" title="'.$prize['title'].'" width="128" max-height="128" /></a></figure>';
+				$display .= '<figure><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="countClick('.$contest_with_prize['id'].')" target="_blank" class="btn_img" ><img src="'. base_url() . $tmp[0] . $prize['id'] .'.jpg" title="'.$prize['title'].'" width="128" max-height="128" /></a></figure>';
 				$display .= '<h4>'.$prize['title'].'</h4>';
 				$display .= '<p class="valeur">'.$prize['value'].'&euro;</p>';
 

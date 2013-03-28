@@ -1,5 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+include(APPPATH.'/controllers/function.php');
+
 /**
 * @file admin.php
 * @author M. D. (mikanono01@hotmail.com)
@@ -419,52 +421,39 @@ class Admin extends CI_Controller
 				break;
 			}		
 
-			// on regarde s'il faut créer un nouveau dossier et/ou s'il existe
-			for ( $i = 0; $i < $id; $i++ )
+			$folderFullSize = getPath('full_size', $id);
+			$folderThumbnail = getPath('thumbnail', $id);
+
+			if ( checkRepertory($folderFullSize) == TRUE )
+				imagejpeg ($img, $folderFullSize.$nom);
+			else
+				return $erreur = 'Dossier non inscriptible :' . $folderFullSize;
+
+			if ( checkRepertory($folderThumbnail) === TRUE )
 			{
-				$n = $i * 100;
-				$u = ($i + 1) * 100;
+				imagejpeg ($img, $folderThumbnail.$nom);
 
-				if ( $n < $id && $id < $u )
-				{
-					$folderName = $n.'-'.$u;
+				// on crée la miniature a partir de l'image enregistrer dans le dossier thumbnail.
+				$this->load->library('image_lib');
 
-					if ( !is_dir(APPPATH.'../web/uploads/full_size/'.$folderName.'/') && !is_dir(APPPATH.'../web/uploads/thumbnail/'.$u.'/') )
-					{
-						mkdir(APPPATH.'../web/uploads/full_size/'.$folderName, 0777);
-						mkdir(APPPATH.'../web/uploads/thumbnail/'.$folderName, 0777);
+				$config['image_library'] = 'gd2';
+		        $config['source_image'] = $folderThumbnail.$nom;
+		        $config['create_thumb'] = FALSE;
+		        $config['maintain_ratio'] = TRUE;
+		        $config['width'] = 128;
+		        $config['height'] = 128;
 
-						imagejpeg ($img, 'web/uploads/full_size/'.$u.'/'.$nom);
-						imagejpeg ($img, 'web/uploads/thumbnail/'.$u.'/'.$nom);
-
-						break;
-					}
-					else
-					{
-						imagejpeg ($img, 'web/uploads/full_size/'.$folderName.'/'.$nom);
-						imagejpeg ($img, 'web/uploads/thumbnail/'.$folderName.'/'.$nom);
-
-						break;
-					}
-				}
+		        $this->image_lib->initialize($config);
+		        $this->image_lib->resize();
 			}
-
-			// on crée la miniature a partir de l'image enregistrer dans le dossier thumbnail.
-			$this->load->library('image_lib');
-
-			$config['image_library'] = 'gd2';
-	        $config['source_image'] = 'web/uploads/thumbnail/'. $folderName .'/'. $nom;
-	        $config['create_thumb'] = FALSE;
-	        $config['maintain_ratio'] = TRUE;
-	        $config['width'] = 128;
-	        $config['height'] = 128;
-
-	        $this->image_lib->initialize($config);
-	        $this->image_lib->resize();
+			else 
+			{
+				return $erreur = 'Dossier non inscriptible';
+			}
 
 			return TRUE; 
 		}	
-		return $erreur;	
+		return 'Pas d\'image ou d\'id reçu';	
 	}
 
 	/** 

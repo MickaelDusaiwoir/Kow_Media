@@ -1,3 +1,11 @@
+body #wrap h2 {
+	font-family: Calibri,Candara,Segoe,"Segoe UI",Optima,Arial,sans-serif;
+}
+
+#wrap #connexion li {
+	display: inline;
+}
+
 body #wrap #contests {
 	width: 60%;
 }
@@ -6,11 +14,23 @@ body #wrap #contests {
 	width: 65%;
 }
 
-#wrap #contests #progress {
+#wrap #userData #progress {
 	display: none;
-	z-index: -1;
 }
 
-#wrap #contests .content_prize figure {
-	display: inline-block;
+#wrap #contests .content_prize {
+	display: block;
+	float: left;
+}
+
+#wrap #contests .prize {
+	padding: 5px 0 0 0;
+}
+
+#nom, #prenom, #man, #woman, #miss {
+	vertical-align: middle;
+}
+
+#wrap #contests .astuces i {
+	display: none;
 }
