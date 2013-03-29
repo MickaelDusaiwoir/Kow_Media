@@ -2,7 +2,7 @@
 	<?php if ( isset($type) ) : // on regarde quel type de formulaire on doit utiliser (modifier / ajouter) ?>
 
 		<h2>
-			Modifier ce  cadeau
+			Modifiez ce  cadeau
 		</h2>
 
 		<?= form_open('admin/update', array('id' => 'addPrize', 'enctype' => 'multipart/form-data')); ?>
@@ -12,7 +12,7 @@
 	<?php else : ?>
 
 		<h2>
-			Ajouter un cadeau
+			Ajoutez un cadeau
 		</h2>
 
 		<?= form_open('admin/addPrize', array('id' => 'addPrize', 'enctype' => 'multipart/form-data')); ?>
@@ -35,20 +35,15 @@
 				<input type="file" name="image" id="image" />
 				<?php 
 					if ( isset($data->id) ) : 
-						for ( $i = 0; $i < $data->id; $i++ )
-						{
-							$n = $i * 100;
-							$u = ($i + 1) * 100;
 
-							if ( $n < $data->id && $data->id < $u )
-							{
-								$folderName = $n.'-'.$u.'/';
-								break;
-							}
-						}
+						// On calcule dans quel dossier se trouve l'image.
+						$thumbnail = getPath('thumbnail', $data->id);
+
+						// on retire les caractères inutiles
+						$tmp = explode('../', $thumbnail);
 				?>
 					<figure>
-						<img src="<?= base_url() . THUMB_IMG . $folderName . $data->id; ?>.jpg" title="<?php echo $data->title ?>" />
+						<img src="<?= base_url() . $tmp[0] . $data->id; ?>.jpg" title="<?php echo $data->title ?>" />
 					</figure>
 				<?php endif; ?>
 				
@@ -75,7 +70,14 @@
 				<?php if ( isset($type) ) : ?>
 					<div class="clear">
 						<?= form_label('Position du cadeau', 'position'); ?>
-						<input type="number" placeholder="0" name="position" id="position" min="0" />
+						<input type="number" placeholder="0" name="position" id="position" min="0" 
+							<?php 
+								if ( set_value('position') ) 
+									echo 'value="'.set_value('position').'"'; 
+								elseif ( isset($data->position) )
+									echo 'value="'.$data->position.'"';
+							?>
+						 />
 					</div>
 
 					<input type="hidden" name="id" 
@@ -87,12 +89,12 @@
 
 					?> />
 					<input type="hidden" name="type" value="<?php echo $type ?>" />
-					<input type="submit" name="envoyer" value="Modifier ce cadeau" />
+					<input type="submit" name="envoyer" value="Modifiez ce cadeau" />
 
 				<?php else : ?>
 
 					<input type="hidden" name="contest_id" value="<?php echo $id; ?>" />
-					<input type="submit" name="envoyer" value="Ajouter ce cadeau" />
+					<input type="submit" name="envoyer" value="Ajoutez ce cadeau" />
 
 				<?php endif; ?>
 

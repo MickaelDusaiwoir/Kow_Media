@@ -232,7 +232,7 @@ class Admin extends CI_Controller
 	{
 		$this->load->helper('form');
 
-		$dataLayout['titre'] 	=  'Ajouter un concours';
+		$dataLayout['titre'] 	=  'Ajoutez un concours';
         $dataLayout['vue'] 		=  $this->load->view('contest', null ,true);
         $this->load->view('layout', $dataLayout);		
 	}
@@ -253,8 +253,8 @@ class Admin extends CI_Controller
 			$this->load->library('form_validation');			
 			$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
 
-			$this->form_validation->set_rules('title', 'titre', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
-			$this->form_validation->set_rules('url', 'lien', 'trim|required|min_length[5]|valid_url');
+			$this->form_validation->set_rules('title', 'titre', 'trim|required|min_length[4]|max_length[255]|encode_php_tags|xss_clean');
+			$this->form_validation->set_rules('url', 'lien', 'trim|required|min_length[4]|valid_url');
 			$this->form_validation->set_rules('text', 'astuces', 'trim|required|encode_php_tags|xss_clean');
 			
 			if ( $this->form_validation->run() )
@@ -274,7 +274,7 @@ class Admin extends CI_Controller
 			{
 				$this->load->helper('form');
 
-				$dataLayout['titre'] 	=  'Ajouter un concours';
+				$dataLayout['titre'] 	=  'Ajoutez un concours';
 		        $dataLayout['vue'] 		=  $this->load->view('contest', null ,true);
 		        $this->load->view('layout', $dataLayout);
 			}
@@ -301,7 +301,7 @@ class Admin extends CI_Controller
 		$this->load->helper('form');
 
 		$dataList['id'] 		= $contest_id;
-		$dataLayout['titre'] 	=  'Ajouter un cadeau';
+		$dataLayout['titre'] 	=  'Ajoutez un cadeau';
         $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
         $this->load->view('layout', $dataLayout);
 	}
@@ -325,7 +325,7 @@ class Admin extends CI_Controller
 			$this->load->library('form_validation');
 			$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
 
-			$this->form_validation->set_rules('title', 'titre ', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
+			$this->form_validation->set_rules('title', 'titre ', 'trim|required|min_length[4]|max_length[255]|encode_php_tags|xss_clean');
 			$this->form_validation->set_rules('value', 'valeur ', 'trim|required|numeric|min_length[1]|max_length[12]|encode_php_tags|xss_clean');
 			
 			$contest_id = $this->input->post('contest_id');
@@ -364,7 +364,7 @@ class Admin extends CI_Controller
 
 					$dataList['erreur']		=  $imageErreur ;
 					$dataList['id'] 		=  $contest_id; 
-					$dataLayout['titre'] 	=  'Ajouter un cadeau';
+					$dataLayout['titre'] 	=  'Ajoutez un cadeau';
 			        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
 			        $this->load->view('layout', $dataLayout);
 				}
@@ -379,7 +379,7 @@ class Admin extends CI_Controller
 
 				$dataList['erreur']		=  $erreur;
 				$dataList['id'] 		=  $contest_id; 
-				$dataLayout['titre'] 	=  'Ajouter un cadeau';
+				$dataLayout['titre'] 	=  'Ajoutez un cadeau';
 		        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
 		        $this->load->view('layout', $dataLayout);
 			}			
@@ -603,7 +603,7 @@ class Admin extends CI_Controller
 
 			if ( $type == 'prize' )
 			{
-				$this->form_validation->set_rules('title', 'titre', 'trim|required|min_length[5]|max_length[255]|encode_php_tags|xss_clean');
+				$this->form_validation->set_rules('title', 'titre', 'trim|required|min_length[4]|max_length[255]|encode_php_tags|xss_clean');
 				$this->form_validation->set_rules('value', 'valeur', 'trim|required|numeric|min_length[1]|max_length[12]|encode_php_tags|xss_clean');
 				$this->form_validation->set_rules('position', 'position', 'trim|numeric|encode_php_tags|xss_clean');
 
@@ -631,7 +631,7 @@ class Admin extends CI_Controller
 				{
 					$dataList['id']			=  $id;
 			        $dataList['type'] 		=  $type;
-					$dataLayout['titre'] 	=  'Modifier ce '.$type;
+					$dataLayout['titre'] 	=  'Modifiez ce '.$type;
 			        $dataLayout['vue'] 		=  $this->load->view('prize', $dataList ,true);
 			        $this->load->view('layout', $dataLayout);
 				}

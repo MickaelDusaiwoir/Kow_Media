@@ -5,14 +5,19 @@
   font-style: normal;
 }
 
+/* @color_red: #BE333F;
+@color_vert: #307360;
+@color_noir: #303030;
+@color_blanc: #fff;
+@color_jaune: #f9f0d5; */
 
-@color_red: #da6610;
-@color_blue: #2185C5;
-@color_noir: #3E454C;
-@color_blanc: #FFF6E5;
-@color_blue2: #7ECEFD;
-@color_blue3: #416174;
+@color_red: #E84200;
+@color_vert: #27855E;
 @color_vert_flash: #00CD27;
+@color_noir: #333;
+@color_blanc: #fff;
+@color_jaune: #f8f5de;
+@color_jaune2: #F6F4E6;
 
 
 .border-radius {
@@ -27,7 +32,6 @@
 	-o-box-sizing: border-box;
 	-ms-box-sizing: border-box;
 }
-
 
 /************ FONTELLLO ********************/
 
@@ -91,6 +95,7 @@
 
 /*******************************************************/
 
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -136,19 +141,15 @@ table {
 }
 
 body {	
-	background: url('../img/black_lozenge.png') repeat;
+	background: url('../img/agsquare.png') repeat;
 	font-size: 14px;
 	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 	max-width: 1300px;
-	color: #f1f1f1;
 	margin: 0 auto;
 }
 
 #no_show, .no_show {
 	display: none;
-}
-#show, .show {
-	display: inline-block;
 }
 
 body #wrap .alert-error {
@@ -165,7 +166,7 @@ h2 {
 	padding-bottom: 25px;
 	font-weight: bold;
 	&:before {
-		background: url('../img/sprite_b.png') no-repeat;
+		background: url('../img/sprite.png') no-repeat;
 		background-position: -24px -29px;
 		content: '';
 		height: 36px;
@@ -179,12 +180,12 @@ h2 {
 
 h3 {
 	font-size: 1.6em;
-	color: @color_blue2;
+	color: @color_vert;
 	padding: 5px 10px;
 	font-weight: bold;
-	text-shadow: -1px -1px 0px @color_noir;
+	text-shadow: -1px -1px 0px @color_blanc;
 	a {
-		color: @color_blue2;
+		color: @color_vert;
 		text-decoration: none;
 	}
 }
@@ -192,7 +193,6 @@ h3 {
 h4 {
 	font-size: 1.1em;
 	margin-top: 0;
-	text-shadow: -1px -1px 0px @color_noir;
 }
 
 #wrap {
@@ -200,27 +200,26 @@ h4 {
 	margin: 0 auto;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-	display: inline;
-}
-
 .fixed {
 	position: fixed;
 	width: 28%;
-	z-index: 2;
+	z-index: 3;
+	max-width: 390px;
 }
 #fixedbug {
-	height: 260px;
+	height: 295px;
 	display: inline-block;
 }
 
+[class^="icon-"], [class*=" icon-"] {
+	display: inline;
+}
 
 #dialog-message {
 	display: none;
 	.border-radius;
 	border: 1px solid lighten(@color_noir, 50%);
 	padding: 10px;
-	color: @color_noir;
 	header {
 		font-size: 1.2em;
 		font-weight: bold;
@@ -250,16 +249,15 @@ h4 {
 
 #userData {
 	padding: 10px;
-	width: 30%;
+	width: 28%;
 	.box-sizing;
 	float: left;
 	#form {
-		border: 1px solid @color_blue;
+		border: 1px solid #ccc;
 		-webkit-box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
         box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
 		padding: 10px 10px 20px 10px;
-		background-color: @color_blue3;
-		position: relative;
+		background-color: @color_jaune2;
 		border-top-right: 2px;
 		border-top-left-radius: 40px 20px;
 		border-bottom-right-radius: 10px 60px;
@@ -281,11 +279,11 @@ h4 {
 			.box-sizing;
 		}
 		input, select {
-			color: @color_blue;
+			color: @color_vert;
 			display: inline-block;
 			margin-bottom: 5px;
 			background-color: @color_blanc;
-			border: 1px solid @color_blue;
+			border: 1px solid @color_vert;
 			.border-radius;
 			padding: 3px;
 			transition: border-color 0.2s linear 0s;
@@ -295,11 +293,11 @@ h4 {
 			-ms-transition: border-color 0.2s linear 0s;
 			&:focus {
 				outline: none;
-				border: 1px solid lighten(@color_blue, 30%);
+				border: 1px solid lighten(@color_vert, 30%);
 				background-color: darken(@color_blanc, 5%);
 			}
 			&:hover {
-				border: 1px solid darken(@color_blue2, 20%);
+				border: 1px solid darken(@color_jaune, 50%);
 			}
 		}
 		input[type="text"], input[type="email"] {
@@ -351,18 +349,18 @@ h4 {
 
 	.contest {
 		border-top-right-radius: 10px 60px;
-		border: 1px solid @color_blue;
+		border: 1px solid #ccc;
 		display: inline-block;
 		width: 100%;
 		margin-bottom: 15px;
 		padding-bottom: 5px;
-		background-color: @color_blue3;
+		background-color: @color_jaune2;
 		position: relative;
 		-webkit-box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
         box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
         z-index: 0;
 		&:before, &:after {
-			background: url('../img/sprite_b.png') no-repeat;
+			background: url('../img/sprite.png') no-repeat;
 			height: 22px;
 			width: 22px;
 			display: inline-block;
@@ -403,14 +401,14 @@ h4 {
 			figure {
 				display: inline-block;
 				.border-radius;
-				background-color: @color_blue3;
-				border: 1px solid darken(@color_blue, 20%);
+				background-color: @color_blanc;
+				border: 1px solid darken(@color_blanc, 10%);
 			}
 
 			img {
-				border: 1px solid darken(@color_blue, 30%);
+				border: 1px solid darken(@color_blanc, 10%);
 				padding: 3px;
-				background-color: @color_blue;
+				background-color: @color_blanc;
 				margin: 0 auto;
 				text-align: center;
 				width: 128px;
@@ -424,7 +422,6 @@ h4 {
 			color: @color_red;
 			font-weight: bold;
 			font-size: 1.2em;
-			text-shadow: -1px -1px 0px @color_noir;
 			padding-top: 3px;
 		}
 	}
@@ -437,8 +434,7 @@ h4 {
 		margin-bottom: 10px;
 		position: relative;
 		h3 {
-			padding-left: 0;
-			font-size: 1.3em;
+			display: none;
 		}
 		.btn {
 			transition: all 0.2s linear 0s;
@@ -450,41 +446,40 @@ h4 {
 			font-size: 1.1em;
 			text-align: center;
 			display: inline-block;
-			border-top: 1px solid darken(@color_blue, 20%);
-		   background: @color_blue;
-		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
-		   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   padding: 7px 12px;
-		   -webkit-border-radius: 7px;
-		   -moz-border-radius: 7px;
-		   border-radius: 7px;
-		   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-		   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-		   box-shadow: rgba(0,0,0,1) 0 1px 0;
-		   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-		   color: white;
-		   text-shadow: 0px -1px 0 darken(@color_noir, 40%);
-		   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-		   text-decoration: none;
-		   vertical-align: middle;
+			border-top: 1px solid darken(@color_blanc, 20%);
+			   background: @color_vert;
+			   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
+			   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+			   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+			   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+			   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+			   padding: 7px 12px;
+			   -webkit-border-radius: 7px;
+			   -moz-border-radius: 7px;
+			   border-radius: 7px;
+			   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+			   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+			   box-shadow: rgba(0,0,0,1) 0 1px 0;
+			   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+			   color: white;
+			   text-shadow: -1px -1px 0 darken(@color_red, 40%);
+			   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+			   text-decoration: none;
+			   vertical-align: middle;
 			
 			&:hover {
 			   border-top-color: darken(@color_noir, 70%);
-			   background: darken(@color_blue, 10%);
-			   color: @color_blue2;
-			   text-shadow: -1px -1px 0 darken(@color_blue, 30%);
+			   background: darken(@color_vert, 10%);
+			   color: @color_jaune;
 			   }
 			&:active {
 			   border-top-color: lighten(@color_noir, 30%);
-			   background: darken(@color_blue, 30%);
+			   background: darken(@color_vert, 15%);
 			   }
 			&:before {
 				content: '';
 				display: inline-block;
-				background: url('../img/sprite_b.png') no-repeat;
+				background: url('../img/sprite.png') no-repeat;
 				background-position: -44px -2px;
 				width: 17px;
 				height: 23px;
@@ -500,7 +495,7 @@ h4 {
 				padding: 0.2em 0;
 			}
 			li i {
-				background: url('../img/sprite_b.png') no-repeat;
+				background: url('../img/sprite.png') no-repeat;
 				height: 23px;
 				width: 23px;
 				display: inline-block;
@@ -566,11 +561,11 @@ h4 {
 	}
 }
 #login {
-		border: 1px solid @color_blue;
+		border: 1px solid #ccc;
 		-webkit-box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
         box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
 		padding: 10px 10px 20px 10px;
-		background-color: @color_blue3;
+		background-color: @color_jaune2;
 		position: relative;
 		border-top-right: 2px;
 		border-top-left-radius: 40px 20px;
@@ -589,11 +584,11 @@ h4 {
 		}
 		
 		input {
-			color: @color_blue;
+			color: @color_vert;
 			display: inline-block;
 			margin-bottom: 5px;
 			background-color: @color_blanc;
-			border: 1px solid @color_blue;
+			border: 1px solid @color_vert;
 			.border-radius;
 			padding: 3px;
 			width: 61%;
@@ -605,22 +600,22 @@ h4 {
 			-ms-transition: border-color 0.2s linear 0s;
 			&:focus {
 				outline: none;
-				border: 1px solid lighten(@color_blue, 30%);
+				border: 1px solid lighten(@color_vert, 30%);
 				background-color: darken(@color_blanc, 5%);
 			}
 			&:hover {
-				border: 1px solid darken(@color_blue2, 20%);
+				border: 1px solid darken(@color_jaune, 50%);
 			}
 		}
 		input[type="submit"] {
 			width: 100%;
 		  border-top: 1px solid darken(@color_blanc, 20%);
-		   background: @color_blue;
-		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
-		   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: @color_vert;
+		   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
+		   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
 		   padding: 7px 12px;
 		   -webkit-border-radius: 7px;
 		   -moz-border-radius: 7px;
@@ -629,7 +624,7 @@ h4 {
 		   -moz-box-shadow: rgba(0,0,0,0.2) 0 1px 0;
 		   box-shadow: rgba(0,0,0,0.2) 0 1px 0;
 		  text-shadow: -1px -1px 0px @color_noir;
-		   color: @color_blue2;
+		   color: @color_jaune;
 		   font-weight: bold;
 		   font-size: 15px;
 		  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
@@ -639,12 +634,12 @@ h4 {
 			&:hover {
 				cursor: pointer;
 			   border-top-color: darken(@color_blanc, 30%);
-			   background: darken(@color_blue, 15%);
+			   background: darken(@color_vert, 15%);
 			   color: @color_blanc;
 			   }
 			&:active {
 			   border-top-color: @color_noir;
-			   background: darken(@color_blue, 5%);
+			   background: darken(@color_vert, 5%);
 			   color: @color_blanc;
 			   text-shadow: -1px -1px 0 @color_noir;
 			   }
@@ -655,11 +650,12 @@ h4 {
 	padding: 10px;
 	background: #f2dede;
 	color: #b94a48;
-	border-color: #eed3d7;
+	border: 1px solid #eed3d7;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 	.border-radius;
 	margin-bottom: 10px;
 }
+
 .info {
 	padding: 10px;
 	background: #fcf8e3;
@@ -673,8 +669,6 @@ h4 {
 
 
 
-
-
 /********* ICONES *****/
 .actionContest a, .actionPrize a, .add_gift a {
 	text-decoration: none;
@@ -685,7 +679,7 @@ h4 {
 	-o-transition: all 0.2s linear 0s;
 	-ms-transition: all 0.2s linear 0s;
 	&:hover {
-		color: darken(@color_red, 50%);
+		color: darken(@color_red, 20%);
 	}
 }
 .actionContest a:first-child {
@@ -706,18 +700,18 @@ h4 {
 		-o-transition: all 0.2s linear 0s;
 		-ms-transition: all 0.2s linear 0s;
 		margin: 0 auto;
-		color: @color_red;
+		color: lighten(@color_noir, 50%);
 		width: 128px;
 		text-align: center;
 		font-size: 2.4em;
 		display: block;
 		padding-top: 20px;
 		padding-bottom: 20px;
-		border: 2px dashed @color_red;
+		border: 2px dashed lighten(@color_noir, 50%);
 
 		&:hover {
-			color: darken(@color_red, 50%);
-			border: 2px dashed darken(@color_red, 50%);
+			color: @color_red;
+			border: 2px dashed (@color_red);
 		}
 	}
 }
@@ -744,8 +738,7 @@ h4 {
 /*********** MENU CONNEXION ***************/
 #connexion {
 	text-align: right;
-	background-color: rgba(255,255,255,0.1);
-	border-bottom: 1px dashed darken(@color_blanc, 65%);
+	background: url('../img/black_lozenge.png') repeat #333;
 	height: 25px;
 	margin-right: -6px;
 	margin-left: -10px;
@@ -765,7 +758,7 @@ h4 {
 		-o-transition: all 0.2s linear 0s;
 		-ms-transition: all 0.2s linear 0s;
 		text-decoration: none;
-		color: @color_blanc;
+		color: darken(@color_blanc, 15%);
 		text-shadow: -1px -1px 0 #000;
 
 		&:hover {
@@ -775,6 +768,11 @@ h4 {
 }
 
 
+.group {
+	display: inline-block;
+	position: relative;
+	width: 30%;
+}
 
 /********************************************/
 #add_contest_content, #edit_gift {
@@ -784,11 +782,11 @@ h4 {
 	.box-sizing;
 	margin: 10px;
 	form {
-		border: 1px solid @color_blue;
+		border: 1px solid #ccc;
 		-webkit-box-shadow:  2px 3px 10px 1px rgba(0, 0, 0, 0.1); 
 	    box-shadow:  2px 3px 10px 1px rgba(0, 0, 0, 0.1);
 		padding: 10px 10px 20px 10px;
-		background-color: @color_blue3;
+		background-color: @color_jaune2;
 		position: relative;
 		border-top-right: 2px;
 		border-top-left-radius: 40px 20px;
@@ -814,8 +812,8 @@ h4 {
 			.box-sizing;
 			margin-bottom: 5px;
 			background-color: @color_blanc;
-			border: 1px solid @color_blue;
-			color: @color_blue;
+			border: 1px solid @color_vert;
+			color: @color_vert;
 			.border-radius;
 			transition: border-color 0.2s linear 0s;
 			-moz-transition: border-color 0.2s linear 0s;
@@ -824,17 +822,18 @@ h4 {
 			-ms-transition: border-color 0.2s linear 0s;
 			&:focus {
 				outline: none;
-				border: 1px solid lighten(@color_blue, 30%);
+				border: 1px solid lighten(@color_vert, 30%);
 				background-color: darken(@color_blanc, 5%);
 			}
 			&:hover {
-				border: 1px solid darken(@color_blue2, 20%);
+				border: 1px solid darken(@color_jaune, 50%);
 			}
 		}
 		textarea {
 			color: @color_noir;
 			margin-left: 3px;
-			resize:vertical;		
+			resize:vertical;
+			min-height: 60px;	
 		}
 		input[type="file"] {
 			width: 67%;
@@ -842,20 +841,24 @@ h4 {
 			display: inline-block;
 			padding: 2px 5px;
 		}
-		input#value, input#position {
-			width: 30%;
+		input#position {
+			width: 67%;
+			display: inline-block;
+			border-top-right: 0px;
+			border-bottom-right: 0px;
+			padding-right: 25px;
+		}
+		input#value {
 			display: inline-block;
 			position: relative;
 			border-top-right: 0px;
 			border-bottom-right: 0px;
-		}
-		input#position {
-			padding-right: 25px;
+			width: 86%;
 		}
 		.euro_btn {
-			position: relative;
-			right: 28px;
-			bottom: 0;
+			position: absolute;
+			right: 0px;
+			bottom: 5px;
 			background-color: darken(@color_blanc, 5%);
 			
 			padding: 1px 8px 5px 8px\9;
@@ -863,7 +866,7 @@ h4 {
 			_padding: 2px 8px 6px 8px;
 
 			padding: 5px 8px 3px 8px;
-			border: 1px solid @color_blue;
+			border: 1px solid @color_vert;
 			text-shadow: -1px -1px 0px #fff;
 			border-top-right: 2px;
 			border-bottom-right: 2px;
@@ -879,12 +882,12 @@ h4 {
 		input[type="submit"] {
 		   width: 98%;
 		   border-top: 1px solid darken(@color_blanc, 20%);
-		   background: @color_blue;
-		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
-		   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: @color_vert;
+		   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
+		   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
 		   padding: 7px 12px;
 		   -webkit-border-radius: 7px;
 		   -moz-border-radius: 7px;
@@ -893,7 +896,7 @@ h4 {
 		   -moz-box-shadow: rgba(0,0,0,0.2) 0 1px 0;
 		   box-shadow: rgba(0,0,0,0.2) 0 1px 0;
 		  text-shadow: -1px -1px 0px @color_noir;
-		   color: @color_blue2;
+		   color: @color_jaune;
 		   font-weight: bold;
 		   font-size: 15px;
 		  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
@@ -903,12 +906,12 @@ h4 {
 			&:hover {
 				cursor: pointer;
 			   border-top-color: darken(@color_blanc, 30%);
-			   background: darken(@color_blue, 15%);
+			   background: darken(@color_vert, 15%);
 			   color: @color_blanc;
 			   }
 			&:active {
 			   border-top-color: @color_noir;
-			   background: darken(@color_blue, 5%);
+			   background: darken(@color_vert, 5%);
 			   color: @color_blanc;
 			   text-shadow: -1px -1px 0 @color_noir;
 			   }
@@ -921,7 +924,7 @@ h4 {
 		border: 1px solid darken(@color_blanc, 10%);
 		margin-bottom: 5px;
 		float: right;
-		margin-right: 5px;
+		margin-right: 10px;
 		img {
 			border: 1px solid darken(@color_blanc, 10%);
 			padding: 3px;
@@ -937,6 +940,10 @@ h4 {
 	}
 }
 
+#edit_gift #addPrize #position {
+	width: 30%;
+}
+
 #legend {
 	padding: 10px;
 	width: 55%;
@@ -946,7 +953,7 @@ h4 {
 
 	li {
 		padding-bottom: 10px;
-		color: @color_blue;
+		color: @color_vert;
 		line-height: 22px;
 		p {
 			color: @color_red;
@@ -955,7 +962,7 @@ h4 {
 		u {
 			text-decoration: none;
 			padding-bottom: 1px;
-			border-bottom: 1px dashed @color_blue;
+			border-bottom: 1px dashed @color_vert;
 		}
 
 		small {
@@ -971,8 +978,32 @@ h4 {
 			color: lighten(@color_noir, 40%);
 		}
 	}
-
-	
+	.exemple {
+		margin-top: 20px;
+		line-height: 20px;
+		display: inline-block;
+		border: 1px dashed #c09853;
+		padding: 10px;
+		small {
+			color: lighten(@color_noir, 40%);
+			display: inline-block;
+		}
+		strong {
+			font-weight: bold;
+			color: @color_vert;
+			display: inline-block;
+		}
+		u {
+			display: inline-block;
+		}
+		h3 {
+			color: @color_noir;
+			padding-bottom: 3px;
+			display: inline-block;
+			padding-top: 0;
+			padding-left: 0;
+		}
+	}	
 }
 
 /********** BTN **************/
@@ -986,12 +1017,12 @@ h4 {
 	text-align: center;
 	display: inline-block;
 	border-top: 1px solid darken(@color_blanc, 20%);
-   background: @color_blue;
-   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
-   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+   background: @color_vert;
+   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
+   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
 	   padding: 4px 12px;
 	   -webkit-border-radius: 7px;
 	   -moz-border-radius: 7px;
@@ -1001,19 +1032,19 @@ h4 {
 	   box-shadow: rgba(0,0,0,1) 0 1px 0;
 	   text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	   color: white;
-	   text-shadow: -1px -1px 0 darken(@color_blue, 40%);
+	   text-shadow: -1px -1px 0 darken(@color_red, 40%);
 	   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 	   text-decoration: none;
 	   vertical-align: middle;
 	
 	&:hover {
 	   border-top-color: darken(@color_noir, 70%);
-	   background: darken(@color_blue, 10%);
-	   color: @color_blue2;
+	   background: darken(@color_vert, 10%);
+	   color: @color_jaune;
 	   }
 	&:active {
 	   border-top-color: lighten(@color_noir, 30%);
-	   background: darken(@color_blue, 15%);
+	   background: darken(@color_vert, 15%);
 	   }
 }
 
@@ -1067,19 +1098,19 @@ h4 {
 			-webkit-transition: all 0.2s linear 0s;
 			-o-transition: all 0.2s linear 0s;
 			-ms-transition: all 0.2s linear 0s;
-		 background: @color_blue;
-		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
-		   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
-		   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		 background: @color_vert;
+		   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
+		   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
 		&:hover {
-			 background: darken(@color_blue, 10%);
-		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(darken(@color_blue, 5%)));
-		   background: -webkit-linear-gradient(top, @color_blue, darken(@color_blue, 5%));
-		   background: -moz-linear-gradient(top, @color_blue, darken(@color_blue, 5%));
-		   background: -ms-linear-gradient(top, @color_blue, darken(@color_blue, 5%));
-		   background: -o-linear-gradient(top, @color_blue, darken(@color_blue, 5%));
+			 background: darken(@color_vert, 10%);
+		   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(darken(@color_vert, 5%)));
+		   background: -webkit-linear-gradient(top, @color_vert, darken(@color_vert, 5%));
+		   background: -moz-linear-gradient(top, @color_vert, darken(@color_vert, 5%));
+		   background: -ms-linear-gradient(top, @color_vert, darken(@color_vert, 5%));
+		   background: -o-linear-gradient(top, @color_vert, darken(@color_vert, 5%));
 		}
 	}
 }
@@ -1105,11 +1136,10 @@ h4 {
 	}
 	.pourcentage {
 		position: relative;
-		z-index: 0;
 		top: -17px;
+		z-index: 0;
 		font-weight: bold;
 		text-shadow: 0px 1px 0px @color_blanc;
-		color: @color_noir;
 	}
 
 	.icon-ok {
@@ -1123,7 +1153,7 @@ h4 {
 		}
 	}
 	.icon-cancel {
-		color: @color_blanc;
+		color: @color_noir;
 		&:before {
 			font-size: 14px;
 			color: red;
@@ -1132,7 +1162,7 @@ h4 {
 		}
 	}
 	.current {
-		color: @color_blanc;
+		color: @color_noir;
 		font-weight: bold;
 		font-size: 1.5em;
 	}
@@ -1140,7 +1170,7 @@ h4 {
 		font-size: 1.2em;
 	}
 	small {
-		color: @color_blue;
+		color: @color_vert;
 		display: block;
 		margin-top: 0px;
 		margin-left: 0px;
@@ -1156,7 +1186,7 @@ h4 {
 			display: inline-block;
 			width: 43px;
 			height: 15px;
-			background: url('../img/sprite_b.png') no-repeat;
+			background: url('../img/sprite.png') no-repeat;
 			background-position: -25px -70px;
 			content: '';
 		}
@@ -1164,22 +1194,43 @@ h4 {
 }
 #explications {
 	margin-top: 30px;
-	border: 1px dashed @color_blue;
+	border: 1px dashed #c09853;
 	padding: 10px;
 	h3 {
 		color: @color_noir;
 		padding-bottom: 3px;
 		display: inline-block;
+		padding-top: 0px;
+	}
+	ol {
+		line-height: 17px;
 	}
 	li {
 		padding-bottom: 6px;
+		small {
+			display: inline;
+		}
+		em {
+			color: @color_vert;
+		}
+	}
+	u {
+		color: @color_red;
+		font-weight: bold;
+	}
+	p {
+		line-height: 14px;
+		color: lighten(@color_noir, 20%);
+	}
+	i {
+		font-style: italic;
 	}
 }
 #intro, #explications {
 	.pub {
 		margin-top: 30px;
 		font-size: 1.1em;
-		border: 1px dashed @color_blue;
+		border: 1px dashed #ccc;
 		padding: 5px 10px;
 		.border-radius;
 		border-bottom-left-radius: 60px 10px;
@@ -1223,7 +1274,7 @@ h4 {
 		padding-left: 45px;
 		strong {
 			font-weight: bold;
-			color: @color_blue;
+			color: @color_noir;
 		}
 	}
 }
@@ -1235,17 +1286,50 @@ h4 {
     bottom: 15px;
     display: none;
     padding: 10px;
-    background: @color_blanc;
+    background: @color_noir;
     .border-radius;
     opacity: 0.8;
     z-index: 2000;
     text-decoration: none;
-   	color: @color_noir;
+   	color: @color_blanc;
    	&:hover {
    		background: darken(@color_noir, 20%);
    		color: darken(@color_blanc, 10%);
    	}
 }
+
+/*****************************************************************************************/
+#datatable {
+	margin-top: 5px;
+	margin-left: 10px;
+	thead th {
+		border-bottom: 1px dashed #999;
+		border-top: 1px dashed #999;
+		background-color: #27855e;
+		color: #fff;
+		text-shadow: 0px -1px 0px #000;
+	}
+	th, td {
+		padding: 5px 10px;
+		text-align: center;
+	}
+	th {
+		font-weight: bold;
+	}
+	tbody th {
+		text-align: left;
+		font-weight: bold;
+	}
+	tr:nth-child(even) {
+		background-color: #ddd;
+		border-top: 1px dashed #999;
+		border-bottom: 1px dashed #999;
+	}
+	tr:hover {
+		background-color: #dcfadc;
+	}
+}
+
 
 /**************************************************************************************/
 
@@ -1426,13 +1510,21 @@ input[type="submit"] {
   margin-left: 0;
 }
 
+#container {
+	height: 400px;
+}
+
 
 
 @media all and (max-width: 1200px) {
+	.fixed {
+		width: 28%;
+	}
 	#fixedbug {
 		height: 325px;
 	}
 	#userData {
+		width: 28%;
 		#form {
 			label {
 			}
@@ -1484,6 +1576,9 @@ input[type="submit"] {
 		margin-left: -3px;
 		margin-right: -3px;
 	}
+	#edit_gift {
+		width: 60%;
+	}
 }
 
 @media all and (max-width: 850px) {
@@ -1513,6 +1608,12 @@ input[type="submit"] {
 			}
 		}
 	}
+	#edit_gift {
+		width: 96%;
+		form input#value {
+			width: 92%;
+		}
+	}
 }
 
 @media all and (max-width: 780px) {
@@ -1540,22 +1641,42 @@ input[type="submit"] {
 				}
 			}
 			#jour, #mois, #annee {
-				float: right;
+				float: none;
 				margin: 2px 0;
+				display: inline-block;
 			}
 			#jour {
-				width: 38%
+				width: 23%
 			}
 			#mois {
-				width: 80%;
-				margin-left: 20px;
+				width: 41%;
+				padding-left: 0;
 			}
 			#annee {
-				width: 50%;
-				margin-left: 60px;
+				width: 32%;
+				padding-left: 0;
 			}
 			#ddn {
-				width: 50%;
+				width: 100%;
+			}
+		}
+	}
+	#add_contest_content, #edit_gift {
+		form {
+			label {
+				display: block;
+				width: 100%;
+				text-align: left;
+			}
+			input, textarea {
+				width: 100%;
+				margin-left: 0;
+			}
+			input#image{
+				width: 70%;
+			}
+			input#value {
+				width: 90%;
 			}
 		}
 	}
@@ -1583,6 +1704,14 @@ input[type="submit"] {
 			}
 		}
 	}
+
+	#add_contest_content #addContest input#position {
+		width: 100%;
+	}
+
+	#add_contest_content #addContest textarea {
+		min-height: 100px;
+	}
 }
 
 
@@ -1590,6 +1719,7 @@ input[type="submit"] {
 	.fixed {
 		position: static;
 		width: 100%;
+		margin: 0 auto;
 	}
 	#fixedbug{
 		height: 0;
@@ -1599,7 +1729,7 @@ input[type="submit"] {
 		padding-left: 50px;
 		padding-bottom: 25px;
 		&:before {
-			background: url('../img/sprite_b.png') no-repeat;
+			background: url('../img/sprite.png') no-repeat;
 			background-position: -24px -29px;
 			content: '';
 			height: 36px;
@@ -1618,17 +1748,16 @@ input[type="submit"] {
 			margin: 0 auto;
 		}
 	}
-	#userData, #contests  {
+	#userData, #contests {
 		width: 100%;
 	}
-
 	#userData {
 		#form {
-			border: 1px solid @color_blue;
+			border: 1px solid #ccc;
 			-webkit-box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
 	        box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
-			padding: 10px 10px 20px 10px;
-			background-color: @color_blue3;
+			padding: 15px 10px 10px 10px;
+			background-color: @color_jaune2;
 			position: relative;
 			border-top-right: 2px;
 			border-top-left-radius: 40px 20px;
@@ -1652,11 +1781,11 @@ input[type="submit"] {
 				float: none;
 			}
 			input, select {
-				color: @color_blue;
+				color: @color_vert;
 				display: inline-block;
 				margin-bottom: 5px;
 				background-color: @color_blanc;
-				border: 1px solid @color_blue;
+				border: 1px solid @color_vert;
 				.border-radius;
 				padding: 3px;
 				transition: border-color 0.2s linear 0s;
@@ -1666,11 +1795,11 @@ input[type="submit"] {
 				-ms-transition: border-color 0.2s linear 0s;
 				&:focus {
 					outline: none;
-					border: 1px solid lighten(@color_blue, 30%);
+					border: 1px solid lighten(@color_vert, 30%);
 					background-color: darken(@color_blanc, 5%);
 				}
 				&:hover {
-					border: 1px solid darken(@color_blue2, 50%);
+					border: 1px solid darken(@color_jaune, 50%);
 				}
 			}
 			input[type="text"], input[type="email"] {
@@ -1684,20 +1813,21 @@ input[type="submit"] {
 			#jour {
 				width: 16%;
 				float: none;
+				margin-bottom: 10px;
 			}
 			#mois {
 				width: 35%;
 				float: none;
-				margin-left: 2px;
+				margin: 5px 0 10px 2px;
 			}
 			#annee {
 				width: 23%;
 				float: none;
-				margin-left: 2px;
+				margin: 5px 0 10px 2px;
 			}
 			.radio {
 				text-align: center;
-				width: 32.5%;
+				width: 30.5%;
 				.box-sizing;
 				margin-right: 0;
 				display: inline-block;
@@ -1707,7 +1837,6 @@ input[type="submit"] {
 			}
 		}
 	}
-
 	#contests {
 		.actionContest {
 			right: 5px;
@@ -1733,6 +1862,19 @@ input[type="submit"] {
 				width: 50%;
 			}
 		}
+	}
+
+	#add_contest_content, #legend {
+		width: 94%;
+		float: none;
+	}
+
+	#add_contest_content #addContest input#position {
+		width: 100%;
+	}
+
+	.group {
+		width: 50%;
 	}
 }
 
@@ -1792,7 +1934,7 @@ input[type="submit"] {
 
 	#connexion {
 		margin: 0;
-		height: 65px;
+		height: 80px;
 		ul {
 			width: 90%;
 			li {
@@ -1805,6 +1947,38 @@ input[type="submit"] {
 
 	#intro {
 		display: none;
+	}
+
+	#login_page {
+		width: 300px;
+		margin-bottom: 10px;
+	}
+
+	#login label {
+		text-align: left;
+		padding: 5px 0 10px 0;
+		margin: 0 5%;
+		width: auto;
+	}
+
+	#login #password, #login #username {
+		width: 50%;
+	}
+
+	#login #password {
+		margin-left: 23px;
+	}
+
+	#login input[type=submit] {
+		margin-top: 5px;
+	}
+
+	#add_contest_content #addContest input#position {
+		width: 100%;
+	}
+
+	.group {
+		width: 50%;
 	}
 
 }

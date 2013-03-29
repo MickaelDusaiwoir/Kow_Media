@@ -204,9 +204,10 @@ h4 {
 	position: fixed;
 	width: 28%;
 	z-index: 3;
+	max-width: 390px;
 }
 #fixedbug {
-	height: 260px;
+	height: 295px;
 	display: inline-block;
 }
 
@@ -248,7 +249,7 @@ h4 {
 
 #userData {
 	padding: 10px;
-	width: 30%;
+	width: 28%;
 	.box-sizing;
 	float: left;
 	#form {
@@ -831,7 +832,8 @@ h4 {
 		textarea {
 			color: @color_noir;
 			margin-left: 3px;
-			resize:vertical;		
+			resize:vertical;
+			min-height: 60px;			
 		}
 		input[type="file"] {
 			width: 67%;
@@ -840,7 +842,7 @@ h4 {
 			padding: 2px 5px;
 		}
 		input#position {
-			width: 30%;
+			width: 67%;
 			display: inline-block;
 			border-top-right: 0px;
 			border-bottom-right: 0px;
@@ -922,7 +924,7 @@ h4 {
 		border: 1px solid darken(@color_blanc, 10%);
 		margin-bottom: 5px;
 		float: right;
-		margin-right: 5px;
+		margin-right: 10px;
 		img {
 			border: 1px solid darken(@color_blanc, 10%);
 			padding: 3px;
@@ -936,6 +938,10 @@ h4 {
 			border-top-right-radius: 11px 53px;
 		}
 	}
+}
+
+#edit_gift #addPrize #position {
+	width: 30%;
 }
 
 #legend {
@@ -1511,10 +1517,14 @@ input[type="submit"] {
 
 
 @media all and (max-width: 1200px) {
+	.fixed {
+		width: 28%;
+	}
 	#fixedbug {
 		height: 325px;
 	}
 	#userData {
+		width: 28%;
 		#form {
 			label {
 			}
@@ -1631,22 +1641,23 @@ input[type="submit"] {
 				}
 			}
 			#jour, #mois, #annee {
-				float: right;
+				float: none;
 				margin: 2px 0;
+				display: inline-block;
 			}
 			#jour {
-				width: 38%
+				width: 23%
 			}
 			#mois {
-				width: 80%;
-				margin-left: 20px;
+				width: 41%;
+				padding-left: 0;
 			}
 			#annee {
-				width: 50%;
-				margin-left: 60px;
+				width: 32%;
+				padding-left: 0;
 			}
 			#ddn {
-				width: 50%;
+				width: 100%;
 			}
 		}
 	}
@@ -1693,13 +1704,23 @@ input[type="submit"] {
 			}
 		}
 	}
+
+	#add_contest_content #addContest input#position {
+		width: 100%;
+	}
+
+	#add_contest_content #addContest textarea {
+		min-height: 100px;
+	}
 }
 
 
 @media all and (max-width: 520px) {
+
 	.fixed {
 		position: static;
 		width: 100%;
+		margin: 0 auto;
 	}
 	#fixedbug{
 		height: 0;
@@ -1736,7 +1757,7 @@ input[type="submit"] {
 			border: 1px solid #ccc;
 			-webkit-box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
 	        box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
-			padding: 10px 10px 20px 10px;
+			padding: 15px 10px 10px 10px;
 			background-color: @color_jaune2;
 			position: relative;
 			border-top-right: 2px;
@@ -1754,7 +1775,6 @@ input[type="submit"] {
 				.box-sizing;
 			}
 			select {
-				margin: 0
 				padding: 0;
 				display: inline;
 				.box-sizing;
@@ -1773,6 +1793,9 @@ input[type="submit"] {
 				-webkit-transition: border-color 0.2s linear 0s;
 				-o-transition: border-color 0.2s linear 0s;
 				-ms-transition: border-color 0.2s linear 0s;
+
+				margin-bottom: 10px;
+
 				&:focus {
 					outline: none;
 					border: 1px solid lighten(@color_vert, 30%);
@@ -1793,20 +1816,21 @@ input[type="submit"] {
 			#jour {
 				width: 16%;
 				float: none;
+				margin-bottom: 10px;
 			}
 			#mois {
 				width: 35%;
 				float: none;
-				margin-left: 2px;
+				margin: 5px 0 10px 2px;
 			}
 			#annee {
 				width: 23%;
 				float: none;
-				margin-left: 2px;
+				margin: 5px 0 10px 2px;
 			}
 			.radio {
 				text-align: center;
-				width: 32.5%;
+				width: 30.5%;
 				.box-sizing;
 				margin-right: 0;
 				display: inline-block;
@@ -1846,6 +1870,14 @@ input[type="submit"] {
 	#add_contest_content, #legend {
 		width: 94%;
 		float: none;
+	}
+
+	#add_contest_content #addContest input#position {
+		width: 100%;
+	}
+
+	.group {
+		width: 50%;
 	}
 }
 
@@ -1905,7 +1937,7 @@ input[type="submit"] {
 
 	#connexion {
 		margin: 0;
-		height: 65px;
+		height: 80px;
 		ul {
 			width: 90%;
 			li {
@@ -1918,6 +1950,40 @@ input[type="submit"] {
 
 	#intro {
 		display: none;
+	}
+
+	#login_page {
+		width: 300px;
+		margin-bottom: 10px;
+	}
+
+
+	#login label {
+		text-align: left;
+		padding: 5px 0 10px 0;
+		margin: 0 5%;
+		width: auto;
+	}
+
+	#login #password, #login #username {
+		width: 50%;
+	}
+
+
+	#login #password {
+		margin-left: 23px;
+	}
+
+	#login input[type=submit] {
+		margin-top: 5px;
+	}
+
+	#add_contest_content #addContest input#position {
+		width: 100%;
+	}
+
+	.group {
+		width: 50%;
 	}
 
 }

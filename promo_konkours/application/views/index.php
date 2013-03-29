@@ -155,9 +155,9 @@
 				$tmp = explode('../', $thumbnail);
 
 				// Déclaration du titre, de la valeur et de l'image du cadeau.
-				$display .= '<figure><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="countClick('.$contest_with_prize['id'].')" target="_blank" class="btn_img" ><img src="'. base_url() . $tmp[0] . $prize['id'] .'.jpg" title="'.$prize['title'].'" width="128" max-height="128" /></a></figure>';
+				$display .= '<figure><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="countClick('.$contest_with_prize['id'].')" target="_blank" class="btn_img" ><img src="'. base_url() . $tmp[1] . $prize['id'] .'.jpg" title="'.$prize['title'].'" width="128" max-height="128" /></a></figure>';
 				$display .= '<h4>'.$prize['title'].'</h4>';
-				$display .= '<p class="valeur">'.$prize['value'].'&euro;</p>';
+				$display .= '<p class="valeur">'.number_format($prize['value'], 0, ',', ' ').'&euro;</p>';
 
 				// Si on est connecté ont affiche les options d'administrations des cadeaux (modifier / supprimer).
 				if ( $this->session->userdata('Connected') ) 

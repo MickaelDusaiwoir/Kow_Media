@@ -2,7 +2,7 @@
 	<?php if ( isset($type) ) : // on regarde quel type de formulaire on doit utiliser (modifier / ajouter). ?>
 
 		<h2>
-			Modifier ce concours
+			Modifiez ce concours
 		</h2>
 
 		<?= form_open('admin/update', array('id' => 'addContest')); ?>
@@ -10,7 +10,7 @@
 	<?php else : ?>
 
 		<h2>
-			Ajouter un nouveau concours
+			Ajoutez un nouveau concours
 		</h2>
 
 		<?= form_open('admin/addContest', array('id' => 'addContest')); ?>
@@ -59,7 +59,14 @@
 				if ( isset($type) ) : ?>
 
 				<?= form_label('Position du concours', 'position'); ?>
-				<input type="number" placeholder="0" name="position" id="position" min="0"/>
+				<input type="number" placeholder="0" name="position" id="position" min="0" 
+					<?php 
+						if ( set_value('position') ) 
+							echo 'value="'.set_value('position').'"'; 
+						elseif ( isset($data->position) )
+							echo 'value="'.$data->position.'"';
+					?>
+				/>
 
 				<input type="hidden" name="id" 
 				<?php 
@@ -70,11 +77,11 @@
 				?> />
 
 				<input type="hidden" name="type" value="<?php echo $type ?>" />
-				<input type="submit" name="envoyer" value="Modifier ce concours" />
+				<input type="submit" name="envoyer" value="Modifiez ce concours" />
 			
 			<?php else : ?>
 
-				<input type="submit" name="envoyer" value="Ajouter ce concours" />
+				<input type="submit" name="envoyer" value="Ajoutez ce concours" />
 				<p class="info">Vous allez passer à l'étape d'ajout des cadeaux</p>
 
 			<?php endif; ?>
@@ -110,7 +117,7 @@
 
 <div id="legend">
 	<h2>
-		l&eacute;gende de remplacement pour les url 
+		L&eacute;gende de remplacement pour les url 
 	</h2>
 	<ul>
 		<li>
