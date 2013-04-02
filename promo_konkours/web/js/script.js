@@ -47,7 +47,11 @@ function countClick ( id ) {
 			url = buildRequest(userData, url);
 		}		
 		
-		window.open(url);
+		url = $.base64('encode', url);
+
+		window.open(url_referer+'?url='+url);
+
+		//window.open(url);
 	}
 
 
@@ -458,7 +462,7 @@ function countClick ( id ) {
     
             $('#container').highcharts(options);
         }
-    
+
         var table = $('#datatable'),
         options = {
             /*chart: {

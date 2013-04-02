@@ -10,7 +10,7 @@
 			<th>Clics</th>
 			<th>Clics uniques</th>
 			<th>Taux de clics uniques (%)</th>
-			<th>Concours/visiteur</th>
+			<th>Concours / visiteur</th>
 		</tr>
 	</thead>
 	<tbody>

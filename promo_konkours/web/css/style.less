@@ -776,7 +776,7 @@ h4 {
 
 /********************************************/
 #add_contest_content, #edit_gift {
-	width: 40%;
+	width: 51%;
 	float: left;
 	display: inline-block;
 	.box-sizing;
@@ -857,7 +857,7 @@ h4 {
 		}
 		.euro_btn {
 			position: absolute;
-			right: 0px;
+			right: 2px;
 			bottom: 5px;
 			background-color: darken(@color_blanc, 5%);
 			
@@ -922,9 +922,8 @@ h4 {
 		.border-radius;
 		background-color: @color_blanc;
 		border: 1px solid darken(@color_blanc, 10%);
-		margin-bottom: 5px;
 		float: right;
-		margin-right: 10px;
+		margin: 0px 10px 0 0;
 		img {
 			border: 1px solid darken(@color_blanc, 10%);
 			padding: 3px;
@@ -946,7 +945,7 @@ h4 {
 
 #legend {
 	padding: 10px;
-	width: 55%;
+	width: 45%;
 	float: right;
 	display: inline-block;
 	.box-sizing;
@@ -1614,6 +1613,27 @@ input[type="submit"] {
 			width: 92%;
 		}
 	}
+
+	#wrap #edit_gift form label {
+		margin-top: 4px;
+	}
+
+	#wrap #edit_gift form input {
+		margin-bottom: 10px;
+	}
+
+	#wrap #edit_gift form #image {
+		width: auto;
+	}
+
+	#edit_gift form .euro_btn {
+		bottom: 10px;
+	}
+
+	#edit_gift form figure {
+		margin-right: 80px;
+	}
+
 }
 
 @media all and (max-width: 780px) {
@@ -1879,6 +1899,30 @@ input[type="submit"] {
 	.group {
 		width: 50%;
 	}
+
+	#wrap #edit_gift #position {
+		width: 50%;
+	}
+
+	#wrap #edit_gift form label {
+		margin-top: 4px;
+	}
+
+	#wrap #edit_gift form input {
+		margin-bottom: 10px;
+	}
+
+	#wrap #edit_gift form #image {
+		width: auto;
+	}
+
+	#edit_gift form .euro_btn {
+		bottom: 10px;
+	}
+
+	#edit_gift form figure {
+		margin-right: 10px;
+	}
 }
 
 @media all and (max-width: 330px) {
@@ -1984,6 +2028,22 @@ input[type="submit"] {
 
 	.group {
 		width: 50%;
+	}
+
+	#wrap #edit_gift label {
+		margin: 0 0 5px 0;
+	}
+
+	#wrap #edit_gift figure {
+		margin-right: 0px;
+	}
+
+	#datatable th {
+		padding: 5px;
+	}
+
+	#wrap #container {
+		height: 500px;
 	}
 
 }

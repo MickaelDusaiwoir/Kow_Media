@@ -37,9 +37,11 @@
         <script src="<?= base_url() . JS_DIR?>jquery.js"></script>
         <script src="<?= base_url() . JS_DIR?>jquery.ui.js"></script>
         <script src="<?= base_url() . JS_DIR?>bootstrap.js"></script>
+        <script src="<?= base_url() . JS_DIR?>jquery.base64.js"></script>
         <script>
             // Tableau servant à récupère les paramètres. 
-            var url_stats = '<?= base_url()."web/ajax/stats.php" ?>';
+            var url_stats = '<?= base_url()."web/ajax/stats.php" ?>',
+                url_referer = '<?= base_url()."web/ajax/referer.php" ?>';
 
             var settings = new Array();
 

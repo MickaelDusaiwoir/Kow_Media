@@ -174,7 +174,7 @@
 			if ( $this->session->userdata('Connected') ) 
 			{
 				$display .= '<div class="add_gift">';
-				$display .= anchor('admin/addPrizesView/'.$contest_with_prize['id'], '<span>Ajouter un cadeau</span>', array('title' => 'Ajouter un cadeau', 'class' => 'icon-plus')); 
+				$display .= anchor('admin/addPrizesView/'.$contest_with_prize['id'], '<span>Ajoutez un cadeau</span>', array('title' => 'Ajouter un cadeau', 'class' => 'icon-plus')); 
 				$display .= '</div>';
 			}
 

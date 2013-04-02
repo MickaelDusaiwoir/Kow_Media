@@ -5,19 +5,14 @@
   font-style: normal;
 }
 
-/* @color_red: #BE333F;
-@color_vert: #307360;
-@color_noir: #303030;
-@color_blanc: #fff;
-@color_jaune: #f9f0d5; */
 
-@color_red: #E84200;
-@color_vert: #27855E;
+@color_red: #da6610;
+@color_blue: #2185C5;
+@color_noir: #3E454C;
+@color_blanc: #FFF6E5;
+@color_blue2: #7ECEFD;
+@color_blue3: #416174;
 @color_vert_flash: #00CD27;
-@color_noir: #333;
-@color_blanc: #fff;
-@color_jaune: #f8f5de;
-@color_jaune2: #F6F4E6;
 
 
 .border-radius {
@@ -32,6 +27,7 @@
 	-o-box-sizing: border-box;
 	-ms-box-sizing: border-box;
 }
+
 
 /************ FONTELLLO ********************/
 
@@ -80,21 +76,19 @@
 /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-up-hand:before { content: '\261d'; } /* '☝' */
-.icon-cancel:before { content: '\e04e'; } /* '' */
-.icon-plus:before { content: '\e05a'; } /* '' */
-.icon-pencil:before { content: '\e068'; } /* '' */
-.icon-ok:before { content: '\e070'; } /* '' */
-.icon-up:before { content: '\e0ae'; } /* '' */
-.icon-doc-new:before { content: '\e0bd'; } /* '' */
-.icon-home:before { content: '\e0e0'; } /* '' */
-.icon-login:before { content: '\f02c'; } /* '' */
-.icon-logout:before { content: '\f02d'; } /* '' */
-.icon-alert:before { content: '\1f4a5'; } /* '\1f4a5' */
-.icon-chart-bar:before { content: '\1f4ca'; } /* '\1f4ca' */
+.icon-up-hand:before { content: '\261d'; } /* 'â˜' */
+.icon-cancel:before { content: '\e04e'; } /* 'îŽ' */
+.icon-plus:before { content: '\e05a'; } /* 'îš' */
+.icon-pencil:before { content: '\e068'; } /* 'î¨' */
+.icon-ok:before { content: '\e070'; } /* 'î°' */
+.icon-up:before { content: '\e0ae'; } /* 'î‚®' */
+.icon-doc-new:before { content: '\e0bd'; } /* 'î‚½' */
+.icon-home:before { content: '\e0e0'; } /* 'îƒ ' */
+.icon-login:before { content: '\f02c'; } /* 'ï€¬' */
+.icon-logout:before { content: '\f02d'; } /* 'ï€­' */
+.icon-alert:before { content: 'ðŸ’¥'; } /* '\1f4a5' */
 
 /*******************************************************/
-
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -141,15 +135,19 @@ table {
 }
 
 body {	
-	background: url('../img/agsquare.png') repeat;
+	background: url('../img/black_lozenge.png') repeat;
 	font-size: 14px;
 	font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 	max-width: 1300px;
+	color: #f1f1f1;
 	margin: 0 auto;
 }
 
 #no_show, .no_show {
 	display: none;
+}
+#show, .show {
+	display: inline-block;
 }
 
 body #wrap .alert-error {
@@ -166,7 +164,7 @@ h2 {
 	padding-bottom: 25px;
 	font-weight: bold;
 	&:before {
-		background: url('../img/sprite.png') no-repeat;
+		background: url('../img/sprite_b.png') no-repeat;
 		background-position: -24px -29px;
 		content: '';
 		height: 36px;
@@ -180,12 +178,12 @@ h2 {
 
 h3 {
 	font-size: 1.6em;
-	color: @color_vert;
+	color: @color_blue2;
 	padding: 5px 10px;
 	font-weight: bold;
-	text-shadow: -1px -1px 0px @color_blanc;
+	text-shadow: -1px -1px 0px @color_noir;
 	a {
-		color: @color_vert;
+		color: @color_blue2;
 		text-decoration: none;
 	}
 }
@@ -193,11 +191,16 @@ h3 {
 h4 {
 	font-size: 1.1em;
 	margin-top: 0;
+	text-shadow: -1px -1px 0px @color_noir;
 }
 
 #wrap {
 	width: 99%;
 	margin: 0 auto;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	display: inline;
 }
 
 .fixed {
@@ -211,15 +214,13 @@ h4 {
 	display: inline-block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-	display: inline;
-}
 
 #dialog-message {
 	display: none;
 	.border-radius;
 	border: 1px solid lighten(@color_noir, 50%);
 	padding: 10px;
+	color: @color_noir;
 	header {
 		font-size: 1.2em;
 		font-weight: bold;
@@ -253,11 +254,12 @@ h4 {
 	.box-sizing;
 	float: left;
 	#form {
-		border: 1px solid #ccc;
+		border: 1px solid @color_blue;
 		-webkit-box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
         box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
 		padding: 10px 10px 20px 10px;
-		background-color: @color_jaune2;
+		background-color: @color_blue3;
+		position: relative;
 		border-top-right: 2px;
 		border-top-left-radius: 40px 20px;
 		border-bottom-right-radius: 10px 60px;
@@ -279,11 +281,11 @@ h4 {
 			.box-sizing;
 		}
 		input, select {
-			color: @color_vert;
+			color: @color_blue;
 			display: inline-block;
 			margin-bottom: 5px;
 			background-color: @color_blanc;
-			border: 1px solid @color_vert;
+			border: 1px solid @color_blue;
 			.border-radius;
 			padding: 3px;
 			transition: border-color 0.2s linear 0s;
@@ -293,11 +295,11 @@ h4 {
 			-ms-transition: border-color 0.2s linear 0s;
 			&:focus {
 				outline: none;
-				border: 1px solid lighten(@color_vert, 30%);
+				border: 1px solid lighten(@color_blue, 30%);
 				background-color: darken(@color_blanc, 5%);
 			}
 			&:hover {
-				border: 1px solid darken(@color_jaune, 50%);
+				border: 1px solid darken(@color_blue2, 20%);
 			}
 		}
 		input[type="text"], input[type="email"] {
@@ -349,18 +351,18 @@ h4 {
 
 	.contest {
 		border-top-right-radius: 10px 60px;
-		border: 1px solid #ccc;
+		border: 1px solid @color_blue;
 		display: inline-block;
 		width: 100%;
 		margin-bottom: 15px;
 		padding-bottom: 5px;
-		background-color: @color_jaune2;
+		background-color: @color_blue3;
 		position: relative;
 		-webkit-box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
         box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
         z-index: 0;
 		&:before, &:after {
-			background: url('../img/sprite.png') no-repeat;
+			background: url('../img/sprite_b.png') no-repeat;
 			height: 22px;
 			width: 22px;
 			display: inline-block;
@@ -401,14 +403,14 @@ h4 {
 			figure {
 				display: inline-block;
 				.border-radius;
-				background-color: @color_blanc;
-				border: 1px solid darken(@color_blanc, 10%);
+				background-color: @color_blue3;
+				border: 1px solid darken(@color_blue, 20%);
 			}
 
 			img {
-				border: 1px solid darken(@color_blanc, 10%);
+				border: 1px solid darken(@color_blue, 30%);
 				padding: 3px;
-				background-color: @color_blanc;
+				background-color: @color_blue;
 				margin: 0 auto;
 				text-align: center;
 				width: 128px;
@@ -422,6 +424,7 @@ h4 {
 			color: @color_red;
 			font-weight: bold;
 			font-size: 1.2em;
+			text-shadow: -1px -1px 0px @color_noir;
 			padding-top: 3px;
 		}
 	}
@@ -434,7 +437,8 @@ h4 {
 		margin-bottom: 10px;
 		position: relative;
 		h3 {
-			display: none;
+			padding-left: 0;
+			font-size: 1.3em;
 		}
 		.btn {
 			transition: all 0.2s linear 0s;
@@ -446,40 +450,41 @@ h4 {
 			font-size: 1.1em;
 			text-align: center;
 			display: inline-block;
-			border-top: 1px solid darken(@color_blanc, 20%);
-			   background: @color_vert;
-			   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
-			   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-			   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-			   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-			   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-			   padding: 7px 12px;
-			   -webkit-border-radius: 7px;
-			   -moz-border-radius: 7px;
-			   border-radius: 7px;
-			   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-			   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-			   box-shadow: rgba(0,0,0,1) 0 1px 0;
-			   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-			   color: white;
-			   text-shadow: -1px -1px 0 darken(@color_red, 40%);
-			   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-			   text-decoration: none;
-			   vertical-align: middle;
+			border-top: 1px solid darken(@color_blue, 20%);
+		   background: @color_blue;
+		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
+		   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   padding: 7px 12px;
+		   -webkit-border-radius: 7px;
+		   -moz-border-radius: 7px;
+		   border-radius: 7px;
+		   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+		   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+		   box-shadow: rgba(0,0,0,1) 0 1px 0;
+		   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+		   color: white;
+		   text-shadow: 0px -1px 0 darken(@color_noir, 40%);
+		   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+		   text-decoration: none;
+		   vertical-align: middle;
 			
 			&:hover {
 			   border-top-color: darken(@color_noir, 70%);
-			   background: darken(@color_vert, 10%);
-			   color: @color_jaune;
+			   background: darken(@color_blue, 10%);
+			   color: @color_blue2;
+			   text-shadow: -1px -1px 0 darken(@color_blue, 30%);
 			   }
 			&:active {
 			   border-top-color: lighten(@color_noir, 30%);
-			   background: darken(@color_vert, 15%);
+			   background: darken(@color_blue, 30%);
 			   }
 			&:before {
 				content: '';
 				display: inline-block;
-				background: url('../img/sprite.png') no-repeat;
+				background: url('../img/sprite_b.png') no-repeat;
 				background-position: -44px -2px;
 				width: 17px;
 				height: 23px;
@@ -495,7 +500,7 @@ h4 {
 				padding: 0.2em 0;
 			}
 			li i {
-				background: url('../img/sprite.png') no-repeat;
+				background: url('../img/sprite_b.png') no-repeat;
 				height: 23px;
 				width: 23px;
 				display: inline-block;
@@ -561,11 +566,11 @@ h4 {
 	}
 }
 #login {
-		border: 1px solid #ccc;
+		border: 1px solid @color_blue;
 		-webkit-box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
         box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
 		padding: 10px 10px 20px 10px;
-		background-color: @color_jaune2;
+		background-color: @color_blue3;
 		position: relative;
 		border-top-right: 2px;
 		border-top-left-radius: 40px 20px;
@@ -584,11 +589,11 @@ h4 {
 		}
 		
 		input {
-			color: @color_vert;
+			color: @color_blue;
 			display: inline-block;
 			margin-bottom: 5px;
 			background-color: @color_blanc;
-			border: 1px solid @color_vert;
+			border: 1px solid @color_blue;
 			.border-radius;
 			padding: 3px;
 			width: 61%;
@@ -600,22 +605,22 @@ h4 {
 			-ms-transition: border-color 0.2s linear 0s;
 			&:focus {
 				outline: none;
-				border: 1px solid lighten(@color_vert, 30%);
+				border: 1px solid lighten(@color_blue, 30%);
 				background-color: darken(@color_blanc, 5%);
 			}
 			&:hover {
-				border: 1px solid darken(@color_jaune, 50%);
+				border: 1px solid darken(@color_blue2, 20%);
 			}
 		}
 		input[type="submit"] {
 			width: 100%;
 		  border-top: 1px solid darken(@color_blanc, 20%);
-		   background: @color_vert;
-		   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
-		   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-		   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-		   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-		   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: @color_blue;
+		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
+		   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
 		   padding: 7px 12px;
 		   -webkit-border-radius: 7px;
 		   -moz-border-radius: 7px;
@@ -624,7 +629,7 @@ h4 {
 		   -moz-box-shadow: rgba(0,0,0,0.2) 0 1px 0;
 		   box-shadow: rgba(0,0,0,0.2) 0 1px 0;
 		  text-shadow: -1px -1px 0px @color_noir;
-		   color: @color_jaune;
+		   color: @color_blue2;
 		   font-weight: bold;
 		   font-size: 15px;
 		  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
@@ -634,12 +639,12 @@ h4 {
 			&:hover {
 				cursor: pointer;
 			   border-top-color: darken(@color_blanc, 30%);
-			   background: darken(@color_vert, 15%);
+			   background: darken(@color_blue, 15%);
 			   color: @color_blanc;
 			   }
 			&:active {
 			   border-top-color: @color_noir;
-			   background: darken(@color_vert, 5%);
+			   background: darken(@color_blue, 5%);
 			   color: @color_blanc;
 			   text-shadow: -1px -1px 0 @color_noir;
 			   }
@@ -650,12 +655,11 @@ h4 {
 	padding: 10px;
 	background: #f2dede;
 	color: #b94a48;
-	border: 1px solid #eed3d7;
+	border-color: #eed3d7;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 	.border-radius;
 	margin-bottom: 10px;
 }
-
 .info {
 	padding: 10px;
 	background: #fcf8e3;
@@ -669,6 +673,8 @@ h4 {
 
 
 
+
+
 /********* ICONES *****/
 .actionContest a, .actionPrize a, .add_gift a {
 	text-decoration: none;
@@ -679,7 +685,7 @@ h4 {
 	-o-transition: all 0.2s linear 0s;
 	-ms-transition: all 0.2s linear 0s;
 	&:hover {
-		color: darken(@color_red, 20%);
+		color: darken(@color_red, 50%);
 	}
 }
 .actionContest a:first-child {
@@ -700,18 +706,18 @@ h4 {
 		-o-transition: all 0.2s linear 0s;
 		-ms-transition: all 0.2s linear 0s;
 		margin: 0 auto;
-		color: lighten(@color_noir, 50%);
+		color: @color_red;
 		width: 128px;
 		text-align: center;
 		font-size: 2.4em;
 		display: block;
 		padding-top: 20px;
 		padding-bottom: 20px;
-		border: 2px dashed lighten(@color_noir, 50%);
+		border: 2px dashed @color_red;
 
 		&:hover {
-			color: @color_red;
-			border: 2px dashed (@color_red);
+			color: darken(@color_red, 50%);
+			border: 2px dashed darken(@color_red, 50%);
 		}
 	}
 }
@@ -738,7 +744,8 @@ h4 {
 /*********** MENU CONNEXION ***************/
 #connexion {
 	text-align: right;
-	background: url('../img/black_lozenge.png') repeat #333;
+	background-color: rgba(255,255,255,0.1);
+	border-bottom: 1px dashed darken(@color_blanc, 65%);
 	height: 25px;
 	margin-right: -6px;
 	margin-left: -10px;
@@ -758,7 +765,7 @@ h4 {
 		-o-transition: all 0.2s linear 0s;
 		-ms-transition: all 0.2s linear 0s;
 		text-decoration: none;
-		color: darken(@color_blanc, 15%);
+		color: @color_blanc;
 		text-shadow: -1px -1px 0 #000;
 
 		&:hover {
@@ -768,11 +775,6 @@ h4 {
 }
 
 
-.group {
-	display: inline-block;
-	position: relative;
-	width: 30%;
-}
 
 /********************************************/
 #add_contest_content, #edit_gift {
@@ -782,11 +784,11 @@ h4 {
 	.box-sizing;
 	margin: 10px;
 	form {
-		border: 1px solid #ccc;
+		border: 1px solid @color_blue;
 		-webkit-box-shadow:  2px 3px 10px 1px rgba(0, 0, 0, 0.1); 
 	    box-shadow:  2px 3px 10px 1px rgba(0, 0, 0, 0.1);
 		padding: 10px 10px 20px 10px;
-		background-color: @color_jaune2;
+		background-color: @color_blue3;
 		position: relative;
 		border-top-right: 2px;
 		border-top-left-radius: 40px 20px;
@@ -812,8 +814,8 @@ h4 {
 			.box-sizing;
 			margin-bottom: 5px;
 			background-color: @color_blanc;
-			border: 1px solid @color_vert;
-			color: @color_vert;
+			border: 1px solid @color_blue;
+			color: @color_blue;
 			.border-radius;
 			transition: border-color 0.2s linear 0s;
 			-moz-transition: border-color 0.2s linear 0s;
@@ -822,18 +824,17 @@ h4 {
 			-ms-transition: border-color 0.2s linear 0s;
 			&:focus {
 				outline: none;
-				border: 1px solid lighten(@color_vert, 30%);
+				border: 1px solid lighten(@color_blue, 30%);
 				background-color: darken(@color_blanc, 5%);
 			}
 			&:hover {
-				border: 1px solid darken(@color_jaune, 50%);
+				border: 1px solid darken(@color_blue2, 20%);
 			}
 		}
 		textarea {
 			color: @color_noir;
 			margin-left: 3px;
-			resize:vertical;
-			min-height: 60px;	
+			resize:vertical;		
 		}
 		input[type="file"] {
 			width: 67%;
@@ -841,24 +842,20 @@ h4 {
 			display: inline-block;
 			padding: 2px 5px;
 		}
-		input#position {
-			width: 67%;
-			display: inline-block;
-			border-top-right: 0px;
-			border-bottom-right: 0px;
-			padding-right: 25px;
-		}
-		input#value {
+		input#value, input#position {
+			width: 30%;
 			display: inline-block;
 			position: relative;
 			border-top-right: 0px;
 			border-bottom-right: 0px;
-			width: 86%;
+		}
+		input#position {
+			padding-right: 25px;
 		}
 		.euro_btn {
-			position: absolute;
-			right: 0px;
-			bottom: 5px;
+			position: relative;
+			right: 28px;
+			bottom: 0;
 			background-color: darken(@color_blanc, 5%);
 			
 			padding: 1px 8px 5px 8px\9;
@@ -866,7 +863,7 @@ h4 {
 			_padding: 2px 8px 6px 8px;
 
 			padding: 5px 8px 3px 8px;
-			border: 1px solid @color_vert;
+			border: 1px solid @color_blue;
 			text-shadow: -1px -1px 0px #fff;
 			border-top-right: 2px;
 			border-bottom-right: 2px;
@@ -882,12 +879,12 @@ h4 {
 		input[type="submit"] {
 		   width: 98%;
 		   border-top: 1px solid darken(@color_blanc, 20%);
-		   background: @color_vert;
-		   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
-		   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-		   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-		   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-		   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		   background: @color_blue;
+		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
+		   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
 		   padding: 7px 12px;
 		   -webkit-border-radius: 7px;
 		   -moz-border-radius: 7px;
@@ -896,7 +893,7 @@ h4 {
 		   -moz-box-shadow: rgba(0,0,0,0.2) 0 1px 0;
 		   box-shadow: rgba(0,0,0,0.2) 0 1px 0;
 		  text-shadow: -1px -1px 0px @color_noir;
-		   color: @color_jaune;
+		   color: @color_blue2;
 		   font-weight: bold;
 		   font-size: 15px;
 		  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
@@ -906,12 +903,12 @@ h4 {
 			&:hover {
 				cursor: pointer;
 			   border-top-color: darken(@color_blanc, 30%);
-			   background: darken(@color_vert, 15%);
+			   background: darken(@color_blue, 15%);
 			   color: @color_blanc;
 			   }
 			&:active {
 			   border-top-color: @color_noir;
-			   background: darken(@color_vert, 5%);
+			   background: darken(@color_blue, 5%);
 			   color: @color_blanc;
 			   text-shadow: -1px -1px 0 @color_noir;
 			   }
@@ -922,9 +919,8 @@ h4 {
 		.border-radius;
 		background-color: @color_blanc;
 		border: 1px solid darken(@color_blanc, 10%);
-		margin-bottom: 5px;
 		float: right;
-		margin-right: 10px;
+		margin: 0px 10px 0 0;
 		img {
 			border: 1px solid darken(@color_blanc, 10%);
 			padding: 3px;
@@ -946,14 +942,14 @@ h4 {
 
 #legend {
 	padding: 10px;
-	width: 55%;
+	width: 45%;
 	float: right;
 	display: inline-block;
 	.box-sizing;
 
 	li {
 		padding-bottom: 10px;
-		color: @color_vert;
+		color: @color_blue;
 		line-height: 22px;
 		p {
 			color: @color_red;
@@ -962,7 +958,7 @@ h4 {
 		u {
 			text-decoration: none;
 			padding-bottom: 1px;
-			border-bottom: 1px dashed @color_vert;
+			border-bottom: 1px dashed @color_blue;
 		}
 
 		small {
@@ -978,32 +974,8 @@ h4 {
 			color: lighten(@color_noir, 40%);
 		}
 	}
-	.exemple {
-		margin-top: 20px;
-		line-height: 20px;
-		display: inline-block;
-		border: 1px dashed #c09853;
-		padding: 10px;
-		small {
-			color: lighten(@color_noir, 40%);
-			display: inline-block;
-		}
-		strong {
-			font-weight: bold;
-			color: @color_vert;
-			display: inline-block;
-		}
-		u {
-			display: inline-block;
-		}
-		h3 {
-			color: @color_noir;
-			padding-bottom: 3px;
-			display: inline-block;
-			padding-top: 0;
-			padding-left: 0;
-		}
-	}	
+
+	
 }
 
 /********** BTN **************/
@@ -1017,12 +989,12 @@ h4 {
 	text-align: center;
 	display: inline-block;
 	border-top: 1px solid darken(@color_blanc, 20%);
-   background: @color_vert;
-   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
-   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+   background: @color_blue;
+   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
+   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
 	   padding: 4px 12px;
 	   -webkit-border-radius: 7px;
 	   -moz-border-radius: 7px;
@@ -1032,19 +1004,19 @@ h4 {
 	   box-shadow: rgba(0,0,0,1) 0 1px 0;
 	   text-shadow: rgba(0,0,0,.4) 0 1px 0;
 	   color: white;
-	   text-shadow: -1px -1px 0 darken(@color_red, 40%);
+	   text-shadow: -1px -1px 0 darken(@color_blue, 40%);
 	   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 	   text-decoration: none;
 	   vertical-align: middle;
 	
 	&:hover {
 	   border-top-color: darken(@color_noir, 70%);
-	   background: darken(@color_vert, 10%);
-	   color: @color_jaune;
+	   background: darken(@color_blue, 10%);
+	   color: @color_blue2;
 	   }
 	&:active {
 	   border-top-color: lighten(@color_noir, 30%);
-	   background: darken(@color_vert, 15%);
+	   background: darken(@color_blue, 15%);
 	   }
 }
 
@@ -1098,19 +1070,19 @@ h4 {
 			-webkit-transition: all 0.2s linear 0s;
 			-o-transition: all 0.2s linear 0s;
 			-ms-transition: all 0.2s linear 0s;
-		 background: @color_vert;
-		   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(lighten(@color_vert, 5%)));
-		   background: -webkit-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-		   background: -moz-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-		   background: -ms-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
-		   background: -o-linear-gradient(top, @color_vert, lighten(@color_vert, 5%));
+		 background: @color_blue;
+		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(lighten(@color_blue, 5%)));
+		   background: -webkit-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -moz-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -ms-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
+		   background: -o-linear-gradient(top, @color_blue, lighten(@color_blue, 5%));
 		&:hover {
-			 background: darken(@color_vert, 10%);
-		   background: -webkit-gradient(linear, left top, left bottom, from(@color_vert), to(darken(@color_vert, 5%)));
-		   background: -webkit-linear-gradient(top, @color_vert, darken(@color_vert, 5%));
-		   background: -moz-linear-gradient(top, @color_vert, darken(@color_vert, 5%));
-		   background: -ms-linear-gradient(top, @color_vert, darken(@color_vert, 5%));
-		   background: -o-linear-gradient(top, @color_vert, darken(@color_vert, 5%));
+			 background: darken(@color_blue, 10%);
+		   background: -webkit-gradient(linear, left top, left bottom, from(@color_blue), to(darken(@color_blue, 5%)));
+		   background: -webkit-linear-gradient(top, @color_blue, darken(@color_blue, 5%));
+		   background: -moz-linear-gradient(top, @color_blue, darken(@color_blue, 5%));
+		   background: -ms-linear-gradient(top, @color_blue, darken(@color_blue, 5%));
+		   background: -o-linear-gradient(top, @color_blue, darken(@color_blue, 5%));
 		}
 	}
 }
@@ -1136,10 +1108,11 @@ h4 {
 	}
 	.pourcentage {
 		position: relative;
-		top: -17px;
 		z-index: 0;
+		top: -17px;
 		font-weight: bold;
 		text-shadow: 0px 1px 0px @color_blanc;
+		color: @color_noir;
 	}
 
 	.icon-ok {
@@ -1153,7 +1126,7 @@ h4 {
 		}
 	}
 	.icon-cancel {
-		color: @color_noir;
+		color: @color_blanc;
 		&:before {
 			font-size: 14px;
 			color: red;
@@ -1162,7 +1135,7 @@ h4 {
 		}
 	}
 	.current {
-		color: @color_noir;
+		color: @color_blanc;
 		font-weight: bold;
 		font-size: 1.5em;
 	}
@@ -1170,7 +1143,7 @@ h4 {
 		font-size: 1.2em;
 	}
 	small {
-		color: @color_vert;
+		color: @color_blue;
 		display: block;
 		margin-top: 0px;
 		margin-left: 0px;
@@ -1186,7 +1159,7 @@ h4 {
 			display: inline-block;
 			width: 43px;
 			height: 15px;
-			background: url('../img/sprite.png') no-repeat;
+			background: url('../img/sprite_b.png') no-repeat;
 			background-position: -25px -70px;
 			content: '';
 		}
@@ -1194,43 +1167,22 @@ h4 {
 }
 #explications {
 	margin-top: 30px;
-	border: 1px dashed #c09853;
+	border: 1px dashed @color_blue;
 	padding: 10px;
 	h3 {
 		color: @color_noir;
 		padding-bottom: 3px;
 		display: inline-block;
-		padding-top: 0px;
-	}
-	ol {
-		line-height: 17px;
 	}
 	li {
 		padding-bottom: 6px;
-		small {
-			display: inline;
-		}
-		em {
-			color: @color_vert;
-		}
-	}
-	u {
-		color: @color_red;
-		font-weight: bold;
-	}
-	p {
-		line-height: 14px;
-		color: lighten(@color_noir, 20%);
-	}
-	i {
-		font-style: italic;
 	}
 }
 #intro, #explications {
 	.pub {
 		margin-top: 30px;
 		font-size: 1.1em;
-		border: 1px dashed #ccc;
+		border: 1px dashed @color_blue;
 		padding: 5px 10px;
 		.border-radius;
 		border-bottom-left-radius: 60px 10px;
@@ -1274,7 +1226,7 @@ h4 {
 		padding-left: 45px;
 		strong {
 			font-weight: bold;
-			color: @color_noir;
+			color: @color_blue;
 		}
 	}
 }
@@ -1286,19 +1238,19 @@ h4 {
     bottom: 15px;
     display: none;
     padding: 10px;
-    background: @color_noir;
+    background: @color_blanc;
     .border-radius;
     opacity: 0.8;
     z-index: 2000;
     text-decoration: none;
-   	color: @color_blanc;
+   	color: @color_noir;
    	&:hover {
    		background: darken(@color_noir, 20%);
    		color: darken(@color_blanc, 10%);
    	}
 }
 
-/*****************************************************************************************/
+/**************************************************************************************/
 #datatable {
 	margin-top: 5px;
 	margin-left: 10px;
@@ -1514,8 +1466,6 @@ input[type="submit"] {
 	height: 400px;
 }
 
-
-
 @media all and (max-width: 1200px) {
 	.fixed {
 		width: 28%;
@@ -1576,6 +1526,7 @@ input[type="submit"] {
 		margin-left: -3px;
 		margin-right: -3px;
 	}
+
 	#edit_gift {
 		width: 60%;
 	}
@@ -1608,11 +1559,25 @@ input[type="submit"] {
 			}
 		}
 	}
-	#edit_gift {
-		width: 96%;
-		form input#value {
-			width: 92%;
-		}
+
+	#wrap #edit_gift form label {
+		margin-top: 4px;
+	}
+
+	#wrap #edit_gift form input {
+		margin-bottom: 10px;
+	}
+
+	#wrap #edit_gift form #image {
+		width: auto;
+	}
+
+	#edit_gift form .euro_btn {
+		bottom: 10px;
+	}
+
+	#edit_gift form figure {
+		margin-right: 80px;
 	}
 }
 
@@ -1641,26 +1606,26 @@ input[type="submit"] {
 				}
 			}
 			#jour, #mois, #annee {
-				float: none;
+				float: right;
 				margin: 2px 0;
-				display: inline-block;
 			}
 			#jour {
-				width: 23%
+				width: 38%
 			}
 			#mois {
-				width: 41%;
-				padding-left: 0;
+				width: 80%;
+				margin-left: 20px;
 			}
 			#annee {
-				width: 32%;
-				padding-left: 0;
+				width: 50%;
+				margin-left: 60px;
 			}
 			#ddn {
-				width: 100%;
+				width: 50%;
 			}
 		}
 	}
+
 	#add_contest_content, #edit_gift {
 		form {
 			label {
@@ -1719,7 +1684,6 @@ input[type="submit"] {
 	.fixed {
 		position: static;
 		width: 100%;
-		margin: 0 auto;
 	}
 	#fixedbug{
 		height: 0;
@@ -1729,7 +1693,7 @@ input[type="submit"] {
 		padding-left: 50px;
 		padding-bottom: 25px;
 		&:before {
-			background: url('../img/sprite.png') no-repeat;
+			background: url('../img/sprite_b.png') no-repeat;
 			background-position: -24px -29px;
 			content: '';
 			height: 36px;
@@ -1748,16 +1712,17 @@ input[type="submit"] {
 			margin: 0 auto;
 		}
 	}
-	#userData, #contests {
+	#userData, #contests  {
 		width: 100%;
 	}
+
 	#userData {
 		#form {
-			border: 1px solid #ccc;
+			border: 1px solid @color_blue;
 			-webkit-box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
 	        box-shadow:  1px 3px 10px 0px rgba(0,0,0,0.1);
-			padding: 15px 10px 10px 10px;
-			background-color: @color_jaune2;
+			padding: 10px 10px 20px 10px;
+			background-color: @color_blue3;
 			position: relative;
 			border-top-right: 2px;
 			border-top-left-radius: 40px 20px;
@@ -1781,11 +1746,11 @@ input[type="submit"] {
 				float: none;
 			}
 			input, select {
-				color: @color_vert;
+				color: @color_blue;
 				display: inline-block;
 				margin-bottom: 5px;
 				background-color: @color_blanc;
-				border: 1px solid @color_vert;
+				border: 1px solid @color_blue;
 				.border-radius;
 				padding: 3px;
 				transition: border-color 0.2s linear 0s;
@@ -1795,11 +1760,11 @@ input[type="submit"] {
 				-ms-transition: border-color 0.2s linear 0s;
 				&:focus {
 					outline: none;
-					border: 1px solid lighten(@color_vert, 30%);
+					border: 1px solid lighten(@color_blue, 30%);
 					background-color: darken(@color_blanc, 5%);
 				}
 				&:hover {
-					border: 1px solid darken(@color_jaune, 50%);
+					border: 1px solid darken(@color_blue2, 50%);
 				}
 			}
 			input[type="text"], input[type="email"] {
@@ -1813,21 +1778,20 @@ input[type="submit"] {
 			#jour {
 				width: 16%;
 				float: none;
-				margin-bottom: 10px;
 			}
 			#mois {
 				width: 35%;
 				float: none;
-				margin: 5px 0 10px 2px;
+				margin-left: 2px;
 			}
 			#annee {
 				width: 23%;
 				float: none;
-				margin: 5px 0 10px 2px;
+				margin-left: 2px;
 			}
 			.radio {
 				text-align: center;
-				width: 30.5%;
+				width: 32.5%;
 				.box-sizing;
 				margin-right: 0;
 				display: inline-block;
@@ -1837,6 +1801,7 @@ input[type="submit"] {
 			}
 		}
 	}
+
 	#contests {
 		.actionContest {
 			right: 5px;
@@ -1875,6 +1840,30 @@ input[type="submit"] {
 
 	.group {
 		width: 50%;
+	}
+
+	#wrap #edit_gift #position {
+		width: 50%;
+	}
+
+	#wrap #edit_gift form label {
+		margin-top: 4px;
+	}
+
+	#wrap #edit_gift form input {
+		margin-bottom: 10px;
+	}
+
+	#wrap #edit_gift form #image {
+		width: auto;
+	}
+
+	#edit_gift form .euro_btn {
+		bottom: 10px;
+	}
+
+	#edit_gift form figure {
+		margin-right: 10px;
 	}
 }
 
@@ -1934,7 +1923,7 @@ input[type="submit"] {
 
 	#connexion {
 		margin: 0;
-		height: 80px;
+		height: 65px;
 		ul {
 			width: 90%;
 			li {
@@ -1954,6 +1943,7 @@ input[type="submit"] {
 		margin-bottom: 10px;
 	}
 
+
 	#login label {
 		text-align: left;
 		padding: 5px 0 10px 0;
@@ -1964,6 +1954,7 @@ input[type="submit"] {
 	#login #password, #login #username {
 		width: 50%;
 	}
+
 
 	#login #password {
 		margin-left: 23px;
@@ -1979,6 +1970,22 @@ input[type="submit"] {
 
 	.group {
 		width: 50%;
+	}
+
+	#wrap #edit_gift label {
+		margin: 0 0 5px 0;
+	}
+
+	#wrap #edit_gift figure {
+		margin-right: 0px;
+	}
+
+	#datatable th {
+		padding: 5px;
+	}
+
+	#wrap #container {
+		height: 500px;
 	}
 
 }
