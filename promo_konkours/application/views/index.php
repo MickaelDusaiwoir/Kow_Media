@@ -1,15 +1,108 @@
-﻿<section id="dialog-message" title="promokonkours.be" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+﻿<?php 
+	// On crée l'affichage des concours pour ce faire, on parcour le tableau $contests_with_prizes qui comporte tout les concours
+	// ainsi que tous les cadeaux qui lui sont associés.
+	// On crée la variable display qui sera remplie à chaque iteration de la boucle.
+	// Dans la première boucle se situe une seconde qui en fonction du concours ajoute les cadeaux qui lui sont associés.
+	
+	$display = '';
+	$prizesTotal = 0;
+
+	$countContest = 1;
+
+	foreach ( $contests_with_prizes as $contest_with_prize ) : 
+
+		// Déclaration du conteneur et du titre du concours.
+		$display .= '<article class="contest">';
+		$display .= '<header><h3><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours">Concours GRATUIT ' . $countContest.'&nbsp;: '. $contest_with_prize['title'] .'</a></h3></header>';
+
+		$display .= '<div class="content_prize">';
+
+		// Parcour des cadeaux
+		foreach ( $contest_with_prize['prizes_data'] as $prize ) 
+		{	
+			$display .= '<section class="prize">';
+
+			// On calcule dans quel dossier se trouve l'image.
+			$thumbnail = getPath('thumbnail', $prize['id']);
+
+			// on retire les caractères inutiles
+			$tmp = explode('../', $thumbnail);
+
+			// Déclaration du titre, de la valeur et de l'image du cadeau.
+			$display .= '<figure><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="countClick('.$contest_with_prize['id'].')" target="_blank" class="btn_img" ><img src="'. base_url() . $tmp[1] . $prize['id'] .'.jpg" title="'.$prize['title'].'" width="128" max-height="128" /></a></figure>';
+			$display .= '<h4>'.$prize['title'].'</h4>';
+			$display .= '<p class="valeur">'.number_format($prize['value'], 0, ',', ' ').'&euro;</p>';
+
+			$prizesTotal += $prize['value'];
+
+			// Si on est connecté ont affiche les options d'administrations des cadeaux (modifier / supprimer).
+			if ( $this->session->userdata('Connected') ) 
+			{
+				$display .= '<div class="action actionPrize">';
+				$display .=  anchor('admin/updateView/'.$prize['id'].'/prize', '<span>Modifier ce cadeau</span>', array('title' => 'Modifier ce cadeau', 'class' => 'icon-pencil')); 
+				$display .=  anchor('admin/deleteView/'.$prize['id'].'/prize', '<span>Supprimer ce cadeau</span>', array('title' => 'Supprimer ce cadeau', 'class' => 'icon-cancel')); 
+				$display .= '</div>';
+			}
+			$display .= '</section>';
+		}
+
+		// Afficahge de l'option ajout d'un cadeau.
+		if ( $this->session->userdata('Connected') ) 
+		{
+			$display .= '<div class="add_gift">';
+			$display .= anchor('admin/addPrizesView/'.$contest_with_prize['id'], '<span>Ajoutez un cadeau</span>', array('title' => 'Ajouter un cadeau', 'class' => 'icon-plus')); 
+			$display .= '</div>';
+		}
+
+		$display .= '</div>';
+
+		// 	On découpe les astuces afin de les placer individuellement dans un li.
+		$display .= '<aside class="astuces" >';
+
+		$display .= '<ol>';
+
+			$astuces = explode("\n", $contest_with_prize['text']);
+			for ( $i = 0; $i < count($astuces); $i++) 
+			{
+				$display .= '<li><i></i><span>'.$astuces[$i].'</span></li>';
+			}
+
+		$display .= '</ol>';
+
+		$display .= anchor($contest_with_prize['url'], 'Je valide&nbsp;!', array('title' => 'Cliquez ICI pour participer à ce concours', 'class' => 'btn', 'onclick' => 'countClick('.$contest_with_prize['id'].')'));
+
+		$display .= '</aside>';
+
+		// Si on est connecté ont affiche les options d'administrations des concours (modifier / supprimer).
+		if ( $this->session->userdata('Connected') ) 
+		{
+			$display .= '<div class="action actionContest">';
+			$display .= anchor('admin/updateView/'.$contest_with_prize['id'].'/contest', '<span>Modifier ce concours</span>', array('title' => 'Modifier ce concours', 'class' => 'icon-pencil')); 
+			$display .= anchor('admin/deleteView/'.$contest_with_prize['id'].'/contest', '<span>Supprimer ce concours</span>', array('title' => 'Supprimer ce concours', 'class' => 'icon-cancel')); 
+			$display .= '</div>';
+		}
+		
+		$display .= '</article>';		
+
+		$countContest += 1;
+
+	endforeach;
+?>
+
+
+<section id="dialog-message" title="promokonkours.be" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
   <header>
 	PromoKonkours.be
   </header>
   <p>
-    Voulez-vous jouer à <strong><?php if ( count($contests_with_prizes) > 1 ) echo 'nos '.count($contests_with_prizes); else echo 'notre ';?></strong> concours&nbsp; <u>en moins de 10&nbsp;minutes</u>&nbsp;?
+    Désirez-vous jouer à <strong><?php if ( count($contests_with_prizes) > 1 ) echo 'nos '.count($contests_with_prizes); else echo 'notre ';?></strong> concours&nbsp; <u>GRATUITS</u> (<?php echo number_format($prizesTotal, 0,','," "); ?>&nbso;€ de cadeaux)&nbsp;?
   </p>
   <p>
-	<strong>C'est très simple&nbsp;!</strong> Remplissez <em>une SEULE fois le formulaire</em> et <em>jouez <?= count($contests_with_prizes) ?> fois</em>.
+	<strong>Astuces&nbsp;:</strong> Remplissez <u>UNE SEULE FOIS</u> vos informations pour jouer à tous les concours&nbsp;!
   </p>
   <footer>
-	<button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>
+	<button class="btn" data-dismiss="modal" aria-hidden="true">OUI</button>
+	<button class="btnNo" data-dismiss="modal" aria-hidden="true">NON</button>
   </footer>
 </section>
 
@@ -98,19 +191,27 @@
 		<article class="pub" id="pub_1">
 			<h1 class="no_show">Introduction</h1>
 			<p>
-				<a href="http://www.kowmedia.com/" title="Visiter le site KowMedia" target="_blank">Kow<span>Media</span></a> a créé <em>pour vous</em> un système permettant de participer à une tonne de concours en ne remplissant qu'<strong>UNE SEULE FOIS</strong> le formulaire.
-			</p>
-			<p>
-				Pour cela, rien de plus simple&nbsp;!
+				Nous avons séléctionné pour vous <strong>une liste de concours <u>100% GRATUITS</u></strong>.
 			</p>
 		<ol>
 			<li>
-				<strong>Complétez 1x le formulaire</strong> ci-dessus.
+				Remplissez <strong>UNE SEULE FOIS</strong> le formulaire.
 			</li>
 			<li>
-				<strong>Suivez les instructions</strong> de chaque concours.
+				Sélectionnez vos cadeaux préférés.
 			</li>
 		</ol>
+			<section id="team">
+				<h5>Concouristes</h5>
+				<figure>
+					<img src="<?= base_url() ?>/web/img/pierre.jpg" alt="Pierre @ KowMedia" width="78" height="103">
+					<p>Pierre</p>
+				</figure>
+				<figure>
+					<img src="<?= base_url() ?>/web/img/ales.jpg" alt="Ales @ KowMedia" width="78" height="103">
+					<p>Ales</p>
+				</figure>
+			</section>
 		</article>
 		<article class="pub" id="pub_2">
 			<p>
@@ -125,93 +226,7 @@
 		2. <span>Jouez</span> <em><?= count($contests_with_prizes) ?>X</em>
 	</h2>
 
-	<?php 
-		// On crée l'affichage des concours pour ce faire, on parcour le tableau $contests_with_prizes qui comporte tout les concours
-		// ainsi que tous les cadeaux qui lui sont associés.
-		// On crée la variable display qui sera remplie à chaque iteration de la boucle.
-		// Dans la première boucle se situe une seconde qui en fonction du concours ajoute les cadeaux qui lui sont associés.
-
-		$display = '';
-
-		$countContest = 1;
-
-		foreach ( $contests_with_prizes as $contest_with_prize ) : 
-
-			// Déclaration du conteneur et du titre du concours.
-			$display .= '<article class="contest">';
-			$display .= '<header><h3><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours">Concours GRATUIT ' . $countContest.'&nbsp;: '. $contest_with_prize['title'] .'</a></h3></header>';
-
-			$display .= '<div class="content_prize">';
-
-			// Parcour des cadeaux
-			foreach ( $contest_with_prize['prizes_data'] as $prize ) 
-			{	
-				$display .= '<section class="prize">';
-
-				// On calcule dans quel dossier se trouve l'image.
-				$thumbnail = getPath('thumbnail', $prize['id']);
-
-				// on retire les caractères inutiles
-				$tmp = explode('../', $thumbnail);
-
-				// Déclaration du titre, de la valeur et de l'image du cadeau.
-				$display .= '<figure><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="countClick('.$contest_with_prize['id'].')" target="_blank" class="btn_img" ><img src="'. base_url() . $tmp[1] . $prize['id'] .'.jpg" title="'.$prize['title'].'" width="128" max-height="128" /></a></figure>';
-				$display .= '<h4>'.$prize['title'].'</h4>';
-				$display .= '<p class="valeur">'.number_format($prize['value'], 0, ',', ' ').'&euro;</p>';
-
-				// Si on est connecté ont affiche les options d'administrations des cadeaux (modifier / supprimer).
-				if ( $this->session->userdata('Connected') ) 
-				{
-					$display .= '<div class="action actionPrize">';
-					$display .=  anchor('admin/updateView/'.$prize['id'].'/prize', '<span>Modifier ce cadeau</span>', array('title' => 'Modifier ce cadeau', 'class' => 'icon-pencil')); 
-					$display .=  anchor('admin/deleteView/'.$prize['id'].'/prize', '<span>Supprimer ce cadeau</span>', array('title' => 'Supprimer ce cadeau', 'class' => 'icon-cancel')); 
-					$display .= '</div>';
-				}
-				$display .= '</section>';
-			}
-
-			// Afficahge de l'option ajout d'un cadeau.
-			if ( $this->session->userdata('Connected') ) 
-			{
-				$display .= '<div class="add_gift">';
-				$display .= anchor('admin/addPrizesView/'.$contest_with_prize['id'], '<span>Ajoutez un cadeau</span>', array('title' => 'Ajouter un cadeau', 'class' => 'icon-plus')); 
-				$display .= '</div>';
-			}
-
-			$display .= '</div>';
-
-			// 	On découpe les astuces afin de les placer individuellement dans un li.
-			$display .= '<aside class="astuces" >';
-
-			$display .= '<ol>';
-
-				$astuces = explode("\n", $contest_with_prize['text']);
-				for ( $i = 0; $i < count($astuces); $i++) 
-				{
-					$display .= '<li><i></i><span>'.$astuces[$i].'</span></li>';
-				}
-
-			$display .= '</ol>';
-
-			$display .= anchor($contest_with_prize['url'], 'Je valide&nbsp;!', array('title' => 'Cliquez ICI pour participer à ce concours', 'class' => 'btn', 'onclick' => 'countClick('.$contest_with_prize['id'].')'));
-
-			$display .= '</aside>';
-
-			// Si on est connecté ont affiche les options d'administrations des concours (modifier / supprimer).
-			if ( $this->session->userdata('Connected') ) 
-			{
-				$display .= '<div class="action actionContest">';
-				$display .= anchor('admin/updateView/'.$contest_with_prize['id'].'/contest', '<span>Modifier ce concours</span>', array('title' => 'Modifier ce concours', 'class' => 'icon-pencil')); 
-				$display .= anchor('admin/deleteView/'.$contest_with_prize['id'].'/contest', '<span>Supprimer ce concours</span>', array('title' => 'Supprimer ce concours', 'class' => 'icon-cancel')); 
-				$display .= '</div>';
-			}
-			
-			$display .= '</article>';		
-
-			$countContest += 1;
-
-		endforeach;
-
+	<?php
 		// On affiche les articles.
 		echo $display; 
 	?>

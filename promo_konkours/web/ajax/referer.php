@@ -11,13 +11,10 @@
 
 		$url = base64_decode($_GET['url']);
 
-	header("Referer: http://www.google.com");
-	header("location: ".$url);
 ?>
 		<form action="<?= $url ?>" method="post" id="referer">
 			<input type="hidden" />
 		</form>
-		
 <?php
 	else :
 ?>
@@ -27,6 +24,6 @@
 <?php
 	endif;
 ?>
-		<script src="../js/hideRef.js"></script>
+		<script src="../js/hideRef.js"></script>  
 	</body>		
 </html>

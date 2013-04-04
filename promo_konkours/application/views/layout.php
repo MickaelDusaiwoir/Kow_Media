@@ -8,6 +8,7 @@
             <link rel="stylesheet" type="text/css" href="<?= base_url() . CSS_DIR ?>style_ie7.css" media="screen" />
         <![endif]-->
         <link rel="stylesheet" type="text/css" href="<?= base_url() . CSS_DIR ?>style.css" media="screen" id="design_css" />
+	<link rel="stylesheet" type="text/css" href="<?= base_url() . CSS_DIR ?>modal.css" media="screen" id="modal_css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <LINK REL="icon" HREF="<?= base_url() ?>favicon.ico" TYPE="image/x-icon">
         <LINK REL="shortcut icon" HREF="<?= base_url() ?>favicon.ico" TYPE="image/x-icon"> 

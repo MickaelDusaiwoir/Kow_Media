@@ -46,12 +46,8 @@ function countClick ( id ) {
 		{
 			url = buildRequest(userData, url);
 		}		
-		
-		url = $.base64('encode', url);
 
-		window.open(url_referer+'?url='+url);
-
-		//window.open(url);
+		window.open(url);
 	}
 
 
@@ -293,8 +289,8 @@ function countClick ( id ) {
 
 	var putSettings = function () {
 
-		var url_css;
-		url_css = $('#design_css').attr('href');
+		var url_css = $('#design_css').attr('href'),
+			modal_css = $('#modal_css').attr('href');
 
 		switch ( settings['css'] )
 		{
@@ -306,6 +302,23 @@ function countClick ( id ) {
 			case 2:
 				url_css = url_css.replace('style.css', 'style3.css');
 				$('#design_css').attr('href', url_css);
+				break;
+
+			case 0:
+			default :
+				break;
+		}
+
+		switch ( settings['modal_css'] )
+		{
+			case 1:
+				modal_css = modal_css.replace('modal.css', 'modal1.css');
+				$('#modal_css').attr('href', modal_css);
+				break;
+
+			case 2:
+				modal_css = modal_css.replace('modal.css', 'modal2.css');
+				$('#modal_css').attr('href', modal_css);
 				break;
 
 			case 0:
