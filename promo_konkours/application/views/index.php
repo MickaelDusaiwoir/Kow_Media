@@ -93,16 +93,17 @@
 <section id="dialog-message" title="promokonkours.be" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
   <header>
 	PromoKonkours.be
+	<a class="closeModal" data-dismiss="modal" aria-hidden="true"><i class="icon-cancel-1"></i></a>
   </header>
-  <p>
-    Désirez-vous jouer à <strong><?php if ( count($contests_with_prizes) > 1 ) echo 'nos '.count($contests_with_prizes); else echo 'notre ';?></strong> concours&nbsp; <u>GRATUITS</u> (<?php echo number_format($prizesTotal, 0,','," "); ?>&nbso;€ de cadeaux)&nbsp;?
+  <p class="question">
+    Désirez-vous jouer à <strong><?php if ( count($contests_with_prizes) > 1 ) echo 'nos '.count($contests_with_prizes); else echo 'notre ';?></strong> concours&nbsp; <u>GRATUITS</u> (<?php echo number_format($prizesTotal, 0,','," "); ?>&nbsp;€ de cadeaux)&nbsp;?
   </p>
   <p>
 	<strong>Astuces&nbsp;:</strong> Remplissez <u>UNE SEULE FOIS</u> vos informations pour jouer à tous les concours&nbsp;!
   </p>
   <footer>
-	<button class="btn" data-dismiss="modal" aria-hidden="true">OUI</button>
-	<button class="btnNo" data-dismiss="modal" aria-hidden="true">NON</button>
+	<button class="btn" id="btnYes" data-dismiss="modal" aria-hidden="true">Oui</button>
+	<button class="btn" id="btnNo" data-dismiss="modal" aria-hidden="true">Non</button>
   </footer>
 </section>
 

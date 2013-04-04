@@ -321,6 +321,11 @@ function countClick ( id ) {
 				$('#modal_css').attr('href', modal_css);
 				break;
 
+			case 3:
+				modal_css = modal_css.replace('modal.css', 'modal3.css');
+				$('#modal_css').attr('href', modal_css);
+				break;
+
 			case 0:
 			default :
 				break;
@@ -436,6 +441,7 @@ function countClick ( id ) {
 
 			case 0:
 				$('.pub').attr('class', 'no_show');
+				$('#intro').attr('class', 'no_show');
 				break;
 				
 			default:			
@@ -654,8 +660,14 @@ function countClick ( id ) {
 		var tmp = document.location.href.split('/admin/');
 
 		if ( tmp[1] == 'stats' )
-			drawGraphicStats ();		
-
+			drawGraphicStats ();
+		
+		
+		// Lien de recdirection "OUI" "NON" de la modal box
+		$('#btnNo').on('click', function(e){
+			window.location('http://wwww.konkours.com');
+		});
+			
 	} );
 
 }( jQuery ) );
