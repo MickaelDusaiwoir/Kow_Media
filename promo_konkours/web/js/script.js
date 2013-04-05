@@ -292,6 +292,7 @@ function countClick ( id ) {
 		var url_css = $('#design_css').attr('href'),
 			modal_css = $('#modal_css').attr('href');
 
+		// changer le css de la page
 		switch ( settings['css'] )
 		{
 			case 1:
@@ -309,6 +310,7 @@ function countClick ( id ) {
 				break;
 		}
 
+		// changer le css de la modal box
 		switch ( settings['modal_css'] )
 		{
 			case 1:
@@ -328,9 +330,12 @@ function countClick ( id ) {
 
 			case 0:
 			default :
+				modal_css = modal_css.replace('modal.css', 'modal.css');
+				$('#modal_css').attr('href', modal_css);
 				break;
 		}
 		
+		// changer le texte des liens
 		switch ( settings['btn'] )
 		{
 			case 1:
@@ -343,9 +348,11 @@ function countClick ( id ) {
 
 			case 0:
 			default:
+				$('.astuces .btn').text('Je valide !');
 				break;
 		}
 
+		// changer le texte du titre ( étape 1 )
 		switch ( settings['title1'] )
 		{
 			case 1:
@@ -358,9 +365,11 @@ function countClick ( id ) {
 
 			case 0:
 			default:
+				$('#userData h2 span').text('Complétez');
 				break;
 		}
 
+		// changer le texte du titre ( étape 2 )
 		switch ( settings['title2'] )
 		{
 			case 1:
@@ -375,15 +384,13 @@ function countClick ( id ) {
 				$('#contests h2 span').text('Choisissez');
 				break;
 
-			case 4:
-				$('#contests h2 span').text('Concourez');
-				break;
-
 			case 0:
 			default:
+				$('#contests h2 span').text('Jouez');
 				break;
 		}
 
+		// ajouter un texte apres le titre ( étape 1 )
 		switch ( settings['after_title1'] )
 		{
 			case 1:
@@ -395,14 +402,16 @@ function countClick ( id ) {
 				break;
 
 			case 3:
-				$('#userData h2 em').append(' et amusez vous');
+				$('#userData h2 em').append(' et amusez-vous');
 				break;
 
 			case 0:
 			default:
+				$('#userData h2 em').append('');
 				break;
 		}	
 
+		// ajouter un texte apres le titre ( étape 2 )
 		switch ( settings['after_title2'] )
 		{
 			case 1:
@@ -419,9 +428,11 @@ function countClick ( id ) {
 
 			case 0:
 			default:
+				$('#contests h2 em').append('');
 				break;
 		}			
 
+		// définir quelle publicité afficher
 		switch ( settings['pub'] ) 
 		{
 			case 1:
@@ -434,17 +445,24 @@ function countClick ( id ) {
 				$('#pub_2').attr('class','pub show');
 				break;
 
-			case 3:
-				$('.pub').attr('class', 'no_show');
-				$('#pub_3').attr('class','pub show');
-				break;
-
 			case 0:
 				$('.pub').attr('class', 'no_show');
 				$('#intro').attr('class', 'no_show');
 				break;
 				
 			default:			
+				break;
+		}
+
+		// définir si on affiche ou pas les signiatures pour la pub n°2
+		switch ( settings['sign'] )
+		{
+			case 0 : 
+				$('.signature').attr('class', 'no_show');
+				break;
+
+			case 1:
+			default:
 				break;
 		}
 	}
@@ -665,7 +683,8 @@ function countClick ( id ) {
 		
 		// Lien de recdirection "OUI" "NON" de la modal box
 		$('#btnNo').on('click', function(e){
-			window.location('http://wwww.konkours.com');
+			e.preventDefault();
+			window.location = 'http://wwww.konkours.com';
 		});
 			
 	} );

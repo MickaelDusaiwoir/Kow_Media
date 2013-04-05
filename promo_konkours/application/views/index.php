@@ -92,14 +92,14 @@
 
 <section id="dialog-message" title="promokonkours.be" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
   <header>
-	PromoKonkours.be
+	Important&nbsp;!
 	<a class="closeModal" data-dismiss="modal" aria-hidden="true"><i class="icon-cancel-1"></i></a>
   </header>
   <p class="question">
-    Désirez-vous jouer à <strong><?php if ( count($contests_with_prizes) > 1 ) echo 'nos '.count($contests_with_prizes); else echo 'notre ';?></strong> concours&nbsp; <u>GRATUITS</u> (<?php echo number_format($prizesTotal, 0,','," "); ?>&nbsp;€ de cadeaux)&nbsp;?
+    Désirez-vous jouer à <strong><?php if ( count($contests_with_prizes) > 1 ) echo 'nos '.count($contests_with_prizes); else echo 'notre ';?></strong> concours&nbsp; <u>GRATUITS</u>&nbsp;? <em>(<?php echo number_format($prizesTotal, 0,','," "); ?>&nbsp;€ de cadeaux)</em>
   </p>
   <p>
-	<strong>Astuces&nbsp;:</strong> Remplissez <u>UNE SEULE FOIS</u> vos informations pour jouer à tous les concours&nbsp;!
+	<em>Astuce&nbsp;:</em> Remplissez <u>une seule fois</u> vos informations pour jouer à tous les concours&nbsp;!
   </p>
   <footer>
 	<button class="btn" id="btnYes" data-dismiss="modal" aria-hidden="true">Oui</button>
@@ -190,10 +190,14 @@
 	</section>
 	<section id="intro">
 		<article class="pub" id="pub_1">
+			<header>
 			<h1 class="no_show">Introduction</h1>
-			<p>
-				Nous avons séléctionné pour vous <strong>une liste de concours <u>100% GRATUITS</u></strong>.
+		<blockquote>
+		<i class="icon-quote-left"></i>
+			<p class="quote">
+				Nous avons séléctionné pour vous <strong><?= count($contests_with_prizes) ?>&nbsp;concours <u>100% GRATUITS&nbsp;!</u></strong>
 			</p>
+			
 		<ol>
 			<li>
 				Remplissez <strong>UNE SEULE FOIS</strong> le formulaire.
@@ -202,8 +206,11 @@
 				Sélectionnez vos cadeaux préférés.
 			</li>
 		</ol>
+		<i class="icon-quote-right"></i>
+		</blockquote>
+		
 			<section id="team">
-				<h5>Concouristes</h5>
+				
 				<figure>
 					<img src="<?= base_url() ?>/web/img/pierre.jpg" alt="Pierre @ KowMedia" width="78" height="103">
 					<p>Pierre</p>
@@ -212,7 +219,12 @@
 					<img src="<?= base_url() ?>/web/img/ales.jpg" alt="Ales @ KowMedia" width="78" height="103">
 					<p>Ales</p>
 				</figure>
+				<h5>Nos experts concours</h5>
 			</section>
+			</header>
+			<footer>
+				<a href="http://www.konkours.com" title="Visitez Konkours.com" target="_blank" id="website">Konkours.com</a>
+			</footer>
 		</article>
 		<article class="pub" id="pub_2">
 			<p>
