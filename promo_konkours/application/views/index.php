@@ -13,7 +13,7 @@
 
 		// Déclaration du conteneur et du titre du concours.
 		$display .= '<article class="contest">';
-		$display .= '<header><h3><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours">Concours GRATUIT ' . $countContest.'&nbsp;: '. $contest_with_prize['title'] .'</a></h3></header>';
+		$display .= '<header><h3><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="javascript:countClick('.$contest_with_prize['id'].'); _gaq.push([\'_trackPageview\',\'/clic.html\']);" target="_blank" >Concours GRATUIT ' . $countContest.'&nbsp;: '. $contest_with_prize['title'] .'</a></h3></header>';
 
 		$display .= '<div class="content_prize">';
 
@@ -29,7 +29,7 @@
 			$tmp = explode('../', $thumbnail);
 
 			// Déclaration du titre, de la valeur et de l'image du cadeau.
-			$display .= '<figure><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="countClick('.$contest_with_prize['id'].')" target="_blank" class="btn_img" ><img src="'. base_url() . $tmp[1] . $prize['id'] .'.jpg" title="'.$prize['title'].'" width="128" max-height="128" /></a></figure>';
+			$display .= '<figure><a href="'.$contest_with_prize["url"].'" title="Cliquez pour participer à ce concours" onclick="javascript:countClick('.$contest_with_prize['id'].'); _gaq.push([\'_trackPageview\',\'/clic.html\']);" target="_blank" class="btn_img" ><img src="'. base_url() . $tmp[0] . $prize["id"] .'.jpg" title="'.$prize["title"].'" width="128" max-height="128" /></a></figure>';
 			$display .= '<h4>'.$prize['title'].'</h4>';
 			$display .= '<p class="valeur">'.number_format($prize['value'], 0, ',', ' ').'&euro;</p>';
 
@@ -69,7 +69,7 @@
 
 		$display .= '</ol>';
 
-		$display .= anchor($contest_with_prize['url'], 'Je valide&nbsp;!', array('title' => 'Cliquez ICI pour participer à ce concours', 'class' => 'btn', 'onclick' => 'countClick('.$contest_with_prize['id'].')'));
+		$display .= anchor($contest_with_prize['url'], 'Je valide&nbsp;!', array('title' => 'Cliquez ICI pour participer à ce concours', 'class' => 'btn', 'onclick' => 'javascript:countClick('.$contest_with_prize['id'].'); _gaq.push([\'_trackPageview\',\'/clic.html\']);'));
 
 		$display .= '</aside>';
 
@@ -114,13 +114,6 @@
 		</h2>
 		<form method="post" action="#" id="form">
 
-
-			<label for="nom">Nom</label>			
-			<input id="nom" name="nom" type="text" placeholder="Rambo" />
-
-			<label for="prenom" id="firstname">Pr&eacute;nom</label>
-			<input id="prenom" name="prenom" type="text" />
-
 			<label for="man" class="radio">Monsieur
 				<input type="radio" id="man" name="civilite" value="man"/>
 			</label>
@@ -130,8 +123,14 @@
 			</label>
 
 			<label for="miss" class="radio">Mademoiselle
-				<input type="radio" id="miss" name="civilite" value="miss"/>
+				<input type="radio" id="miss" name="civilite" value="miss" />
 			</label>
+
+			<label for="nom">Nom</label>			
+			<input id="nom" name="nom" type="text" placeholder="Rambo" />
+
+			<label for="prenom" id="firstname">Pr&eacute;nom</label>
+			<input id="prenom" name="prenom" type="text" />
 
 			<label  id="ddn">Date de naissance</label>
 			<select id="jour" name="jour" >
@@ -175,7 +174,9 @@
 
 			<label for="ville" id="city">Ville</label>
 			<input id="ville" name="ville" type="text" />
-		
+			
+			<button class="btn">Enregistrer</button>
+
 		</form>
 	</div>
 	<span id="fixedbug"></span>

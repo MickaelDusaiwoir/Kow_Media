@@ -25,6 +25,52 @@
 		exit(0);
 	}
 
+	if (  isset($_POST['view']) )
+	{
+		if ( is_numeric($_POST['view']) )
+		{
+			$view = $_POST['view'];
+		}
+		else
+		{
+			echo 'ERROR:VIEW IS NOT A NUMBER';
+
+			exit(0);
+		}
+	}
+	else
+	{
+		echo 'ERROR:NO VIEW';
+
+		exit(0);
+	}
+
+	if (  isset($_POST['css']) )
+	{
+		if ( is_numeric($_POST['css']) )
+		{
+			$css = $_POST['css'];
+		}
+		else
+		{
+			echo 'ERROR:CSS IS NOT A NUMBER';
+
+			exit(0);
+		}
+	}
+	else
+	{
+		echo 'ERROR:NO CSS';
+
+		exit(0);
+	}
+
+
+	if ( isset($_COOKIE['subid']) )
+		$subid = $_COOKIE['subid'];
+	else
+		$subid = '';
+
 	$options = array (
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
@@ -38,8 +84,8 @@
 
 		// On ajout dans la base de donnée le concours qui vient d'être regarder en le liant à l'utilisateur par son id.
 		$req = 
-			"INSERT INTO `stat_contest_click`(`visitor_id`, `ip`, `contest_id`, `date`) ".
-			"VALUES(".$userData->visitor_id.", ".ip2long($_SERVER['REMOTE_ADDR']).", ".$contestID.", ".time().");";
+			"INSERT INTO `stat_contest_click`(`visitor_id`, `ip`, `contest_id`, `date`, `view`, `css`, `subid`) ".
+			"VALUES(".$userData->visitor_id.", ".ip2long($_SERVER['REMOTE_ADDR']).", ".$contestID.", ".time().", ".$view.", ".$css.", '".$subid."');";
 		
 		// On vérifie que la requete c'est bien passé et que aucune erreur n'est survenue. 
 		// S'il n'y a pas d'erreur alors ont envois un message qui confirme l'ajout.

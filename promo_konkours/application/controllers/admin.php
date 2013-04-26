@@ -50,15 +50,37 @@ class Admin extends CI_Controller
 			$dataList['contests_with_prizes'][$key]['prizes_data'] = $this->M_Admin->getPrizesList($value['id']);
 
 		// Tableau contenant les clés désignant les paramètres utilisés par Javascript.
-		$key = array('mb','pb','css','btn','title1','title2','pub','after_title1','after_title2','modal_css','sign');
+		$key = array('mb','pb','css','btn','title1','title2','pub','after_title1','after_title2','modal_css','sign','view','form_title');
 
 		// Parcours de l'URL afin de récupère tous les paramètres et des initialise s'il n'existe pas.
 		for ( $i = 0; $i < count($key); $i++ )
 			$param[$key[$i]] = isset($_GET[$key[$i]]) ? intval($_GET[$key[$i]]) : 0;
 
+
+		// Affichier l'un ou l'autre affichage
+		if ( !$view = isset($_GET['view']) ? $_GET['view'] : 0 )
+		{
+			$view = 'index';	
+		}
+		else
+		{
+			if ( $_GET['view'] == '1' )
+				$view = 'index_v2';
+			else
+				$view = 'index_v3';
+		}
+
+		// Récupère le subid
+		if ( isset($_GET['subid']) )
+		{
+			setcookie('subid', $_GET['subid'], time() + 3600, '/');			
+		}		 
+
+
+		$dataList['css']		=  $view;
 		$dataList['param']		=  $param;
 		$dataLayout['titre']	=  'Promo konkours';
-        $dataLayout['vue'] 		=  $this->load->view('index', $dataList ,true);
+        $dataLayout['vue'] 		=  $this->load->view($view, $dataList ,true);
 
 		$this->load->view('layout', $dataLayout);		
 	}
