@@ -13,7 +13,7 @@
 
 		// Déclaration du conteneur et du titre du concours.
 		$display .= '<article class="contest">';
-		$display .= '<header><h3><a href="'.$contest_with_prize['url'].'" title="Cliquez pour participer à ce concours" onclick="javascript:countClick('.$contest_with_prize['id'].'); _gaq.push([\'_trackPageview\',\'/clic.html\']);" target="_blank" >Concours GRATUIT ' . $countContest.'&nbsp;: '. $contest_with_prize['title'] .'</a></h3></header>';
+		$display .= '<header><h3><a href="'.$contest_with_prize['url'].'" class="btn_img" data-id="'.$contest_with_prize['id'].'" title="Cliquez pour participer à ce concours" onclick="javascript:countClick('.$contest_with_prize['id'].'); _gaq.push([\'_trackPageview\',\'/clic.html\']);" target="_blank" >Concours GRATUIT ' . $countContest.'&nbsp;: '. $contest_with_prize['title'] .'</a></h3></header>';
 
 		$display .= '<div class="content_prize">';
 
@@ -29,9 +29,9 @@
 			$tmp = explode('../', $thumbnail);
 
 			// Déclaration du titre, de la valeur et de l'image du cadeau.
-			$display .= '<figure><a href="'.$contest_with_prize["url"].'" title="Cliquez pour participer à ce concours" onclick="javascript:countClick('.$contest_with_prize['id'].'); _gaq.push([\'_trackPageview\',\'/clic.html\']);" target="_blank" class="btn_img" ><img src="'. base_url() . $tmp[0] . $prize["id"] .'.jpg" title="'.$prize["title"].'" width="128" max-height="128" /></a></figure>';
+			$display .= '<figure><a href="'.$contest_with_prize["url"].'" data-id="'.$contest_with_prize['id'].'" title="Cliquez pour participer à ce concours" onclick="javascript:countClick('.$contest_with_prize['id'].'); _gaq.push([\'_trackPageview\',\'/clic.html\']);" target="_blank" class="btn_img" ><img src="'. base_url() . $tmp[0] . $prize["id"] .'.jpg" title="'.$prize["title"].'" width="128" max-height="128" /></a></figure>';
 			$display .= '<h4>'.$prize['title'].'</h4>';
-			$display .= '<p class="valeur">'.number_format($prize['value'], 0, ',', ' ').'&euro;</p>';
+			$display .= '<p class="valeur">'.number_format($prize['value'], 0, ',', ' ').'&nbsp;&euro;</p>';
 
 			$prizesTotal += $prize['value'];
 
@@ -69,7 +69,7 @@
 
 		$display .= '</ol>';
 
-		$display .= anchor($contest_with_prize['url'], 'Je valide&nbsp;!', array('title' => 'Cliquez ICI pour participer à ce concours', 'class' => 'btn', 'onclick' => 'javascript:countClick('.$contest_with_prize['id'].'); _gaq.push([\'_trackPageview\',\'/clic.html\']);'));
+		$display .= anchor($contest_with_prize['url'], 'Je valide&nbsp;!', array('title' => 'Cliquez ICI pour participer à ce concours', 'data-id' => $contest_with_prize['id'], 'class' => 'btn', 'onclick' => 'javascript:countClick('.$contest_with_prize['id'].'); _gaq.push([\'_trackPageview\',\'/clic.html\']);'));
 
 		$display .= '</aside>';
 
@@ -192,45 +192,36 @@
 	<section id="intro">
 		<article class="pub" id="pub_1">
 			<header>
-			<h1 class="no_show">Introduction</h1>
-		<blockquote>
-		<i class="icon-quote-left"></i>
-			<p class="quote">
-				Nous avons séléctionné pour vous <strong><?= count($contests_with_prizes) ?>&nbsp;concours <u>100% GRATUITS&nbsp;!</u></strong>
-			</p>
-			
-		<ol>
-			<li>
-				Remplissez <strong>UNE SEULE FOIS</strong> le formulaire.
-			</li>
-			<li>
-				Sélectionnez vos cadeaux préférés.
-			</li>
-		</ol>
-		<i class="icon-quote-right"></i>
-		</blockquote>
-		
-			<section id="team">
-				
+				<blockquote>
+					<i class="icon-quote-left-1"></i>
+						<p class="quote">
+							Nous avons séléctionné pour vous <strong><?= count($contests_with_prizes) ?>&nbsp;concours <u>100% GRATUITS&nbsp;!</u></strong>
+						</p>
+						
+					<ol>
+						<li>
+							Remplissez <strong>une seule fois</strong> le formulaire.
+						</li>
+						<li>
+							Sélectionnez vos cadeaux préférés.
+						</li>
+					</ol>
+					<i class="icon-quote-right-1"></i>
+				</blockquote>
+			</header>
+		</article>
+		<article class="pub team" id="pub_2">
 				<figure>
 					<img src="<?= base_url() ?>/web/img/pierre.jpg" alt="Pierre @ KowMedia" width="78" height="103">
 					<p>Pierre</p>
+					<img src="<?= base_url() ?>/web/img/sign2.png" class="signature" />
 				</figure>
 				<figure>
 					<img src="<?= base_url() ?>/web/img/ales.jpg" alt="Ales @ KowMedia" width="78" height="103">
 					<p>Ales</p>
+					<img src="<?= base_url() ?>/web/img/sign1.png" class="signature" />
 				</figure>
-				<h5>Nos experts concours</h5>
-			</section>
-			</header>
-			<footer>
-				<a href="http://www.konkours.com" title="Visitez Konkours.com" target="_blank" id="website">Konkours.com</a>
-			</footer>
-		</article>
-		<article class="pub" id="pub_2">
-			<p>
-				It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here'
-			</p>
+				<h5>Experts en concours</h5>
 		</article>
 	</section>
 </section>
@@ -244,5 +235,30 @@
 		// On affiche les articles.
 		echo $display; 
 	?>
+	<article class="contest no_show" id="footer">
+		<header>
+			<h3>
+				<a href="http://www.konkours.com/" target="_blank">Marre de remplir les formulaires à chaque fois&nbsp;? Le logiciel WahOO le fait pour vous&nbsp;!</a>
+			</h3>
+		</header>
+		<div class="content_prize">
+			<section class="prize">
+				<figure>
+					<a href="http://www.konkours.com/" title="Cliquez pour accéder à jeuxconcours" target="_blank"><img src="<?= base_url().IMG_DIR ?>wahoo.png" title="Logiciel WahOO" width="128" max-height="128"></a>
+				</figure>
+				<h4>Logiciel WahOO</h4>
+				<p class="valeur">100&nbsp;% GRATUIT&nbsp;!</p>
+			</section>
+		</div>
+		<aside class="astuces">
+			<ol>
+				<li><i></i><span>100% Gratuit&nbsp;!</span></li>
+				<li><i></i><span>Les meilleurs concours du Net</span></li>
+				<li><i></i><span>Complète les formulaires</span></li>
+				<li><i></i><span>Sans publicité&nbsp;!</span></li>
+			</ol>
+			<a href="http://www.konkours.com/" title="Cliquez ICI pour accéder à Konkours.com" target="_blank" class="btn-footer">Visiter le site&nbsp;!</a>
+		</aside>
+	</article>
 
 </section>

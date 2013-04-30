@@ -254,7 +254,7 @@
 			</p>
 			<p>
 				<!--<em>CP&nbsp;:</em>-->
-				<span id="user_cp">75343</span>, <span id="user_ville">Parisssssssss</span>
+				<span id="user_cp">75343</span>, <span id="user_ville">Paris</span>
 			</p>
 		</a>
 		<footer>
@@ -301,5 +301,23 @@
 		// On affiche les articles.
 		echo $display; 
 	?>
+	
+	<section class="no_show" id="footer">
+		<a href="http://www.konkours.com" rel="http://www.konkours.com" target="_blank" title="Accéder à Konkours.com">
+			<h3>
+				Marre de remplir les formulaires à chaque fois&nbsp;? <br /> Le logiciel WahOO le fait pour vous&nbsp;!
+			</h3>
+			<figure>
+				<img src="<?= base_url().IMG_DIR ?>wahoo.png" alt="Logiciel WahOO" width="128" max-height="128">
+				<p>100% GRATUIT&nbsp;!</p>
+			</figure>
+			<ul>
+				<li>Les meilleurs concours du Net</li>
+				<li>Complète les formulaires</li>
+				<li>Sans publicité&nbsp;!</li>
+			</ul>
+		</a>
+	</section>
+	
  </section>
 </section>

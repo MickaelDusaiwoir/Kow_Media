@@ -50,7 +50,7 @@ class Admin extends CI_Controller
 			$dataList['contests_with_prizes'][$key]['prizes_data'] = $this->M_Admin->getPrizesList($value['id']);
 
 		// Tableau contenant les clés désignant les paramètres utilisés par Javascript.
-		$key = array('mb','pb','css','btn','title1','title2','pub','after_title1','after_title2','modal_css','sign','view','form_title');
+		$key = array('mb','pb','css','btn','title1','title2','pub','after_title1','after_title2','modal_css','sign','view','form_title','footer','redi');
 
 		// Parcours de l'URL afin de récupère tous les paramètres et des initialise s'il n'existe pas.
 		for ( $i = 0; $i < count($key); $i++ )

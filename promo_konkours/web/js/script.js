@@ -219,7 +219,7 @@ function countClick ( id ) {
 				if ( fieldName == 'email' && userData[fieldName] !== '' )
 					$('#'+ fieldName).attr('value', userData[fieldName]).attr('class', 'ok');
 				else if ( fieldName == 'email' && defaultValue[fieldName] !== '' )
-					$('#'+ fieldName).attr('placeholder', defaultValue[fieldName]).attr('class','error_email');
+					$('#'+ fieldName).attr('placeholder', defaultValue[fieldName]).attr('class','error');
 			}
 			else
 			{
@@ -239,11 +239,10 @@ function countClick ( id ) {
 
 	var progressBar = function () 
 	{
-		var nbInputText = 0, nbInputEmail = 0, nbInputRadio = 0, nbInputs = 0, formComplete = new Array;
+		var nbInputText = 0, nbInputEmail = 0, nbInputs = 0, formComplete = new Array;
 		nbInputText = $('#userData').find('input[type="text"]').length;
 		nbInputEmail = $('#userData').find('input[type="email"]').length;
-		nbInputRadio = $('#userData').find('input[type="radio"]').length - 2;
-		nbInputs = nbInputText + nbInputEmail + nbInputRadio;
+		nbInputs = nbInputText + nbInputEmail ;
 		
 		if ( settings['pb'] == 1 )
 		{ 
@@ -511,6 +510,18 @@ function countClick ( id ) {
 
 			}
 		}
+
+		switch ( settings['footer'] )	
+		{
+			case 1 :
+				$('#footer').css('display', 'inline-block');
+				break;
+
+			case 0 :
+			default : 
+				$('#footer').css('display', 'none');
+				break;
+		}	
 	}
 
 

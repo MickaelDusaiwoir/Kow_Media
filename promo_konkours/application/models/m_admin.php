@@ -98,7 +98,7 @@
 		*/
 		public function archiveContest ($id) 
 		{
-			$this->db->where('id', $data['id']);
+			$this->db->where('id', $id);
 			$this->db->update('contests', array('status' => '1'));
 			
 			redirect('admin/afficher');
