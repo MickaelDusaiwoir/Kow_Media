@@ -193,7 +193,7 @@
 		<article class="pub" id="pub_1">
 			<header>
 				<blockquote>
-					<i class="icon-quote-left-1"></i>
+					<i class="icon-quote-left"></i>
 						<p class="quote">
 							Nous avons séléctionné pour vous <strong><?= count($contests_with_prizes) ?>&nbsp;concours <u>100% GRATUITS&nbsp;!</u></strong>
 						</p>
@@ -206,11 +206,12 @@
 							Sélectionnez vos cadeaux préférés.
 						</li>
 					</ol>
-					<i class="icon-quote-right-1"></i>
+					<i class="icon-quote-right"></i>
 				</blockquote>
 			</header>
 		</article>
-		<article class="pub team" id="pub_2">
+		<article class="pub" id="pub_2">
+			<section id="team">
 				<figure>
 					<img src="<?= base_url() ?>/web/img/pierre.jpg" alt="Pierre @ KowMedia" width="78" height="103">
 					<p>Pierre</p>
@@ -222,6 +223,7 @@
 					<img src="<?= base_url() ?>/web/img/sign1.png" class="signature" />
 				</figure>
 				<h5>Experts en concours</h5>
+			</section>
 		</article>
 	</section>
 </section>
