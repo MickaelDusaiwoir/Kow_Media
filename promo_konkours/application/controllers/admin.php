@@ -84,87 +84,30 @@ class Admin extends CI_Controller
 
 		$this->load->view('layout', $dataLayout);		
 	}
-
+	
 	/** 
 	* @brief La function checkCookie.
 	* @details Elle vérifie si un cookie nommé stats_vistor existe.
 	* @details S'il y a un cookie on appelle la fonction pour le lire sinon ont le créer.
 	*/
-	function checkCookie ()
+	public function checkCookie ()
 	{
-		if ( !isset($_COOKIE['stats_visitor']) )
-			$this->initialiseCookie();
-		else
-			$this->readCookie();
-	}
-
-	/** 
-	* @brief La function initialiseCookie.
-	* @details Elle récupère toutes les informations nécessaires à la base de données mais aussi pour la création du cookie.
-	* @details On récupère lip de la personne, d'où il vient, grace à quoi (banière, ...).
-	* @details On initialise visit count par défaut à 1, c_date avec le timestamp, et m_date est initialisé à 0.
-	* @details On sauvegarde les données dans la base de données, on récupère l'id de la personne.
-	* @details On crée un tableau comporte l'information pour créer le cookie. On appele la fonction qui va le créer.
-	*/
-	function initialiseCookie ()
-	{
-		$data = array(
-			'ip' => ip2long($_SERVER['REMOTE_ADDR']), 
-			'c_date' => time(), 
-			'm_date' => 0, 
-			'referer' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null, 
-			'source' => isset($_GET['src']) ? $_GET['src'] : null, 
-			'visit_count' => '1'
-		); 
+		$userExists = false;
 		
-		if ( $last_id = $this->M_Admin->setVisitor($data) )
+		if ( isset($_COOKIE['stats_visitor']) && $_COOKIE['stats_visitor'] )
 		{
-			$save_to_cookie = array('visitor_id' => $last_id, 'm_date' => $data['c_date'] );
-
-			if ( $this->M_Admin->setVisits($last_id) )
-				$this->createCookie($save_to_cookie);
-			else
-				echo "ERREUR : visits table";
+			$data = json_decode($_COOKIE['stats_visitor']);
+			
+			if ( isset($data->visitor_id) && $data->visitor_id && $this->M_Admin->updateVisitor($data->visitor_id) )
+			{
+				$userExists = true;
+				
+				$this->M_Admin->createOrUpdateVisit($data->visitor_id);
+			}
 		}
-	}
-
-	/** 
-	* @brief La function createCookie.
-	* @param $data contient toutes les informations qui seront enregistrer dans le cookie.
-	* @details Elle crée le cookie avec les informations issues du paramètre avec comme durée de validité 1 an.
-	*/
-	public function createCookie ($data)
-	{
-		setcookie('stats_visitor', json_encode($data), time() + (365*86400), '/' );
-	}
-
-	/** 
-	* @brief La function readCookie.
-	* @details Elle lit et vérifie que l'id de l'utilisateur existe dans la base de données.
-	* @details S'il existe alors on met à jour la date de la dernière visite et on incrémente son nombre de vue.
-	* @details La condition vérifie la date de la dernière visite inscrite dans le cookie et agie en conséquence.
-	*/
-	public function readCookie ()
-	{
-		$visitorData = json_decode($_COOKIE['stats_visitor']);
-
-		if ( $this->M_Admin->checkVisitor(array('id' => $visitorData->visitor_id)) )
-		{
-			$time = time();
-
-			$this->M_Admin->update(array('m_date' => $time), 'visitors', $visitorData->visitor_id);
-
-			if ( $visitorData->m_date < strtotime("0:00", time()) )
-				$this->M_Admin->setVisits($visitorData->visitor_id);
-			else
-				$this->M_Admin->update( null, 'visits', $visitorData->visitor_id );
-
-			$this->createCookie(array('visitor_id' => $visitorData->visitor_id, 'm_date' => $time ));
-		}
-		else
-		{
-			$this->initialiseCookie();
-		}
+		
+		if ( !$userExists && ($visitorID = $this->M_Admin->createVisitor()) )
+			$this->M_Admin->createOrUpdateVisit($visitorID);
 	}
 
 	/** 

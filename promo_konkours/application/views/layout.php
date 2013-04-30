@@ -25,7 +25,7 @@
         <LINK REL="shortcut icon" HREF="<?= base_url() ?>favicon.ico" TYPE="image/x-icon"> 
 
 
-        <?php if ( isset($param) && $param['redi'] == 1 ) : ?>
+        <?php if ( isset($param) && $param['redi'] == 0 ) : ?>
         <!-- Google Analytics Content Experiment code -->
         <script>function utmx_section(){}function utmx(){}(function(){var
         k='71748295-0',d=document,l=d.location,c=d.cookie;

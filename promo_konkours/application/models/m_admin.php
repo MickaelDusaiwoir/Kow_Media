@@ -131,7 +131,88 @@
 			$query = $this->db->get_where($table, array('id' => $id));
 			return $query->row();
 		}
-
+		
+		function createCookie ($visitorID, $date)
+		{
+			if ( $visitorID && $date )
+			{
+				$data = array(
+					'visitor_id' => $visitorID,
+					'm_date' => $date
+				);
+				
+				setcookie('stats_visitor', json_encode($data), time() + (365*86400), '/');
+				
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		function destroyCookie ()
+		{
+			setcookie('stats_visitor', null, 0, '/');
+		}
+		
+		public function createVisitor ()
+		{
+			$data = array(
+				'ip' => ip2long($_SERVER['REMOTE_ADDR']), 
+				'c_date' => time(), 
+				'm_date' => 0, 
+				'referer' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null, 
+				'source' => isset($_GET['src']) ? $_GET['src'] : null, 
+				'visit_count' => '1'
+			); 
+			
+			if ( $this->db->insert('visitors', $data) )
+			{
+				$lastID = $this->db->insert_id();
+				
+				if ( $lastID && $this->createCookie($lastID, $data['c_date']) )
+					return $lastID;
+			}
+			
+			return false;
+		}
+		
+		public function updateVisitor ($visitor_id)
+		{
+			$time = time();
+			
+			$query = 
+				'UPDATE `visitors` SET '.
+				'`m_date` = '.$time.', '.
+				'`visit_count` = `visit_count` + 1 '.
+				'WHERE `id` = '.$visitor_id.' LIMIT 1;';
+			
+			if ( ($result = $this->db->query($query)) !== false )
+			{
+				if ( $this->db->affected_rows() > 0 )
+					return $this->createCookie($visitor_id, $time);
+				else
+					$this->destroyCookie();
+			}
+			
+			return false;
+		}
+		
+		public function createOrUpdateVisit ($visitor_id)
+		{
+			$date = date('d-m-Y');
+			
+			$query = 
+				'INSERT INTO `visits` (`visitor_id`, `visit_count`, `date`) '.
+				'VALUES ('.$visitor_id.', 1, \''.$date.'\') '.
+				'ON DUPLICATE KEY UPDATE `visit_count` = `visit_count` + 1;';
+			
+			$result = $this->db->query($query);
+			
+			return ( $result && $this->db->affected_rows() > 0 );
+		}
+		
 		/** 
 		* @brief La function update.
 		* @param $data Comporte toutes les données servant à modification du concours ou du cadeau ainsi que des statistiques.
@@ -142,57 +223,10 @@
 		*/
 		public function update ($data, $table, $id)
 		{
-	        if ( $table !== 'visitors' && $table !== 'visits' )
-	        {
-	        	$this->db->where('id', $id); 
-	        	$this->db->update($table, $data);
-        		redirect('admin/afficher');
-        	}
-        	elseif ( $table == 'visitors')
-        	{
-        		$req = ' UPDATE visitors SET visit_count = visit_count+1, m_date ='.$data['m_date'].' where id = '.$id;
-	        	return  $this->db->query($req);        		
-        	}
-        	elseif ( $table == 'visits' ) 
-        	{	
-        		$req = ' UPDATE `visits` SET `visit_count` = visit_count+1 where `visitor_id` = '.$id." AND `date` ='".date('d-m-Y')."';";
-	        	return $this->db->query($req);
-        	}
-        		
-		}
-
-		/** 
-		* @brief La function checkVisitor.
-		* @param $data comporte les informations servant à vérifier si l'utilisateur existe.
-		* @details la fonction renvoie si l'utilisateur existe.
-		*/
-		public function checkVisitor ($data)
-		{
-			$query = $this->db->get_where('visitors', $data );
-       		return $query->row();
-		}
-
-		/** 
-		* @brief La function setVisitor.
-		* @param $data comporte les informations servant à enregistrer un utilisateur.
-		* @details la fonction renvoie le dernier l'id de l'utilisateur.
-		*/
-		public function setVisitor ($data)
-		{
-			$this->db->insert('visitors', $data);
-			$last_id = $this->db->insert_id();
-
-			return $last_id;
-		}
-
-		/** 
-		* @brief La function setVisits.
-		* @param $visitor_id comporte l'id de l'utilisateur.
-		*/
-		public function setVisits ($visitor_id)
-		{
-			$data = array('visitor_id' => $visitor_id, 'visit_count' => '1', 'date' => date('d-m-Y'));
-			return $this->db->insert('visits', $data);			
+        	$this->db->where('id', $id); 
+        	$this->db->update($table, $data);
+        	
+    		redirect('admin/afficher');
 		}
 
 		/** 
